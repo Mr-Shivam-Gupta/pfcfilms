@@ -149,69 +149,67 @@ export default function Gallery() {
   ];
 
   return (
-    <section className="relative min-h-screen py-20 bg-black">
+    <section className="relative min-h-screen py-20 bg-zinc-50">
       {/* Animated Background Orbs */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-400/10 rounded-full blur-3xl animate-float-delayed"></div>
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/20 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-400/20 rounded-full blur-3xl animate-float-delayed"></div>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16 animate-fadeInUp">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-black">
             Our{" "}
-            <span className="text-amber-400 inline-block animate-shimmer bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 bg-clip-text text-transparent bg-[length:200%_100%]">
+            <span className="text-amber-500 inline-block animate-shimmer bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 bg-clip-text text-transparent bg-[length:200%_100%]">
               Gallery
             </span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-zinc-600 text-lg max-w-2xl mx-auto">
             Explore our journey through captivating visuals and memorable moments
           </p>
         </div>
 
         {/* Stats */}
-        <div 
+        <div
           className="grid grid-cols-3 gap-6 mb-12 animate-fadeInUp"
           style={{ animationDelay: "200ms" }}
         >
           {stats.map((stat, index) => (
             <div
               key={index}
-              className="bg-zinc-900/50 backdrop-blur-sm p-6 rounded-xl border border-amber-500/10 text-center transform transition-all duration-300 hover:scale-105"
+              className="bg-white p-6 rounded-xl border border-zinc-200 text-center transform transition-all duration-300 hover:scale-105 shadow-md hover:shadow-xl"
             >
-              <div className="flex justify-center mb-3 text-amber-400">
+              <div className="flex justify-center mb-3 text-amber-500">
                 {stat.icon}
               </div>
-              <div className="text-3xl font-bold text-amber-400 mb-1">{stat.number}</div>
-              <div className="text-sm text-gray-400">{stat.label}</div>
+              <div className="text-3xl font-bold text-amber-500 mb-1">{stat.number}</div>
+              <div className="text-sm text-zinc-600">{stat.label}</div>
             </div>
           ))}
         </div>
 
         {/* Tab Navigation */}
-        <div 
+        <div
           className="flex justify-center mb-12 animate-fadeInUp"
           style={{ animationDelay: "400ms" }}
         >
-          <div className="bg-zinc-900/50 backdrop-blur-sm p-2 rounded-full border border-amber-500/20 inline-flex">
+          <div className="bg-white p-2 rounded-full border border-zinc-200 inline-flex shadow-md">
             <button
               onClick={() => setActiveTab("photos")}
-              className={`px-8 py-3 rounded-full font-semibold transition-all duration-300 ${
-                activeTab === "photos"
+              className={`px-8 py-3 rounded-full font-semibold transition-all duration-300 ${activeTab === "photos"
                   ? "bg-amber-400 text-black shadow-lg shadow-amber-500/50"
-                  : "text-white hover:text-amber-400"
-              }`}
+                  : "text-zinc-600 hover:text-amber-600 hover:bg-zinc-50"
+                }`}
             >
               Photos
             </button>
             <button
               onClick={() => setActiveTab("videos")}
-              className={`px-8 py-3 rounded-full font-semibold transition-all duration-300 ${
-                activeTab === "videos"
+              className={`px-8 py-3 rounded-full font-semibold transition-all duration-300 ${activeTab === "videos"
                   ? "bg-amber-400 text-black shadow-lg shadow-amber-500/50"
-                  : "text-white hover:text-amber-400"
-              }`}
+                  : "text-zinc-600 hover:text-amber-600 hover:bg-zinc-50"
+                }`}
             >
               Videos
             </button>
@@ -224,7 +222,7 @@ export default function Gallery() {
             {photos.map((photo, index) => (
               <div
                 key={photo.id}
-                className="group relative aspect-square rounded-xl overflow-hidden border-2 border-amber-500/20 transform transition-all duration-300 hover:scale-105 hover:border-amber-500/60 hover:shadow-2xl hover:shadow-amber-500/30 cursor-pointer animate-fadeInUp"
+                className="group relative aspect-square rounded-xl overflow-hidden border border-zinc-200 transform transition-all duration-300 hover:scale-105 hover:border-amber-400 hover:shadow-2xl hover:shadow-amber-500/20 cursor-pointer animate-fadeInUp shadow-sm"
                 style={{ animationDelay: `${600 + index * 50}ms` }}
                 onClick={() => setSelectedMedia({ type: "photo", ...photo })}
               >
@@ -253,7 +251,7 @@ export default function Gallery() {
             {videos.map((video, index) => (
               <div
                 key={video.id}
-                className="group relative aspect-video rounded-xl overflow-hidden border-2 border-amber-500/20 transform transition-all duration-300 hover:scale-105 hover:border-amber-500/60 hover:shadow-2xl hover:shadow-amber-500/30 cursor-pointer animate-fadeInUp"
+                className="group relative aspect-video rounded-xl overflow-hidden border border-zinc-200 transform transition-all duration-300 hover:scale-105 hover:border-amber-400 hover:shadow-2xl hover:shadow-amber-500/20 cursor-pointer animate-fadeInUp shadow-sm"
                 style={{ animationDelay: `${600 + index * 50}ms` }}
                 onClick={() => setSelectedMedia({ type: "video", ...video })}
               >

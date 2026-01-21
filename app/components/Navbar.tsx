@@ -54,24 +54,18 @@ export default function Navbar({
 
   return (
     <nav
-      className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? "bg-black/80 backdrop-blur-xl shadow-2xl shadow-amber-500/5" : "bg-transparent"}`}
+      className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? "bg-white/80 backdrop-blur-xl shadow-2xl shadow-amber-500/5" : "bg-transparent"}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          <Link href="/" className="flex items-center space-x-3 group cursor-pointer">
-            <div className="w-16 h-16 relative rounded-xl overflow-hidden shadow-xl transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-3">
-              <Image
-                src="/logo.jpg"
-                alt="PFC Logo"
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div className="transform transition-all duration-300 group-hover:translate-x-1">
-              <div className="text-xl font-bold tracking-wider">PFC FILMS</div>
-              <div className="text-xs text-amber-400">
-                Production House & Institute
-              </div>
+          <Link href="/" className="flex flex-col group cursor-pointer">
+            <div className="flex items-center">
+              <span className="text-2xl font-black tracking-tighter text-zinc-900">
+                PFC
+              </span>
+              <span className="text-2xl font-bold tracking-[0.15em] text-amber-500 ml-2 group-hover:ml-3 transition-all duration-300">
+                FILMS
+              </span>
             </div>
           </Link>
 
@@ -88,14 +82,14 @@ export default function Navbar({
                     onClick={() => setActiveSection(item.toLowerCase())}
                     className={`text-sm font-medium transition-all duration-300 relative group ${
                       isActive
-                        ? "text-amber-400"
-                        : "text-white hover:text-amber-400"
+                        ? "text-amber-500"
+                        : "text-zinc-800 hover:text-amber-500"
                     }`}
                     style={{ animationDelay: `${idx * 50}ms` }}
                   >
                     {item}
                     <span
-                      className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-400 transition-all duration-300 group-hover:w-full ${isActive ? "w-full" : ""}`}
+                      className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-amber-500 transition-all duration-300 group-hover:w-full ${isActive ? "w-full" : ""}`}
                     ></span>
                   </Link>
                 );
@@ -104,7 +98,7 @@ export default function Navbar({
           </div>
 
           <button
-            className="md:hidden transform transition-all duration-300 hover:scale-110"
+            className="md:hidden transform transition-all duration-300 hover:scale-110 text-black"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -113,7 +107,7 @@ export default function Navbar({
       </div>
 
       {isMenuOpen && (
-        <div className="md:hidden bg-black/95 backdrop-blur-xl animate-slideDown">
+        <div className="md:hidden bg-white/95 backdrop-blur-xl animate-slideDown shadow-xl">
           <div className="px-4 py-4 space-y-3">
             {["Home", "About", "Productions", "Academy", "Gallery", "Contact"].map(
               (item, idx) => {
@@ -126,7 +120,7 @@ export default function Navbar({
                       setActiveSection(item.toLowerCase());
                       setIsMenuOpen(false);
                     }}
-                    className="block w-full text-left py-3 text-sm font-medium hover:text-amber-400 transition-all duration-300 hover:translate-x-2 border-l-2 border-transparent hover:border-amber-400 pl-4"
+                    className="block w-full text-left py-3 text-sm font-medium text-zinc-800 hover:text-amber-500 transition-all duration-300 hover:translate-x-2 border-l-2 border-transparent hover:border-amber-500 pl-4"
                     style={{ animationDelay: `${idx * 50}ms` }}
                   >
                     {item}

@@ -28,7 +28,7 @@ export default function CursorEffect() {
         className="fixed w-96 h-96 rounded-full pointer-events-none z-0 blur-3xl opacity-20 transition-transform duration-100"
         style={{
           background:
-            "radial-gradient(circle, rgba(251, 191, 36, 0.3) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(245, 158, 11, 0.4) 0%, transparent 70%)",
           left: -192,
           top: -192,
         }}
@@ -38,7 +38,7 @@ export default function CursorEffect() {
           className="absolute inset-0"
           style={{
             backgroundImage:
-              "linear-gradient(rgba(251, 191, 36, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(251, 191, 36, 0.1) 1px, transparent 1px)",
+              "linear-gradient(rgba(245, 158, 11, 0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(245, 158, 11, 0.2) 1px, transparent 1px)",
             backgroundSize: "100px 100px",
           }}
         ></div>

@@ -160,59 +160,59 @@ export default function Academy() {
   ];
 
   return (
-    <section className="relative min-h-screen py-20 bg-black">
+    <section className="relative min-h-screen py-20 bg-zinc-50">
       {/* Animated Background Orbs */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-400/10 rounded-full blur-3xl animate-float-delayed"></div>
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/20 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-400/20 rounded-full blur-3xl animate-float-delayed"></div>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16 animate-fadeInUp">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-black">
             Film{" "}
-            <span className="text-amber-400 inline-block animate-shimmer bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 bg-clip-text text-transparent bg-[length:200%_100%]">
+            <span className="text-amber-500 inline-block animate-shimmer bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 bg-clip-text text-transparent bg-[length:200%_100%]">
               Academy
             </span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-zinc-600 text-lg max-w-2xl mx-auto">
             Learn from industry experts and kickstart your career in filmmaking
           </p>
         </div>
 
         {/* Features */}
-        <div 
+        <div
           className="grid md:grid-cols-4 gap-6 mb-16 animate-fadeInUp"
           style={{ animationDelay: "200ms" }}
         >
           {features.map((feature, index) => (
             <div
               key={index}
-              className="bg-zinc-900/50 backdrop-blur-sm p-6 rounded-xl border border-amber-500/10 text-center transform transition-all duration-300 hover:scale-105 hover:border-amber-500/30"
+              className="bg-white p-6 rounded-xl border border-zinc-200 text-center transform transition-all duration-300 hover:scale-105 hover:border-amber-400 shadow-lg hover:shadow-xl"
             >
-              <div className="flex justify-center mb-4 text-amber-400">
+              <div className="flex justify-center mb-4 text-amber-500">
                 {feature.icon}
               </div>
-              <h3 className="text-lg font-bold mb-2">{feature.title}</h3>
-              <p className="text-sm text-gray-400">{feature.description}</p>
+              <h3 className="text-lg font-bold mb-2 text-black">{feature.title}</h3>
+              <p className="text-sm text-zinc-600 font-medium">{feature.description}</p>
             </div>
           ))}
         </div>
 
         {/* Courses Grid */}
         <div className="mb-16">
-          <h3 
-            className="text-3xl font-bold text-center mb-10 animate-fadeInUp"
+          <h3
+            className="text-3xl font-bold text-center mb-10 animate-fadeInUp text-black"
             style={{ animationDelay: "400ms" }}
           >
-            Our <span className="text-amber-400">Courses</span>
+            Our <span className="text-amber-500">Courses</span>
           </h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {courses.map((course, index) => (
               <div
                 key={course.id}
-                className="group bg-zinc-900/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-amber-500/10 transform transition-all duration-300 hover:scale-105 hover:border-amber-500/30 hover:shadow-2xl hover:shadow-amber-500/20 animate-fadeInUp"
+                className="group bg-white rounded-2xl overflow-hidden border border-zinc-200 transform transition-all duration-300 hover:scale-105 hover:border-amber-400 hover:shadow-xl shadow-md animate-fadeInUp"
                 style={{ animationDelay: `${600 + index * 100}ms` }}
               >
                 {/* Image */}
@@ -224,7 +224,7 @@ export default function Academy() {
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
-                  
+
                   {/* Level Badge */}
                   <div className="absolute top-4 right-4 bg-amber-400 text-black px-3 py-1 rounded-full text-xs font-bold">
                     {course.level}
@@ -233,37 +233,37 @@ export default function Academy() {
 
                 {/* Content */}
                 <div className="p-6">
-                  <h3 className="text-xl font-bold mb-3 group-hover:text-amber-400 transition-colors">
+                  <h3 className="text-xl font-bold mb-3 text-black group-hover:text-amber-500 transition-colors">
                     {course.title}
                   </h3>
 
-                  <p className="text-gray-400 text-sm mb-4">
+                  <p className="text-zinc-600 text-sm mb-4">
                     {course.description}
                   </p>
 
                   {/* Course Stats */}
                   <div className="grid grid-cols-3 gap-4 mb-4 text-sm">
-                    <div className="flex items-center space-x-2 text-gray-400">
-                      <Clock className="w-4 h-4 text-amber-400" />
+                    <div className="flex items-center space-x-2 text-zinc-500">
+                      <Clock className="w-4 h-4 text-amber-500" />
                       <span>{course.duration}</span>
                     </div>
-                    <div className="flex items-center space-x-2 text-gray-400">
-                      <Users className="w-4 h-4 text-amber-400" />
+                    <div className="flex items-center space-x-2 text-zinc-500">
+                      <Users className="w-4 h-4 text-amber-500" />
                       <span>{course.students}</span>
                     </div>
-                    <div className="flex items-center space-x-2 text-gray-400">
-                      <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
+                    <div className="flex items-center space-x-2 text-zinc-500">
+                      <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
                       <span>{course.rating}</span>
                     </div>
                   </div>
 
                   {/* Modules */}
                   <div className="mb-4">
-                    <h4 className="text-sm font-semibold text-amber-400 mb-2">Key Modules:</h4>
+                    <h4 className="text-sm font-semibold text-amber-600 mb-2">Key Modules:</h4>
                     <ul className="space-y-1">
                       {course.modules.slice(0, 3).map((module, idx) => (
-                        <li key={idx} className="flex items-center space-x-2 text-xs text-gray-400">
-                          <CheckCircle className="w-3 h-3 text-amber-400" />
+                        <li key={idx} className="flex items-center space-x-2 text-xs text-zinc-500">
+                          <CheckCircle className="w-3 h-3 text-amber-500" />
                           <span>{module}</span>
                         </li>
                       ))}
@@ -271,10 +271,10 @@ export default function Academy() {
                   </div>
 
                   {/* Price and CTA */}
-                  <div className="flex items-center justify-between pt-4 border-t border-amber-500/10">
+                  <div className="flex items-center justify-between pt-4 border-t border-zinc-100">
                     <div>
-                      <div className="text-2xl font-bold text-amber-400">{course.price}</div>
-                      <div className="text-xs text-gray-400">One-time fee</div>
+                      <div className="text-2xl font-bold text-amber-500">{course.price}</div>
+                      <div className="text-xs text-zinc-400">One-time fee</div>
                     </div>
                     <button className="bg-amber-400 hover:bg-amber-500 text-black px-4 py-2 rounded-lg font-semibold text-sm transition-all transform hover:scale-105">
                       Enroll Now
@@ -288,17 +288,17 @@ export default function Academy() {
 
         {/* Testimonials */}
         <div className="mb-16">
-          <h3 
-            className="text-3xl font-bold text-center mb-10 animate-fadeInUp"
+          <h3
+            className="text-3xl font-bold text-center mb-10 animate-fadeInUp text-black"
             style={{ animationDelay: "1200ms" }}
           >
-            Student <span className="text-amber-400">Success Stories</span>
+            Student <span className="text-amber-500">Success Stories</span>
           </h3>
           <div className="grid md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className="bg-zinc-900/50 backdrop-blur-sm p-6 rounded-xl border border-amber-500/10 animate-fadeInUp"
+                className="bg-white p-6 rounded-xl border border-zinc-200 shadow-lg animate-fadeInUp"
                 style={{ animationDelay: `${1400 + index * 100}ms` }}
               >
                 <div className="flex items-center space-x-4 mb-4">
@@ -311,29 +311,29 @@ export default function Academy() {
                     />
                   </div>
                   <div>
-                    <h4 className="font-bold">{testimonial.name}</h4>
-                    <p className="text-sm text-amber-400">{testimonial.course}</p>
+                    <h4 className="font-bold text-black">{testimonial.name}</h4>
+                    <p className="text-sm text-amber-600 font-medium">{testimonial.course}</p>
                   </div>
                 </div>
                 <div className="flex mb-3">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 text-amber-400 fill-amber-400" />
+                    <Star key={i} className="w-4 h-4 text-amber-500 fill-amber-500" />
                   ))}
                 </div>
-                <p className="text-gray-400 text-sm italic">"{testimonial.text}"</p>
+                <p className="text-zinc-600 text-sm italic">"{testimonial.text}"</p>
               </div>
             ))}
           </div>
         </div>
 
         {/* CTA */}
-        <div 
+        <div
           className="text-center animate-fadeInUp"
           style={{ animationDelay: "1700ms" }}
         >
-          <div className="bg-gradient-to-r from-amber-500/10 via-amber-400/20 to-amber-500/10 p-8 rounded-2xl border border-amber-500/20">
-            <h3 className="text-2xl font-bold mb-4">Ready to Start Your Journey?</h3>
-            <p className="text-gray-400 mb-6">
+          <div className="bg-white p-8 rounded-2xl border border-amber-200 shadow-xl relative overflow-hidden">
+            <h3 className="text-2xl font-bold mb-4 text-black">Ready to Start Your Journey?</h3>
+            <p className="text-zinc-600 mb-6">
               Join over 1000+ students who have transformed their passion into profession
             </p>
             <button className="bg-amber-400 hover:bg-amber-500 text-black px-8 py-4 rounded-full font-semibold transition-all transform hover:scale-105 hover:shadow-2xl hover:shadow-amber-500/50">

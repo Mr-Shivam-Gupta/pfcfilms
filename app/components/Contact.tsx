@@ -41,23 +41,23 @@ export default function Contact() {
   };
 
   return (
-    <section className="relative min-h-screen py-20 bg-black">
+    <section className="relative min-h-screen py-20 bg-zinc-50">
       {/* Animated Background Orbs */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-400/10 rounded-full blur-3xl animate-float-delayed"></div>
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/20 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-400/20 rounded-full blur-3xl animate-float-delayed"></div>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16 animate-fadeInUp">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-black">
             Get In{" "}
-            <span className="text-amber-400 inline-block animate-shimmer bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 bg-clip-text text-transparent bg-[length:200%_100%]">
+            <span className="text-amber-500 inline-block animate-shimmer bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 bg-clip-text text-transparent bg-[length:200%_100%]">
               Touch
             </span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-zinc-600 text-lg max-w-2xl mx-auto">
             Have a project in mind or want to learn filmmaking? Reach out to us
             and let's create something amazing together.
           </p>
@@ -70,19 +70,19 @@ export default function Contact() {
             style={{ animationDelay: "200ms" }}
           >
             <div>
-              <h3 className="text-2xl font-bold mb-6 text-amber-400">
+              <h3 className="text-2xl font-bold mb-6 text-black">
                 Contact Information
               </h3>
               <div className="space-y-6">
                 <div className="flex items-start space-x-4 group">
-                  <div className="bg-amber-500/10 p-3 rounded-lg group-hover:bg-amber-500/20 transition-all duration-300">
-                    <Mail className="w-6 h-6 text-amber-400" />
+                  <div className="bg-white p-3 rounded-lg group-hover:bg-amber-50 border border-zinc-200 shadow-sm transition-all duration-300">
+                    <Mail className="w-6 h-6 text-amber-500" />
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-1">Email</h4>
+                    <h4 className="font-semibold mb-1 text-black">Email</h4>
                     <a
                       href="mailto:info@pfcfilms.com"
-                      className="text-gray-400 hover:text-amber-400 transition-colors"
+                      className="text-zinc-600 hover:text-amber-600 transition-colors"
                     >
                       info@pfcfilms.com
                     </a>
@@ -90,14 +90,14 @@ export default function Contact() {
                 </div>
 
                 <div className="flex items-start space-x-4 group">
-                  <div className="bg-amber-500/10 p-3 rounded-lg group-hover:bg-amber-500/20 transition-all duration-300">
-                    <Phone className="w-6 h-6 text-amber-400" />
+                  <div className="bg-white p-3 rounded-lg group-hover:bg-amber-50 border border-zinc-200 shadow-sm transition-all duration-300">
+                    <Phone className="w-6 h-6 text-amber-500" />
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-1">Phone</h4>
+                    <h4 className="font-semibold mb-1 text-black">Phone</h4>
                     <a
                       href="tel:+911234567890"
-                      className="text-gray-400 hover:text-amber-400 transition-colors"
+                      className="text-zinc-600 hover:text-amber-600 transition-colors"
                     >
                       +91 123 456 7890
                     </a>
@@ -105,12 +105,12 @@ export default function Contact() {
                 </div>
 
                 <div className="flex items-start space-x-4 group">
-                  <div className="bg-amber-500/10 p-3 rounded-lg group-hover:bg-amber-500/20 transition-all duration-300">
-                    <MapPin className="w-6 h-6 text-amber-400" />
+                  <div className="bg-white p-3 rounded-lg group-hover:bg-amber-50 border border-zinc-200 shadow-sm transition-all duration-300">
+                    <MapPin className="w-6 h-6 text-amber-500" />
                   </div>
                   <div>
-                    <h4 className="font-semibold mb-1">Location</h4>
-                    <p className="text-gray-400">
+                    <h4 className="font-semibold mb-1 text-black">Location</h4>
+                    <p className="text-zinc-600">
                       123 Film Street, Cinema City
                       <br />
                       Mumbai, Maharashtra 400001
@@ -122,66 +122,45 @@ export default function Contact() {
 
             {/* Social Media */}
             <div>
-              <h3 className="text-2xl font-bold mb-6 text-amber-400">
+              <h3 className="text-2xl font-bold mb-6 text-black">
                 Follow Us
               </h3>
               <div className="flex space-x-4">
                 <a
                   href="#"
-                  className="bg-amber-500/10 p-4 rounded-lg hover:bg-amber-500/20 transition-all duration-300 transform hover:scale-110"
+                  className="bg-white p-4 rounded-lg hover:bg-amber-50 border border-zinc-200 shadow-sm transition-all duration-300 transform hover:scale-110"
                 >
-                  <Instagram className="w-6 h-6 text-amber-400" />
+                  <Instagram className="w-6 h-6 text-amber-500" />
                 </a>
                 <a
                   href="#"
-                  className="bg-amber-500/10 p-4 rounded-lg hover:bg-amber-500/20 transition-all duration-300 transform hover:scale-110"
+                  className="bg-white p-4 rounded-lg hover:bg-amber-50 border border-zinc-200 shadow-sm transition-all duration-300 transform hover:scale-110"
                 >
-                  <Youtube className="w-6 h-6 text-amber-400" />
+                  <Youtube className="w-6 h-6 text-amber-500" />
                 </a>
                 <a
                   href="#"
-                  className="bg-amber-500/10 p-4 rounded-lg hover:bg-amber-500/20 transition-all duration-300 transform hover:scale-110"
+                  className="bg-white p-4 rounded-lg hover:bg-amber-50 border border-zinc-200 shadow-sm transition-all duration-300 transform hover:scale-110"
                 >
-                  <Facebook className="w-6 h-6 text-amber-400" />
+                  <Facebook className="w-6 h-6 text-amber-500" />
                 </a>
-              </div>
-            </div>
-
-            {/* Business Hours */}
-            <div>
-              <h3 className="text-2xl font-bold mb-6 text-amber-400">
-                Business Hours
-              </h3>
-              <div className="space-y-2 text-gray-400">
-                <div className="flex justify-between">
-                  <span>Monday - Friday:</span>
-                  <span className="text-white">9:00 AM - 6:00 PM</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Saturday:</span>
-                  <span className="text-white">10:00 AM - 4:00 PM</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Sunday:</span>
-                  <span className="text-white">Closed</span>
-                </div>
               </div>
             </div>
           </div>
 
           {/* Contact Form */}
           <div
-            className="bg-zinc-900/50 backdrop-blur-sm p-8 rounded-2xl border border-amber-500/10 animate-fadeInUp"
+            className="bg-white p-8 rounded-2xl border border-zinc-200 shadow-xl animate-fadeInUp"
             style={{ animationDelay: "400ms" }}
           >
-            <h3 className="text-2xl font-bold mb-6 text-amber-400">
+            <h3 className="text-2xl font-bold mb-6 text-black">
               Send Us a Message
             </h3>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label
                   htmlFor="name"
-                  className="block text-sm font-medium mb-2"
+                  className="block text-sm font-medium mb-2 text-zinc-700"
                 >
                   Name *
                 </label>
@@ -192,7 +171,7 @@ export default function Contact() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-black border border-zinc-800 rounded-lg focus:outline-none focus:border-amber-400 transition-colors"
+                  className="w-full px-4 py-3 bg-zinc-50 border border-zinc-300 rounded-lg focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all text-black"
                   placeholder="Your Name"
                 />
               </div>
@@ -200,7 +179,7 @@ export default function Contact() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium mb-2"
+                  className="block text-sm font-medium mb-2 text-zinc-700"
                 >
                   Email *
                 </label>
@@ -211,7 +190,7 @@ export default function Contact() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-black border border-zinc-800 rounded-lg focus:outline-none focus:border-amber-400 transition-colors"
+                  className="w-full px-4 py-3 bg-zinc-50 border border-zinc-300 rounded-lg focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all text-black"
                   placeholder="your@email.com"
                 />
               </div>
@@ -219,7 +198,7 @@ export default function Contact() {
               <div>
                 <label
                   htmlFor="phone"
-                  className="block text-sm font-medium mb-2"
+                  className="block text-sm font-medium mb-2 text-zinc-700"
                 >
                   Phone
                 </label>
@@ -229,7 +208,7 @@ export default function Contact() {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 bg-black border border-zinc-800 rounded-lg focus:outline-none focus:border-amber-400 transition-colors"
+                  className="w-full px-4 py-3 bg-zinc-50 border border-zinc-300 rounded-lg focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all text-black"
                   placeholder="+91 123 456 7890"
                 />
               </div>
@@ -237,7 +216,7 @@ export default function Contact() {
               <div>
                 <label
                   htmlFor="subject"
-                  className="block text-sm font-medium mb-2"
+                  className="block text-sm font-medium mb-2 text-zinc-700"
                 >
                   Subject *
                 </label>
@@ -248,7 +227,7 @@ export default function Contact() {
                   value={formData.subject}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-black border border-zinc-800 rounded-lg focus:outline-none focus:border-amber-400 transition-colors"
+                  className="w-full px-4 py-3 bg-zinc-50 border border-zinc-300 rounded-lg focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all text-black"
                   placeholder="How can we help?"
                 />
               </div>
@@ -256,7 +235,7 @@ export default function Contact() {
               <div>
                 <label
                   htmlFor="message"
-                  className="block text-sm font-medium mb-2"
+                  className="block text-sm font-medium mb-2 text-zinc-700"
                 >
                   Message *
                 </label>
@@ -267,7 +246,7 @@ export default function Contact() {
                   onChange={handleChange}
                   required
                   rows={5}
-                  className="w-full px-4 py-3 bg-black border border-zinc-800 rounded-lg focus:outline-none focus:border-amber-400 transition-colors resize-none"
+                  className="w-full px-4 py-3 bg-zinc-50 border border-zinc-300 rounded-lg focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all resize-none text-black"
                   placeholder="Tell us about your project or inquiry..."
                 />
               </div>

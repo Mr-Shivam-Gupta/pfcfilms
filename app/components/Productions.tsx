@@ -100,61 +100,61 @@ export default function Productions() {
     },
   ];
 
-  const filteredProductions = activeCategory === "all" 
-    ? productions 
+  const filteredProductions = activeCategory === "all"
+    ? productions
     : productions.filter(p => p.category.toLowerCase() === activeCategory.toLowerCase());
 
   return (
-    <section className="relative min-h-screen py-20 bg-black">
+    <section className="relative min-h-screen py-20 bg-zinc-50">
       {/* Animated Background Orbs */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-400/10 rounded-full blur-3xl animate-float-delayed"></div>
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/20 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-400/20 rounded-full blur-3xl animate-float-delayed"></div>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16 animate-fadeInUp">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-black">
             Our{" "}
-            <span className="text-amber-400 inline-block animate-shimmer bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400 bg-clip-text text-transparent bg-[length:200%_100%]">
+            <span className="text-amber-500 inline-block animate-shimmer bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 bg-clip-text text-transparent bg-[length:200%_100%]">
               Productions
             </span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-zinc-600 text-lg max-w-2xl mx-auto">
             Showcasing our finest work in cinema, documentaries, and visual storytelling
           </p>
         </div>
 
         {/* Stats */}
-        <div 
+        <div
           className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12 animate-fadeInUp"
           style={{ animationDelay: "200ms" }}
         >
-          <div className="bg-zinc-900/50 backdrop-blur-sm p-6 rounded-xl border border-amber-500/10 text-center">
-            <Film className="w-8 h-8 text-amber-400 mx-auto mb-2" />
-            <div className="text-3xl font-bold text-amber-400">50+</div>
-            <div className="text-sm text-gray-400">Productions</div>
+          <div className="bg-white p-6 rounded-xl border border-zinc-200 text-center shadow-lg hover:shadow-xl transition-shadow">
+            <Film className="w-8 h-8 text-amber-500 mx-auto mb-2" />
+            <div className="text-3xl font-bold text-amber-500">50+</div>
+            <div className="text-sm text-zinc-500 font-medium">Productions</div>
           </div>
-          <div className="bg-zinc-900/50 backdrop-blur-sm p-6 rounded-xl border border-amber-500/10 text-center">
-            <Award className="w-8 h-8 text-amber-400 mx-auto mb-2" />
-            <div className="text-3xl font-bold text-amber-400">25+</div>
-            <div className="text-sm text-gray-400">Awards</div>
+          <div className="bg-white p-6 rounded-xl border border-zinc-200 text-center shadow-lg hover:shadow-xl transition-shadow">
+            <Award className="w-8 h-8 text-amber-500 mx-auto mb-2" />
+            <div className="text-3xl font-bold text-amber-500">25+</div>
+            <div className="text-sm text-zinc-500 font-medium">Awards</div>
           </div>
-          <div className="bg-zinc-900/50 backdrop-blur-sm p-6 rounded-xl border border-amber-500/10 text-center">
-            <Star className="w-8 h-8 text-amber-400 mx-auto mb-2" />
-            <div className="text-3xl font-bold text-amber-400">4.8</div>
-            <div className="text-sm text-gray-400">Avg Rating</div>
+          <div className="bg-white p-6 rounded-xl border border-zinc-200 text-center shadow-lg hover:shadow-xl transition-shadow">
+            <Star className="w-8 h-8 text-amber-500 mx-auto mb-2" />
+            <div className="text-3xl font-bold text-amber-500">4.8</div>
+            <div className="text-sm text-zinc-500 font-medium">Avg Rating</div>
           </div>
-          <div className="bg-zinc-900/50 backdrop-blur-sm p-6 rounded-xl border border-amber-500/10 text-center">
-            <Calendar className="w-8 h-8 text-amber-400 mx-auto mb-2" />
-            <div className="text-3xl font-bold text-amber-400">15+</div>
-            <div className="text-sm text-gray-400">Years Active</div>
+          <div className="bg-white p-6 rounded-xl border border-zinc-200 text-center shadow-lg hover:shadow-xl transition-shadow">
+            <Calendar className="w-8 h-8 text-amber-500 mx-auto mb-2" />
+            <div className="text-3xl font-bold text-amber-500">15+</div>
+            <div className="text-sm text-zinc-500 font-medium">Years Active</div>
           </div>
         </div>
 
         {/* Category Filter */}
-        <div 
+        <div
           className="flex flex-wrap justify-center gap-4 mb-12 animate-fadeInUp"
           style={{ animationDelay: "400ms" }}
         >
@@ -162,11 +162,10 @@ export default function Productions() {
             <button
               key={category}
               onClick={() => setActiveCategory(category.toLowerCase())}
-              className={`px-6 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 ${
-                activeCategory === category.toLowerCase()
+              className={`px-6 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105 ${activeCategory === category.toLowerCase()
                   ? "bg-amber-400 text-black shadow-lg shadow-amber-500/50"
-                  : "bg-zinc-900/50 text-white border border-amber-500/20 hover:border-amber-500/50"
-              }`}
+                  : "bg-white text-zinc-600 border border-zinc-200 hover:border-amber-400 hover:bg-zinc-50"
+                }`}
             >
               {category}
             </button>
@@ -178,7 +177,7 @@ export default function Productions() {
           {filteredProductions.map((production, index) => (
             <div
               key={production.id}
-              className="group relative bg-zinc-900/50 backdrop-blur-sm rounded-2xl overflow-hidden border border-amber-500/10 transform transition-all duration-300 hover:scale-105 hover:border-amber-500/30 hover:shadow-2xl hover:shadow-amber-500/20 animate-fadeInUp"
+              className="group relative bg-white rounded-2xl overflow-hidden border border-zinc-200 transform transition-all duration-300 hover:scale-105 hover:border-amber-400 hover:shadow-xl shadow-md animate-fadeInUp"
               style={{ animationDelay: `${600 + index * 100}ms` }}
             >
               {/* Image */}
@@ -190,7 +189,7 @@ export default function Productions() {
                   className="object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
-                
+
                 {/* Play Button Overlay */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <div className="bg-amber-400 rounded-full p-4 transform transition-transform duration-300 group-hover:scale-110">
@@ -207,25 +206,25 @@ export default function Productions() {
               {/* Content */}
               <div className="p-6">
                 <div className="flex items-start justify-between mb-2">
-                  <h3 className="text-xl font-bold text-white group-hover:text-amber-400 transition-colors">
+                  <h3 className="text-xl font-bold text-black group-hover:text-amber-500 transition-colors">
                     {production.title}
                   </h3>
                 </div>
 
-                <div className="flex items-center space-x-2 text-sm text-gray-400 mb-3">
-                  <span className="bg-amber-500/20 text-amber-400 px-2 py-1 rounded">
+                <div className="flex items-center space-x-2 text-sm text-zinc-500 mb-3">
+                  <span className="bg-amber-100 text-amber-700 px-2 py-1 rounded font-medium">
                     {production.genre}
                   </span>
                   <span>•</span>
                   <span>{production.duration}</span>
                 </div>
 
-                <p className="text-gray-400 text-sm mb-4 line-clamp-2">
+                <p className="text-zinc-600 text-sm mb-4 line-clamp-2">
                   {production.description}
                 </p>
 
                 {/* Awards */}
-                <div className="flex items-center space-x-2 text-amber-400">
+                <div className="flex items-center space-x-2 text-amber-600 font-medium">
                   <Award className="w-4 h-4" />
                   <span className="text-xs">{production.awards}</span>
                 </div>
@@ -235,13 +234,13 @@ export default function Productions() {
         </div>
 
         {/* Call to Action */}
-        <div 
+        <div
           className="mt-16 text-center animate-fadeInUp"
           style={{ animationDelay: "1400ms" }}
         >
-          <div className="bg-gradient-to-r from-amber-500/10 via-amber-400/20 to-amber-500/10 p-8 rounded-2xl border border-amber-500/20">
-            <h3 className="text-2xl font-bold mb-4">Have a Project in Mind?</h3>
-            <p className="text-gray-400 mb-6">
+          <div className="bg-white p-8 rounded-2xl border border-amber-200 shadow-xl relative overflow-hidden">
+            <h3 className="text-2xl font-bold mb-4 text-black">Have a Project in Mind?</h3>
+            <p className="text-zinc-600 mb-6">
               Let's collaborate and create something extraordinary together
             </p>
             <button className="bg-amber-400 hover:bg-amber-500 text-black px-8 py-4 rounded-full font-semibold transition-all transform hover:scale-105 hover:shadow-2xl hover:shadow-amber-500/50">

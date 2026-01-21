@@ -6,11 +6,9 @@ import Hero from "./components/Hero";
 import Services from "./components/Services";
 import RecentProjects from "./components/RecentProjects";
 import RecentActivity from "./components/RecentActivity";
-import DancePrograms from "./components/DancePrograms";
 import Stats from "./components/Stats";
 import CTA from "./components/CTA";
 import CursorEffect from "./components/CursorEffect";
-import FilmInstitute from "./components/FilmInstitute";
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState("home");
@@ -43,7 +41,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-hidden">
+    <div className="min-h-screen bg-white text-black overflow-hidden">
       <CursorEffect />
       <Navbar
         activeSection={activeSection}
@@ -53,8 +51,6 @@ export default function Home() {
       <Services />
       <RecentProjects />
       <RecentActivity />
-      <DancePrograms />
-      <FilmInstitute />
       <Stats />
       <CTA />
     </div>
