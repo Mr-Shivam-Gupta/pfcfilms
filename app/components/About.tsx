@@ -130,7 +130,7 @@ export default function About() {
           >
             <div>
               <h3 className="text-3xl font-bold text-amber-400 mb-2">
-                Mr. Ramesh Patel
+                Mr. Pramod Kumar Gupta
               </h3>
               <p className="text-xl text-gray-400">
                 Founder & Creative Director
@@ -281,7 +281,9 @@ export default function About() {
               experiences that touch hearts and transform lives. Every frame is
               an opportunity to inspire."
             </p>
-            <p className="text-amber-400 font-semibold">- Mr. Ramesh Patel</p>
+            <p className="text-amber-400 font-semibold">
+              - Mr. Pramod Kumar Gupta
+            </p>
           </div>
         </div>
       </div>
