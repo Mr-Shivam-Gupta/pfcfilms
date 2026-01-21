@@ -212,26 +212,6 @@ export default function Contact() {
                   placeholder="+91 123 456 7890"
                 />
               </div>
-
-              <div>
-                <label
-                  htmlFor="subject"
-                  className="block text-sm font-medium mb-2 text-zinc-700"
-                >
-                  Subject *
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 bg-zinc-50 border border-zinc-300 rounded-lg focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all text-black"
-                  placeholder="How can we help?"
-                />
-              </div>
-
               <div>
                 <label
                   htmlFor="message"
