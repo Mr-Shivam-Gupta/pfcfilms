@@ -73,7 +73,7 @@ export default function Productions() {
       image: "https://placehold.co/400x300/111827/fbbf24?text=Award",
     },
     {
-      id: 1,
+      id: 2,
       title: "National Film Award",
       year: "2024",
       category: "Best Feature Film",
@@ -106,8 +106,8 @@ export default function Productions() {
     activeCategory === "all"
       ? productions
       : productions.filter(
-          (p) => p.category.toLowerCase() === activeCategory.toLowerCase(),
-        );
+        (p) => p.category.toLowerCase() === activeCategory.toLowerCase(),
+      );
 
   /* ===================== UI ===================== */
 
@@ -148,11 +148,10 @@ export default function Productions() {
           <button
             key={cat}
             onClick={() => setActiveCategory(cat.toLowerCase())}
-            className={`px-5 py-2 rounded-full border transition ${
-              activeCategory === cat.toLowerCase()
+            className={`px-5 py-2 rounded-full border transition ${activeCategory === cat.toLowerCase()
                 ? "bg-amber-500 text-black"
                 : "bg-white hover:border-amber-400"
-            }`}
+              }`}
           >
             {cat}
           </button>

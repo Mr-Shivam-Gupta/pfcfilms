@@ -152,8 +152,8 @@ export default function Academy() {
   const academies = [
     {
       id: 1,
-      title: "Acting School",
-      tagline: "Train for Camera, Theatre & OTT",
+      title: "Acting School in Kanpur",
+      tagline: "Best Acting School Kanpur | Film & Theatre Training",
       image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Acting+School",
       highlights: [
         "Acting for Camera",
@@ -166,14 +166,14 @@ export default function Academy() {
     },
     {
       id: 2,
-      title: "Dance Academy",
-      tagline: "Classical • Contemporary • Bollywood",
+      title: "Dance Academy in Kanpur",
+      tagline: "Dhamal India Dance | Bollywood • Hip Hop • Classical",
       image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Dance+Academy",
       highlights: [
-        "Classical & Western Forms",
+        "Bollywood & Hip Hop",
+        "Classical Dance Forms",
         "Stage Performance",
-        "Choreography",
-        "Fitness Training",
+        "Choreography Training",
       ],
       duration: "3–12 Months",
       students: "400+",
@@ -230,13 +230,13 @@ export default function Academy() {
         {/* Header */}
         <div className="text-center mb-16 animate-fadeInUp">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-black">
-            Film{" "}
+            Dance Academy & Acting School{" "}
             <span className="text-amber-500 inline-block animate-shimmer bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 bg-clip-text text-transparent bg-[length:200%_100%]">
-              Academy
+              in Kanpur
             </span>
           </h2>
           <p className="text-zinc-600 text-lg max-w-2xl mx-auto">
-            Learn from industry experts and kickstart your career in filmmaking
+            PFC FILMS - Best Dance Academy & Acting School in Kanpur. Join Dhamal India Dance for professional dance and acting training. Learn from industry experts in Kanpur, Uttar Pradesh.
           </p>
         </div>
 

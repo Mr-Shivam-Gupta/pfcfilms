@@ -33,16 +33,16 @@ export default function Hero() {
           className="text-6xl md:text-6xl font-black mb-6 tracking-tighter animate-fadeInUp text-black"
           style={{ animationDelay: "200ms" }}
         >
-          PFC{" "}
+          Best Dance Academy & Acting School{" "}
           <span className="text-amber-500 inline-block animate-shimmer bg-gradient-to-r from-amber-500 via-amber-300 to-amber-500 bg-clip-text text-transparent bg-[length:200%_100%]">
-            FILMS
+            in Kanpur
           </span>
         </h1>
         <p
           className="text-xl md:text-3xl font-light text-zinc-600 mb-8 max-w-3xl mx-auto animate-fadeInUp"
           style={{ animationDelay: "400ms" }}
         >
-          PFC Films Production House & Institute
+          PFC FILMS - Premier Dance Academy & Acting School in Kanpur | Dhamal India Dance | Professional Training by Pramod Kumar Gupta
         </p>
 
         {/* <div

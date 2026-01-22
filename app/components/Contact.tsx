@@ -79,8 +79,7 @@ export default function Contact() {
             </span>
           </h2>
           <p className="text-zinc-600 text-lg max-w-2xl mx-auto">
-            Have a project in mind or want to learn filmmaking? Reach out to us
-            and let's create something amazing together.
+            Join the best Dance Academy & Acting School in Kanpur! Contact PFC FILMS for dance classes, acting courses, and film training. Located in Kanpur, Uttar Pradesh.
           </p>
         </div>
 
@@ -107,6 +106,7 @@ export default function Contact() {
                     >
                       info@pfcfilms.com
                     </a>
+                    <p className="text-sm text-zinc-500 mt-1">For Dance Academy: dhamalindiadance@pfcfilms.com</p>
                   </div>
                 </div>
 
@@ -117,11 +117,12 @@ export default function Contact() {
                   <div>
                     <h4 className="font-semibold mb-1 text-black">Phone</h4>
                     <a
-                      href="tel:+911234567890"
+                      href="tel:+91XXXXXXXXXX"
                       className="text-zinc-600 hover:text-amber-600 transition-colors"
                     >
-                      +91 123 456 7890
+                      +91 XXXXXXXXXX
                     </a>
+                    <p className="text-sm text-zinc-500 mt-1">Call for Dance Classes & Acting Courses in Kanpur</p>
                   </div>
                 </div>
 
@@ -132,9 +133,11 @@ export default function Contact() {
                   <div>
                     <h4 className="font-semibold mb-1 text-black">Location</h4>
                     <p className="text-zinc-600">
-                      123 Film Street, Cinema City
+                      PFC FILMS - Dance Academy & Acting School
                       <br />
-                      Mumbai, Maharashtra 400001
+                      Kanpur, Uttar Pradesh 208001
+                      <br />
+                      India
                     </p>
                   </div>
                 </div>

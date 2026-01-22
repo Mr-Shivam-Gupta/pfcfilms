@@ -268,22 +268,22 @@ export default function About() {
                 <p>
                   With over 15 years of experience in the film industry, Mr.
                   Pramod Kumar Gupta has established himself as a visionary
-                  director and mentor. His journey began as an assistant
+                  director and mentor in Kanpur, Uttar Pradesh. His journey began as an assistant
                   director in Mumbai's bustling film industry, and through
                   dedication and passion, he rose to become one of the most
                   respected names in regional cinema.
                 </p>
                 <p>
-                  Under his leadership, PFC Films has produced numerous
-                  critically acclaimed films and has become a premier
-                  destination for aspiring filmmakers. His unique approach
+                  Under his leadership, PFC Films in Kanpur has produced numerous
+                  critically acclaimed films and has become Kanpur's premier
+                  destination for aspiring filmmakers, dancers, and actors. His unique approach
                   combines traditional storytelling with modern cinematic
                   techniques.
                 </p>
                 <p>
                   Beyond filmmaking, he is passionate about education and has
-                  trained over 1000 students, helping them pursue their dreams
-                  in the entertainment industry.
+                  trained over 1000 students in Kanpur, helping them pursue their dreams
+                  in the entertainment industry. PFC FILMS and Dhamal India Dance Academy in Kanpur continue to be the top choice for dance and acting training in Uttar Pradesh.
                 </p>
               </div>
 
