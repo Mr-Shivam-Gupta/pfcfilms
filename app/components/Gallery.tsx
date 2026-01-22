@@ -1,14 +1,30 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Play, X, Image as ImageIcon, Video, Camera } from "lucide-react";
+import { getGallery, type GalleryItem } from "../lib/api";
 
 export default function Gallery() {
   const [activeTab, setActiveTab] = useState<"photos" | "videos">("photos");
   const [selectedMedia, setSelectedMedia] = useState<any>(null);
+  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const photos = [
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      const data = await getGallery();
+      setGalleryItems(data);
+      setLoading(false);
+    };
+    fetchData();
+  }, []);
+
+  const photos = galleryItems.filter((item) => item.type === "photo");
+  const videos = galleryItems.filter((item) => item.type === "video");
+
+  const defaultPhotos = [
     {
       id: 1,
       title: "Behind the Scenes - Echoes of Silence",
@@ -83,7 +99,7 @@ export default function Gallery() {
     },
   ];
 
-  const videos = [
+  const defaultVideos = [
     {
       id: 1,
       title: "Echoes of Silence - Official Trailer",
@@ -219,64 +235,78 @@ export default function Gallery() {
         {/* Photos Grid */}
         {activeTab === "photos" && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {photos.map((photo, index) => (
-              <div
-                key={photo.id}
-                className="group relative aspect-square rounded-xl overflow-hidden border border-zinc-200 transform transition-all duration-300 hover:scale-105 hover:border-amber-400 hover:shadow-2xl hover:shadow-amber-500/20 cursor-pointer animate-fadeInUp shadow-sm"
-                style={{ animationDelay: `${600 + index * 50}ms` }}
-                onClick={() => setSelectedMedia({ type: "photo", ...photo })}
-              >
-                <Image
-                  src={photo.image}
-                  alt={photo.title}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <span className="inline-block bg-amber-400 text-black text-xs px-2 py-1 rounded mb-2">
-                      {photo.category}
-                    </span>
-                    <h3 className="text-white font-semibold text-sm">{photo.title}</h3>
+            {loading ? (
+              <div className="col-span-full text-center py-12">Loading photos...</div>
+            ) : photos.length === 0 ? (
+              <div className="col-span-full text-center py-12 text-zinc-500">No photos found</div>
+            ) : (
+              photos.map((photo, index) => (
+                <div
+                  key={photo._id}
+                  className="group relative aspect-square rounded-xl overflow-hidden border border-zinc-200 transform transition-all duration-300 hover:scale-105 hover:border-amber-400 hover:shadow-2xl hover:shadow-amber-500/20 cursor-pointer animate-fadeInUp shadow-sm"
+                  style={{ animationDelay: `${600 + index * 50}ms` }}
+                  onClick={() => setSelectedMedia({ type: "photo", ...photo })}
+                >
+                  <Image
+                    src={photo.image}
+                    alt={photo.title}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="absolute bottom-0 left-0 right-0 p-4">
+                      <span className="inline-block bg-amber-400 text-black text-xs px-2 py-1 rounded mb-2">
+                        {photo.category}
+                      </span>
+                      <h3 className="text-white font-semibold text-sm">{photo.title}</h3>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         )}
 
         {/* Videos Grid */}
         {activeTab === "videos" && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {videos.map((video, index) => (
-              <div
-                key={video.id}
-                className="group relative aspect-video rounded-xl overflow-hidden border border-zinc-200 transform transition-all duration-300 hover:scale-105 hover:border-amber-400 hover:shadow-2xl hover:shadow-amber-500/20 cursor-pointer animate-fadeInUp shadow-sm"
-                style={{ animationDelay: `${600 + index * 50}ms` }}
-                onClick={() => setSelectedMedia({ type: "video", ...video })}
-              >
-                <Image
-                  src={video.thumbnail}
-                  alt={video.title}
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors duration-300 flex items-center justify-center">
-                  <div className="bg-amber-400 rounded-full p-4 transform transition-all duration-300 group-hover:scale-110">
-                    <Play className="w-8 h-8 text-black fill-black" />
+            {loading ? (
+              <div className="col-span-full text-center py-12">Loading videos...</div>
+            ) : videos.length === 0 ? (
+              <div className="col-span-full text-center py-12 text-zinc-500">No videos found</div>
+            ) : (
+              videos.map((video, index) => (
+                <div
+                  key={video._id}
+                  className="group relative aspect-video rounded-xl overflow-hidden border border-zinc-200 transform transition-all duration-300 hover:scale-105 hover:border-amber-400 hover:shadow-2xl hover:shadow-amber-500/20 cursor-pointer animate-fadeInUp shadow-sm"
+                  style={{ animationDelay: `${600 + index * 50}ms` }}
+                  onClick={() => setSelectedMedia({ type: "video", ...video })}
+                >
+                  <Image
+                    src={video.thumbnail || video.image}
+                    alt={video.title}
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors duration-300 flex items-center justify-center">
+                    <div className="bg-amber-400 rounded-full p-4 transform transition-all duration-300 group-hover:scale-110">
+                      <Play className="w-8 h-8 text-black fill-black" />
+                    </div>
+                  </div>
+                  {video.duration && (
+                    <div className="absolute top-4 right-4 bg-black/80 backdrop-blur-sm px-2 py-1 rounded text-white text-xs">
+                      {video.duration}
+                    </div>
+                  )}
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                    <span className="inline-block bg-amber-400 text-black text-xs px-2 py-1 rounded mb-2">
+                      {video.category}
+                    </span>
+                    <h3 className="text-white font-semibold text-sm">{video.title}</h3>
                   </div>
                 </div>
-                <div className="absolute top-4 right-4 bg-black/80 backdrop-blur-sm px-2 py-1 rounded text-white text-xs">
-                  {video.duration}
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
-                  <span className="inline-block bg-amber-400 text-black text-xs px-2 py-1 rounded mb-2">
-                    {video.category}
-                  </span>
-                  <h3 className="text-white font-semibold text-sm">{video.title}</h3>
-                </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         )}
       </div>

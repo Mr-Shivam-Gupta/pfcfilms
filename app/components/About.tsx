@@ -60,7 +60,26 @@ function useTicker({
 }
 
 export default function About() {
-  const achievements = [
+  const [aboutData, setAboutData] = useState<any>(null);
+  const [celebrities, setCelebrities] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      const { getAbout, getCelebrities } = await import("../lib/api");
+      const [about, celebs] = await Promise.all([
+        getAbout(),
+        getCelebrities(),
+      ]);
+      setAboutData(about);
+      setCelebrities(celebs);
+      setLoading(false);
+    };
+    fetchData();
+  }, []);
+
+  const achievements = aboutData?.achievements || [
     {
       icon: <Film className="w-6 h-6" />,
       number: "50+",
@@ -83,8 +102,8 @@ export default function About() {
     },
   ];
 
-  // Enhanced Data with Gallery
-  const celebrities = [
+  // Default celebrities if none from backend
+  const defaultCelebrities = [
     {
       name: "Rajesh Kumar",
       image: "https://placehold.co/400x400/1a1a1a/fbbf24?text=Celebrity+1",
@@ -245,8 +264,8 @@ export default function About() {
             <div className="relative animate-on-scroll opacity-0 translate-x-[-20px] transition-all duration-700 delay-200 forwards">
               <div className="relative w-full aspect-square rounded-2xl overflow-hidden border border-zinc-200 shadow-2xl">
                 <Image
-                  src="https://placehold.co/600x600/1a1a1a/fbbf24?text=Director"
-                  alt="Director"
+                  src={aboutData?.directorImage || "https://placehold.co/600x600/1a1a1a/fbbf24?text=Director"}
+                  alt={aboutData?.directorName || "Director"}
                   fill
                   className="object-cover hover:scale-105 transition-transform duration-700"
                 />
@@ -257,34 +276,40 @@ export default function About() {
             <div className="space-y-6 animate-on-scroll opacity-0 translate-x-[20px] transition-all duration-700 delay-400 forwards">
               <div>
                 <h3 className="text-3xl font-bold text-black mb-2">
-                  Mr. Pramod Kumar Gupta
+                  {aboutData?.directorName || "Mr. Pramod Kumar Gupta"}
                 </h3>
                 <p className="text-xl text-amber-600 font-medium">
-                  Founder & Creative Director
+                  {aboutData?.directorTitle || "Founder & Creative Director"}
                 </p>
               </div>
 
               <div className="space-y-4 text-zinc-600 leading-relaxed">
-                <p>
-                  With over 15 years of experience in the film industry, Mr.
-                  Pramod Kumar Gupta has established himself as a visionary
-                  director and mentor in Kanpur, Uttar Pradesh. His journey began as an assistant
-                  director in Mumbai's bustling film industry, and through
-                  dedication and passion, he rose to become one of the most
-                  respected names in regional cinema.
-                </p>
-                <p>
-                  Under his leadership, PFC Films in Kanpur has produced numerous
-                  critically acclaimed films and has become Kanpur's premier
-                  destination for aspiring filmmakers, dancers, and actors. His unique approach
-                  combines traditional storytelling with modern cinematic
-                  techniques.
-                </p>
-                <p>
-                  Beyond filmmaking, he is passionate about education and has
-                  trained over 1000 students in Kanpur, helping them pursue their dreams
-                  in the entertainment industry. PFC FILMS and Dhamal India Dance Academy in Kanpur continue to be the top choice for dance and acting training in Uttar Pradesh.
-                </p>
+                {aboutData?.directorBio ? (
+                  <p>{aboutData.directorBio}</p>
+                ) : (
+                  <>
+                    <p>
+                      With over 15 years of experience in the film industry, Mr.
+                      Pramod Kumar Gupta has established himself as a visionary
+                      director and mentor in Kanpur, Uttar Pradesh. His journey began as an assistant
+                      director in Mumbai's bustling film industry, and through
+                      dedication and passion, he rose to become one of the most
+                      respected names in regional cinema.
+                    </p>
+                    <p>
+                      Under his leadership, PFC Films in Kanpur has produced numerous
+                      critically acclaimed films and has become Kanpur's premier
+                      destination for aspiring filmmakers, dancers, and actors. His unique approach
+                      combines traditional storytelling with modern cinematic
+                      techniques.
+                    </p>
+                    <p>
+                      Beyond filmmaking, he is passionate about education and has
+                      trained over 1000 students in Kanpur, helping them pursue their dreams
+                      in the entertainment industry. PFC FILMS and Dhamal India Dance Academy in Kanpur continue to be the top choice for dance and acting training in Uttar Pradesh.
+                    </p>
+                  </>
+                )}
               </div>
 
               <div className="flex items-center space-x-3 text-amber-600 bg-amber-50 w-fit px-4 py-2 rounded-full border border-amber-100">
@@ -320,15 +345,13 @@ export default function About() {
               </div>
 
               <p className="text-2xl md:text-3xl text-zinc-300 font-serif italic mb-8 relative z-10 leading-relaxed">
-                "Cinema is not just about telling stories; it's about creating
-                experiences that touch hearts and transform lives. Every frame
-                is an opportunity to inspire."
+                "{aboutData?.quote || "Cinema is not just about telling stories; it's about creating experiences that touch hearts and transform lives. Every frame is an opportunity to inspire."}"
               </p>
 
               <div className="inline-flex items-center space-x-3 relative z-10">
                 <div className="h-px w-12 bg-amber-500"></div>
                 <p className="text-white font-bold uppercase tracking-widest text-sm">
-                  Mr. Pramod Kumar Gupta
+                  {aboutData?.directorName || "Mr. Pramod Kumar Gupta"}
                 </p>
                 <div className="h-px w-12 bg-amber-500"></div>
               </div>
@@ -369,32 +392,38 @@ export default function About() {
               width: "max-content",
             }}
           >
-            {[...celebrities, ...celebrities, ...celebrities].map(
-              (celebrity, index) => (
-                <div
-                  key={`${celebrity.name}-${index}`}
-                  onClick={() => handleItemClick(celebrity)}
-                  className="group w-64 flex-shrink-0 bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 p-3 border border-zinc-100 cursor-pointer"
-                >
-                  <div className="relative aspect-square rounded-lg overflow-hidden mb-3 bg-zinc-100">
-                    <Image
-                      src={celebrity.image}
-                      alt={celebrity.name}
-                      fill
-                      className="object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500"
-                      draggable={false}
-                    />
+            {loading ? (
+              <div className="w-full text-center py-12">Loading celebrities...</div>
+            ) : celebrities.length === 0 ? (
+              <div className="w-full text-center py-12 text-zinc-500">No celebrities found</div>
+            ) : (
+              [...celebrities, ...celebrities, ...celebrities].map(
+                (celebrity, index) => (
+                  <div
+                    key={`${celebrity._id || celebrity.name}-${index}`}
+                    onClick={() => handleItemClick(celebrity)}
+                    className="group w-64 flex-shrink-0 bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 p-3 border border-zinc-100 cursor-pointer"
+                  >
+                    <div className="relative aspect-square rounded-lg overflow-hidden mb-3 bg-zinc-100">
+                      <Image
+                        src={celebrity.image}
+                        alt={celebrity.name}
+                        fill
+                        className="object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500"
+                        draggable={false}
+                      />
+                    </div>
+                    <div className="text-center">
+                      <h4 className="font-bold text-black text-sm mb-1 group-hover:text-amber-600 transition-colors">
+                        {celebrity.name}
+                      </h4>
+                      <p className="text-xs text-zinc-500 font-medium">
+                        {celebrity.role}
+                      </p>
+                    </div>
                   </div>
-                  <div className="text-center">
-                    <h4 className="font-bold text-black text-sm mb-1 group-hover:text-amber-600 transition-colors">
-                      {celebrity.name}
-                    </h4>
-                    <p className="text-xs text-zinc-500 font-medium">
-                      {celebrity.role}
-                    </p>
-                  </div>
-                </div>
-              ),
+                ),
+              )
             )}
           </div>
 
@@ -479,10 +508,7 @@ export default function About() {
                   Our Vision
                 </h3>
                 <p className="text-zinc-600 leading-relaxed text-lg font-medium">
-                  To be the global benchmark in film production and cinematic
-                  education, creating a legacy of storytelling that transcends
-                  borders and cultures, inspiring generations to dream beyond
-                  the ordinary.
+                  {aboutData?.vision || "To be the global benchmark in film production and cinematic education, creating a legacy of storytelling that transcends borders and cultures, inspiring generations to dream beyond the ordinary."}
                 </p>
               </div>
 
@@ -502,10 +528,7 @@ export default function About() {
                   Our Mission
                 </h3>
                 <p className="text-zinc-600 leading-relaxed text-lg font-medium">
-                  To nurture raw talent into world-class cinematic artists
-                  through immersive training, while simultaneously producing
-                  high-caliber content that entertains, educates, and elevates
-                  the standards of regional and national cinema.
+                  {aboutData?.mission || "To nurture raw talent into world-class cinematic artists through immersive training, while simultaneously producing high-caliber content that entertains, educates, and elevates the standards of regional and national cinema."}
                 </p>
               </div>
 

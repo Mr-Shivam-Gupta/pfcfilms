@@ -1,32 +1,64 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { ChevronRight, Play } from "lucide-react";
+import { getProductions, type Production } from "../lib/api";
+
+const categoryColors: Record<string, string> = {
+  "Music Videos": "from-blue-500/20 to-cyan-500/20",
+  "Short Films": "from-indigo-500/20 to-purple-500/20",
+  "Commercials": "from-orange-500/20 to-red-500/20",
+  "Reality Shows": "from-rose-500/20 to-pink-500/20",
+  "Web Series": "from-teal-500/20 to-cyan-500/20",
+  "Feature Films": "from-purple-500/20 to-pink-500/20",
+};
+
+const categoryImages: Record<string, string> = {
+  "Music Videos": "/projects/music-video.png",
+  "Short Films": "/projects/short-film.png",
+  "Commercials": "/projects/commercial.png",
+  "Reality Shows": "/projects/reality-show.png",
+  "Web Series": "/projects/web-series.png",
+  "Feature Films": "/projects/feature-film.png",
+};
 
 export default function RecentProjects() {
-  const projects = [
+  const [productions, setProductions] = useState<Production[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      const data = await getProductions();
+      setProductions(data.slice(0, 6)); // Get first 6 productions
+      setLoading(false);
+    };
+    fetchData();
+  }, []);
+
+  const defaultProjects = [
     {
       title: "Music Albums",
-      category: "Music",
+      category: "Music Videos",
       image: "/projects/music-video.png",
       color: "from-blue-500/20 to-cyan-500/20",
     },
     {
       title: "Short Film",
-      category: "Short Film",
+      category: "Short Films",
       image: "/projects/short-film.png",
       color: "from-indigo-500/20 to-purple-500/20",
     },
     {
       title: "Commercial Ad",
-      category: "Advertisement",
+      category: "Commercials",
       image: "/projects/commercial.png",
       color: "from-orange-500/20 to-red-500/20",
     },
     {
       title: "Reality Show",
-      category: "Reality TV",
+      category: "Reality Shows",
       image: "/projects/reality-show.png",
       color: "from-rose-500/20 to-pink-500/20",
     },
@@ -38,11 +70,20 @@ export default function RecentProjects() {
     },
     {
       title: "Feature Film",
-      category: "Cinema",
+      category: "Feature Films",
       image: "/projects/feature-film.png",
       color: "from-purple-500/20 to-pink-500/20",
     },
   ];
+
+  const projects = productions.length > 0
+    ? productions.map((p) => ({
+        title: p.title,
+        category: p.category,
+        image: p.image || categoryImages[p.category] || "/projects/feature-film.png",
+        color: categoryColors[p.category] || "from-purple-500/20 to-pink-500/20",
+      }))
+    : defaultProjects;
 
   return (
     <section className="py-20 px-4 bg-zinc-50 relative overflow-hidden">

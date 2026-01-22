@@ -26,18 +26,26 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate form submission
-    setTimeout(() => {
-      alert("Thank you for contacting us! We'll get back to you soon.");
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        subject: "",
-        message: "",
-      });
+    try {
+      const { submitContact } = await import("../lib/api");
+      const result = await submitContact(formData);
+      if (result.success) {
+        alert("Thank you for contacting us! We'll get back to you soon.");
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: "",
+        });
+      } else {
+        alert(result.message || "Failed to submit. Please try again.");
+      }
+    } catch (error) {
+      alert("Failed to submit. Please try again.");
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
   const socialMediaLinks = [

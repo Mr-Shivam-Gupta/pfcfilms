@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import {
   BookOpen,
@@ -11,11 +11,29 @@ import {
   CheckCircle,
   Award,
 } from "lucide-react";
+import { getCourses, getTestimonials, type Course, type Testimonial } from "../lib/api";
 
 export default function Academy() {
-  const [selectedCourse, setSelectedCourse] = useState<number | null>(null);
+  const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const courses = [
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      const [coursesData, testimonialsData] = await Promise.all([
+        getCourses(),
+        getTestimonials(true),
+      ]);
+      setCourses(coursesData);
+      setTestimonials(testimonialsData);
+      setLoading(false);
+    };
+    fetchData();
+  }, []);
+
+  const defaultCourses = [
     {
       id: 1,
       title: "Film Direction Masterclass",
@@ -194,29 +212,6 @@ export default function Academy() {
     },
   ];
 
-  const testimonials = [
-    {
-      name: "Arjun Mehta",
-      course: "Film Direction",
-      image: "https://placehold.co/100x100/1a1a1a/fbbf24?text=AM",
-      text: "The course transformed my understanding of filmmaking. Now working as an assistant director in Bollywood!",
-      rating: 5,
-    },
-    {
-      name: "Sneha Patel",
-      course: "Cinematography",
-      image: "https://placehold.co/100x100/1a1a1a/fbbf24?text=SP",
-      text: "Hands-on training with professional equipment made all the difference. Highly recommended!",
-      rating: 5,
-    },
-    {
-      name: "Rahul Sharma",
-      course: "Video Editing",
-      image: "https://placehold.co/100x100/1a1a1a/fbbf24?text=RS",
-      text: "Got placed in a top production house within 2 months of completing the course. Best investment!",
-      rating: 5,
-    },
-  ];
 
   return (
     <section className="relative min-h-screen py-20 bg-zinc-50">
@@ -336,41 +331,47 @@ export default function Academy() {
             Student <span className="text-amber-500">Success Stories</span>
           </h3>
           <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <div
-                key={index}
-                className="bg-white p-6 rounded-xl border border-zinc-200 shadow-lg animate-fadeInUp"
-                style={{ animationDelay: `${1400 + index * 100}ms` }}
-              >
-                <div className="flex items-center space-x-4 mb-4">
-                  <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-amber-400">
-                    <Image
-                      src={testimonial.image}
-                      alt={testimonial.name}
-                      fill
-                      className="object-cover"
-                    />
+            {loading ? (
+              <div className="col-span-full text-center py-12">Loading testimonials...</div>
+            ) : testimonials.length === 0 ? (
+              <div className="col-span-full text-center py-12 text-zinc-500">No testimonials found</div>
+            ) : (
+              testimonials.map((testimonial, index) => (
+                <div
+                  key={testimonial._id}
+                  className="bg-white p-6 rounded-xl border border-zinc-200 shadow-lg animate-fadeInUp"
+                  style={{ animationDelay: `${1400 + index * 100}ms` }}
+                >
+                  <div className="flex items-center space-x-4 mb-4">
+                    <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-amber-400">
+                      <Image
+                        src={testimonial.image}
+                        alt={testimonial.name}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-black">{testimonial.name}</h4>
+                      <p className="text-sm text-amber-600 font-medium">
+                        {testimonial.course}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-bold text-black">{testimonial.name}</h4>
-                    <p className="text-sm text-amber-600 font-medium">
-                      {testimonial.course}
-                    </p>
+                  <div className="flex mb-3">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className="w-4 h-4 text-amber-500 fill-amber-500"
+                      />
+                    ))}
                   </div>
+                  <p className="text-zinc-600 text-sm italic">
+                    "{testimonial.text}"
+                  </p>
                 </div>
-                <div className="flex mb-3">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className="w-4 h-4 text-amber-500 fill-amber-500"
-                    />
-                  ))}
-                </div>
-                <p className="text-zinc-600 text-sm italic">
-                  "{testimonial.text}"
-                </p>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
 
