@@ -8,7 +8,7 @@ import { X, ChevronLeft, ChevronRight } from "lucide-react";
 const CELEBRITIES = [
   {
     id: 1,
-    name: "Celebrity 1",
+    name: "Celebrity ",
     thumbnail: "https://placehold.co/400x400/1a1a1a/fbbf24?text=Celebrity+1",
     gallery: [
       "https://placehold.co/600x400/1a1a1a/fbbf24?text=Gallery+1-1",
@@ -18,7 +18,7 @@ const CELEBRITIES = [
   },
   {
     id: 2,
-    name: "Celebrity 2",
+    name: "Celebrity ",
     thumbnail: "https://placehold.co/400x400/1a1a1a/fbbf24?text=Celebrity+2",
     gallery: [
       "https://placehold.co/600x400/1a1a1a/fbbf24?text=Gallery+2-1",
@@ -27,13 +27,13 @@ const CELEBRITIES = [
   },
   {
     id: 3,
-    name: "Celebrity 3",
+    name: "Celebrity ",
     thumbnail: "https://placehold.co/400x400/1a1a1a/fbbf24?text=Celebrity+3",
     gallery: ["https://placehold.co/600x400/1a1a1a/fbbf24?text=Gallery+3-1"],
   },
   {
     id: 4,
-    name: "Celebrity 4",
+    name: "Celebrity ",
     thumbnail: "https://placehold.co/400x400/1a1a1a/fbbf24?text=Celebrity+4",
     gallery: [
       "https://placehold.co/600x400/1a1a1a/fbbf24?text=Gallery+4-1",
@@ -42,7 +42,7 @@ const CELEBRITIES = [
   },
   {
     id: 5,
-    name: "Celebrity 5",
+    name: "Celebrity ",
     thumbnail: "https://placehold.co/400x400/1a1a1a/fbbf24?text=Celebrity+5",
     gallery: [
       "https://placehold.co/600x400/1a1a1a/fbbf24?text=Gallery+5-1",
@@ -51,19 +51,19 @@ const CELEBRITIES = [
   },
   {
     id: 6,
-    name: "Celebrity 6",
+    name: "Celebrity ",
     thumbnail: "https://placehold.co/400x400/1a1a1a/fbbf24?text=Celebrity+6",
     gallery: ["https://placehold.co/600x400/1a1a1a/fbbf24?text=Gallery+6-1"],
   },
   {
     id: 7,
-    name: "Celebrity 7",
+    name: "Celebrity ",
     thumbnail: "https://placehold.co/400x400/1a1a1a/fbbf24?text=Celebrity+7",
     gallery: ["https://placehold.co/600x400/1a1a1a/fbbf24?text=Gallery+7-1"],
   },
   {
     id: 8,
-    name: "Celebrity 8",
+    name: "Celebrity ",
     thumbnail: "https://placehold.co/400x400/1a1a1a/fbbf24?text=Celebrity+8",
     gallery: [
       "https://placehold.co/600x400/1a1a1a/fbbf24?text=Gallery+8-1",
@@ -239,24 +239,85 @@ export default function Marquee3D() {
 
         {/* 3D Container */}
         <div
+          className="flex flex-col gap-8 transform-gpu pointer-events-none"
+          style={{
+            perspective: "1000px",
+            transform:
+              "rotateX(20deg) rotateY(-10deg) rotateZ(25deg) scale(1.1)",
+            position: "absolute",
+            top: "-20%",
+            // left: "-20%",
+            width: "160%",
+            height: "0%",
+          }}
+        >
+          {/* <div
           className="flex flex-col gap-8 transform-gpu pointer-events-none" // pointer-events-none on container so clicks pass through to items? No, items need pointer-events-auto
           style={{
             perspective: "1000px",
             transform:
               "rotateX(20deg) rotateY(-10deg) rotateZ(5deg) scale(1.1)",
           }}
-        >
+        > */}
+
           {/* We need pointer-events-auto on items even if container has logic? 
               Actually, the parent div handles drag. The items need to handle click.
               If parent consumes MouseDown, Click might still work on MouseUp if not moved much.
           */}
           <div className="pointer-events-auto">
             <MarqueeRow
-              speed={0.8}
+              speed={1.2}
+              reverse
               dragX={dragX}
               onItemClick={setSelectedCelebrity}
             />
           </div>
+          <div className="pointer-events-auto">
+            <MarqueeRow
+              speed={1.0}
+              dragX={dragX}
+              className="hidden md:flex"
+              onItemClick={setSelectedCelebrity}
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        className="absolute inset-0 z-0 overflow-hidden cursor-grab active:cursor-grabbing flex items-center justify-center pointer-events-auto"
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/40 to-white/80 z-10 pointer-events-none"></div>
+
+        {/* 3D Container */}
+        <div
+          className="flex flex-col gap-8 transform-gpu pointer-events-none"
+          style={{
+            perspective: "1000px",
+            transform:
+              "rotateX(20deg) rotateY(-10deg) rotateZ(25deg) scale(1.1)",
+            position: "absolute",
+            bottom: "20%",
+            // left: "-20%",
+            width: "160%",
+            height: "0%",
+          }}
+        >
+          {/* <div
+          className="flex flex-col gap-8 transform-gpu pointer-events-none" // pointer-events-none on container so clicks pass through to items? No, items need pointer-events-auto
+          style={{
+            perspective: "1000px",
+            transform:
+              "rotateX(20deg) rotateY(-10deg) rotateZ(5deg) scale(1.1)",
+          }}
+        > */}
+
+          {/* We need pointer-events-auto on items even if container has logic? 
+              Actually, the parent div handles drag. The items need to handle click.
+              If parent consumes MouseDown, Click might still work on MouseUp if not moved much.
+          */}
           <div className="pointer-events-auto">
             <MarqueeRow
               speed={1.2}
@@ -332,7 +393,7 @@ export default function Marquee3D() {
                     <div
                       key={idx}
                       onClick={() => setCurrentImageIndex(idx)}
-                      className={`relative w-24 h-16 rounded-md overflow-hidden cursor-pointer border-2 transition-all shrink-0 ${currentImageIndex === idx ? "border-amber-500 scale-105" : "border-transparent opacity-60 hover:opacity-100"}`}
+                      className={`relative w-24 h-24 rounded-md overflow-hidden cursor-pointer border-2 transition-all shrink-0 ${currentImageIndex === idx ? "border-amber-500 scale-105" : "border-transparent opacity-60 hover:opacity-100"}`}
                     >
                       <Image
                         src={img}

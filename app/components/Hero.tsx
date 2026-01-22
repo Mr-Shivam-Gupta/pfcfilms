@@ -7,7 +7,9 @@ import Marquee3D from "./Marquee3D";
 export default function Hero() {
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
-      <Marquee3D />
+      <div className="hidden md:block">
+        <Marquee3D />
+      </div>
 
       {/* Animated Orbs */}
       <div className="absolute inset-0">
