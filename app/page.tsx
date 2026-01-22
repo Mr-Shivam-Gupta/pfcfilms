@@ -51,7 +51,7 @@ export default function Home() {
       <Services />
       <RecentProjects />
       <RecentActivity />
-      <Stats />
+      {/* <Stats /> */}
       <CTA />
     </div>
   );

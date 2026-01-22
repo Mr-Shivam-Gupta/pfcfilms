@@ -106,6 +106,19 @@ body {
   }
 }
 
+@keyframes scroll-y {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-33.33%);
+  }
+}
+
+.animate-scroll-y {
+  animation: scroll-y 20s linear infinite;
+}
+
 .animate-scroll {
   animation: scroll 30s linear infinite;
 }

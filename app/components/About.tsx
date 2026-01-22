@@ -91,7 +91,8 @@ export default function About() {
               About the <span className="text-amber-500">Director</span>
             </h2>
             <p className="text-zinc-600 text-lg max-w-2xl mx-auto">
-              Visionary filmmaker, mentor, and the driving force behind PFC Films
+              Visionary filmmaker, mentor, and the driving force behind PFC
+              Films
             </p>
           </div>
 
@@ -120,17 +121,19 @@ export default function About() {
 
               <div className="space-y-4 text-zinc-600 leading-relaxed">
                 <p>
-                  With over 15 years of experience in the film industry, Mr. Pramod Kumar Gupta
-                  has established himself as a visionary director and mentor.
-                  His journey began as an assistant director in Mumbai's bustling
-                  film industry, and through dedication and passion, he rose to
-                  become one of the most respected names in regional cinema.
+                  With over 15 years of experience in the film industry, Mr.
+                  Pramod Kumar Gupta has established himself as a visionary
+                  director and mentor. His journey began as an assistant
+                  director in Mumbai's bustling film industry, and through
+                  dedication and passion, he rose to become one of the most
+                  respected names in regional cinema.
                 </p>
                 <p>
-                  Under his leadership, PFC Films has produced numerous critically
-                  acclaimed films and has become a premier destination for aspiring
-                  filmmakers. His unique approach combines traditional storytelling
-                  with modern cinematic techniques.
+                  Under his leadership, PFC Films has produced numerous
+                  critically acclaimed films and has become a premier
+                  destination for aspiring filmmakers. His unique approach
+                  combines traditional storytelling with modern cinematic
+                  techniques.
                 </p>
                 <p>
                   Beyond filmmaking, he is passionate about education and has
@@ -161,15 +164,20 @@ export default function About() {
           <div className="group relative bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-xl rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
             <div className="relative p-10">
               <div className="absolute top-0 left-0 text-white/20 transform -translate-x-1/2 -translate-y-1/2">
-                <svg width="100" height="100" viewBox="0 0 100 100" fill="currentColor">
+                <svg
+                  width="100"
+                  height="100"
+                  viewBox="0 0 100 100"
+                  fill="currentColor"
+                >
                   <path d="M30 50h-10c-5.5 0-10-4.5-10-10v-10c0-5.5 4.5-10 10-10h10v30zm40 0h-10c-5.5 0-10-4.5-10-10v-10c0-5.5 4.5-10 10-10h10v30z" />
                 </svg>
               </div>
 
               <p className="text-2xl md:text-3xl text-zinc-300 font-serif italic mb-8 relative z-10 leading-relaxed">
                 "Cinema is not just about telling stories; it's about creating
-                experiences that touch hearts and transform lives. Every frame is
-                an opportunity to inspire."
+                experiences that touch hearts and transform lives. Every frame
+                is an opportunity to inspire."
               </p>
 
               <div className="inline-flex items-center space-x-3 relative z-10">
@@ -217,7 +225,9 @@ export default function About() {
                   <h4 className="font-bold text-black text-sm mb-1 group-hover:text-amber-600 transition-colors">
                     {celebrity.name}
                   </h4>
-                  <p className="text-xs text-zinc-500 font-medium">{celebrity.role}</p>
+                  <p className="text-xs text-zinc-500 font-medium">
+                    {celebrity.role}
+                  </p>
                 </div>
               </div>
             ))}
@@ -243,11 +253,14 @@ export default function About() {
                   <Star className="w-8 h-8" />
                 </div>
 
-                <h3 className="text-3xl font-bold text-zinc-900 mb-6 group-hover:text-amber-600 transition-colors">Our Vision</h3>
+                <h3 className="text-3xl font-bold text-zinc-900 mb-6 group-hover:text-amber-600 transition-colors">
+                  Our Vision
+                </h3>
                 <p className="text-zinc-600 leading-relaxed text-lg font-medium">
-                  To be the global benchmark in film production and cinematic education,
-                  creating a legacy of storytelling that transcends borders and cultures,
-                  inspiring generations to dream beyond the ordinary.
+                  To be the global benchmark in film production and cinematic
+                  education, creating a legacy of storytelling that transcends
+                  borders and cultures, inspiring generations to dream beyond
+                  the ordinary.
                 </p>
               </div>
 
@@ -263,11 +276,14 @@ export default function About() {
                   <Target className="w-8 h-8" />
                 </div>
 
-                <h3 className="text-3xl font-bold text-zinc-900 mb-6 group-hover:text-black transition-colors">Our Mission</h3>
+                <h3 className="text-3xl font-bold text-zinc-900 mb-6 group-hover:text-black transition-colors">
+                  Our Mission
+                </h3>
                 <p className="text-zinc-600 leading-relaxed text-lg font-medium">
-                  To nurture raw talent into world-class cinematic artists through
-                  immersive training, while simultaneously producing high-caliber
-                  content that entertains, educates, and elevates the standards of regional and national cinema.
+                  To nurture raw talent into world-class cinematic artists
+                  through immersive training, while simultaneously producing
+                  high-caliber content that entertains, educates, and elevates
+                  the standards of regional and national cinema.
                 </p>
               </div>
 
@@ -276,7 +292,6 @@ export default function About() {
           </div>
         </div>
       </section>
-
     </div>
   );
 }

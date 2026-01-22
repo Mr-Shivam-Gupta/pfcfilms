@@ -2,10 +2,12 @@ import React from "react";
 import Image from "next/image";
 import { Play, Sparkles, ArrowRight, ChevronRight } from "lucide-react";
 
+import Marquee3D from "./Marquee3D";
+
 export default function Hero() {
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-amber-50 via-white to-amber-50"></div>
+      <Marquee3D />
 
       {/* Animated Orbs */}
       <div className="absolute inset-0">
@@ -26,7 +28,7 @@ export default function Hero() {
         </div>
 
         <h1
-          className="text-6xl md:text-8xl font-black mb-6 tracking-tighter animate-fadeInUp text-black"
+          className="text-6xl md:text-6xl font-black mb-6 tracking-tighter animate-fadeInUp text-black"
           style={{ animationDelay: "200ms" }}
         >
           PFC{" "}
@@ -34,7 +36,6 @@ export default function Hero() {
             FILMS
           </span>
         </h1>
-
         <p
           className="text-xl md:text-3xl font-light text-zinc-600 mb-8 max-w-3xl mx-auto animate-fadeInUp"
           style={{ animationDelay: "400ms" }}
@@ -42,10 +43,9 @@ export default function Hero() {
           PFC Films Production House & Institute
         </p>
 
-        <div
+        {/* <div
           className="flex flex-col sm:flex-row gap-4 justify-center animate-fadeInUp"
-          style={{ animationDelay: "600ms" }}
-        >
+          style={{ animationDelay: "600ms" }}>
           <button className="group bg-amber-400 hover:bg-amber-500 text-black px-8 py-4 rounded-full font-semibold flex items-center justify-center space-x-2 transition-all transform hover:scale-105 hover:shadow-2xl hover:shadow-amber-500/30">
             <Play
               size={20}
@@ -67,7 +67,7 @@ export default function Hero() {
             </span>
             <div className="absolute inset-0 bg-amber-400 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
           </button>
-        </div>
+        </div> */}
       </div>
 
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">

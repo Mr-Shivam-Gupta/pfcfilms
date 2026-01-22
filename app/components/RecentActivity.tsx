@@ -16,15 +16,14 @@ export default function RecentActivity() {
   const [activeActivityTab, setActiveActivityTab] =
     useState<ActivityTab>("awards");
 
-
-
   const recentActivities: Record<ActivityTab, Activity[]> = {
     awards: [
       {
         title: "Best Cinematography Award",
         event: "Chennai International Film Festival",
         date: "Jan 15, 2026",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Cinematography+Award",
+        image:
+          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Cinematography+Award",
       },
       {
         title: "Best Director - Short Film",
@@ -36,7 +35,8 @@ export default function RecentActivity() {
         title: "Audience Choice Award",
         event: "Mumbai Film Festival",
         date: "Dec 28, 2025",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Audience+Choice",
+        image:
+          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Audience+Choice",
       },
       {
         title: "Best Editing Award",
@@ -48,25 +48,29 @@ export default function RecentActivity() {
         title: "Excellence in Production",
         event: "Tamil Film Producers Council",
         date: "Dec 15, 2025",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Production+Excellence",
+        image:
+          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Production+Excellence",
       },
       {
         title: "Best Music Video",
         event: "MTV Music Awards",
         date: "Dec 5, 2025",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Best+Music+Video",
+        image:
+          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Best+Music+Video",
       },
       {
         title: "Outstanding Dance Performance",
         event: "National Dance Championship",
         date: "Nov 28, 2025",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Dance+Performance",
+        image:
+          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Dance+Performance",
       },
       {
         title: "Best Documentary",
         event: "Documentary Film Festival",
         date: "Nov 20, 2025",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Best+Documentary",
+        image:
+          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Best+Documentary",
       },
       {
         title: "Rising Star Production House",
@@ -86,13 +90,15 @@ export default function RecentActivity() {
         title: "Dance Reality Show - Season 2",
         event: "Star Network",
         date: "Jan 20, 2026",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Dance+Reality+Show",
+        image:
+          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Dance+Reality+Show",
       },
       {
         title: "Behind The Scenes Documentary",
         event: "Netflix Original",
         date: "Jan 18, 2026",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=BTS+Documentary",
+        image:
+          "https://placehold.co/600x400/1a1a1a/fbbf24?text=BTS+Documentary",
       },
       {
         title: "Talent Hunt Show Finale",
@@ -116,7 +122,8 @@ export default function RecentActivity() {
         title: "Music Video Countdown Show",
         event: "MTV India",
         date: "Dec 30, 2025",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Music+Countdown",
+        image:
+          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Music+Countdown",
       },
       {
         title: "Dance Academy Showcase",
@@ -154,7 +161,8 @@ export default function RecentActivity() {
         title: "Web Series Episode 5-8",
         event: "Studio Shoot - Chennai",
         date: "Jan 19, 2026",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Web+Series+Shoot",
+        image:
+          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Web+Series+Shoot",
       },
       {
         title: "Commercial Ad - Tech Brand",
@@ -166,7 +174,8 @@ export default function RecentActivity() {
         title: "Music Video - Classical Fusion",
         event: "Heritage Temple Location",
         date: "Jan 14, 2026",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Music+Video+Shoot",
+        image:
+          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Music+Video+Shoot",
       },
       {
         title: "Documentary - Traditional Arts",
@@ -178,13 +187,15 @@ export default function RecentActivity() {
         title: 'Short Film - "Nizhal"',
         event: "Night Shoot - Chennai Beach",
         date: "Jan 7, 2026",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Short+Film+Shoot",
+        image:
+          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Short+Film+Shoot",
       },
       {
         title: "Reality Show - Final Episode",
         event: "Studio Set - Hyderabad",
         date: "Jan 3, 2026",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Reality+Show+Set",
+        image:
+          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Reality+Show+Set",
       },
       {
         title: "Behind The Scenes Content",
@@ -196,13 +207,15 @@ export default function RecentActivity() {
         title: "Dance Performance Video",
         event: "PFC Dance Academy",
         date: "Dec 24, 2025",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Dance+Video+Shoot",
+        image:
+          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Dance+Video+Shoot",
       },
       {
         title: "Corporate Film Shoot",
         event: "Office Location - Bangalore",
         date: "Dec 18, 2025",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Corporate+Shoot",
+        image:
+          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Corporate+Shoot",
       },
     ],
     releases: [
@@ -210,7 +223,8 @@ export default function RecentActivity() {
         title: 'Feature Film - "Kadhal Kavithai"',
         event: "Theatrical Release - Nationwide",
         date: "Jan 26, 2026",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Kadhal+Kavithai",
+        image:
+          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Kadhal+Kavithai",
       },
       {
         title: 'Web Series - "City Lights"',
@@ -311,12 +325,11 @@ export default function RecentActivity() {
   // Helper to determine if image is a URL
   const isUrl = (str: string) => str.startsWith("http") || str.startsWith("/");
 
-
-
-
-
   return (
-    <section className="py-20 px-4 bg-gradient-to-br from-black via-zinc-900 to-black relative overflow-hidden" id="recent-activity">
+    <section
+      className="py-20 px-4 bg-gradient-to-br from-black via-zinc-900 to-black relative overflow-hidden"
+      id="recent-activity"
+    >
       {/* Animated Background Gradient Orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-amber-500/20 to-transparent rounded-full blur-3xl animate-pulse"></div>
@@ -326,16 +339,20 @@ export default function RecentActivity() {
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Header Section */}
         <div className="text-center mb-16">
-          <div className="inline-block mb-4">
+          {/* <div className="inline-block mb-4">
             <span className="text-sm font-bold text-amber-400 uppercase tracking-wider px-4 py-2 bg-amber-400/10 rounded-full border border-amber-400/20">
               Recent Activity
             </span>
-          </div>
+          </div> */}
           <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-white mb-6 tracking-tight">
-            Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600">Journey</span>
+            Our{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600">
+              Journey
+            </span>
           </h2>
           <p className="text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-            From award-winning films to viral marketing campaigns, explore our creative journey through the industry.
+            From award-winning films to viral marketing campaigns, explore our
+            creative journey through the industry.
           </p>
         </div>
 
@@ -347,7 +364,7 @@ export default function RecentActivity() {
               onClick={() => setActiveActivityTab(tab.key)}
               className={`group relative px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 ${
                 activeActivityTab === tab.key
-                  ? `bg-gradient-to-r ${tab.color} text-white shadow-lg shadow-${tab.color.split('-')[1]}-500/50 scale-105`
+                  ? `bg-gradient-to-r ${tab.color} text-white shadow-lg shadow-${tab.color.split("-")[1]}-500/50 scale-105`
                   : "bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-white border border-white/10"
               }`}
             >
@@ -357,7 +374,9 @@ export default function RecentActivity() {
                 <span className="sm:hidden">{tab.shortLabel}</span>
               </span>
               {activeActivityTab === tab.key && (
-                <div className={`absolute inset-0 rounded-full bg-gradient-to-r ${tab.color} opacity-20 blur-xl`}></div>
+                <div
+                  className={`absolute inset-0 rounded-full bg-gradient-to-r ${tab.color} opacity-20 blur-xl`}
+                ></div>
               )}
             </button>
           ))}
@@ -367,36 +386,39 @@ export default function RecentActivity() {
         <div className="relative">
           <div className="space-y-24">
             {tabs
-              .filter(tab => tab.key === activeActivityTab)
+              .filter((tab) => tab.key === activeActivityTab)
               .map((tab) => (
-              <div 
-                key={tab.key} 
-                id={`section-${tab.key}`} 
-                className="relative"
-              >
+                <div
+                  key={tab.key}
+                  id={`section-${tab.key}`}
+                  className="relative"
+                >
+                  {/* Modern Grid Layout */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {recentActivities[tab.key]
+                      .slice(0, 6)
+                      .map((activity, idx) => (
+                        <ModernActivityCard
+                          key={`${tab.key}-${idx}`}
+                          activity={activity}
+                          isUrl={isUrl}
+                          tab={tab}
+                          index={idx}
+                        />
+                      ))}
+                  </div>
 
-                {/* Modern Grid Layout */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {recentActivities[tab.key].slice(0, 6).map((activity, idx) => (
-                    <ModernActivityCard 
-                      key={`${tab.key}-${idx}`} 
-                      activity={activity} 
-                      isUrl={isUrl}
-                      tab={tab}
-                      index={idx}
-                    />
-                  ))}
+                  {/* View More Button */}
+                  <div className="mt-12 text-center">
+                    <button
+                      className={`group inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-white bg-gradient-to-r ${tab.color} hover:shadow-lg hover:shadow-${tab.color.split("-")[1]}-500/50 transition-all duration-300 hover:scale-105`}
+                    >
+                      View All {tab.label}
+                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  </div>
                 </div>
-
-                {/* View More Button */}
-                <div className="mt-12 text-center">
-                  <button className={`group inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-white bg-gradient-to-r ${tab.color} hover:shadow-lg hover:shadow-${tab.color.split('-')[1]}-500/50 transition-all duration-300 hover:scale-105`}>
-                    View All {tab.label}
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </button>
-                </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       </div>
@@ -405,14 +427,14 @@ export default function RecentActivity() {
 }
 
 // Modern Card Component
-function ModernActivityCard({ 
-  activity, 
-  isUrl, 
+function ModernActivityCard({
+  activity,
+  isUrl,
   tab,
-  index 
-}: { 
-  activity: Activity; 
-  isUrl: (s: string) => boolean; 
+  index,
+}: {
+  activity: Activity;
+  isUrl: (s: string) => boolean;
   tab: { key: ActivityTab; color: string; bgColor: string };
   index: number;
 }) {
@@ -420,37 +442,43 @@ function ModernActivityCard({
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div 
+    <div
       className="group relative bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-xl rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={{ animationDelay: `${index * 50}ms` }}
     >
       {/* Gradient Overlay on Hover */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${tab.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
-      
+      <div
+        className={`absolute inset-0 bg-gradient-to-br ${tab.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
+      ></div>
+
       {/* Image Container */}
       <div className="relative h-48 overflow-hidden">
         {hasImage ? (
-          <img 
-            src={activity.image} 
-            alt={activity.title} 
+          <img
+            src={activity.image}
+            alt={activity.title}
             className={`w-full h-full object-cover transition-transform duration-700 ${
-              isHovered ? 'scale-110' : 'scale-100'
+              isHovered ? "scale-110" : "scale-100"
             }`}
           />
         ) : (
-          <div className={`w-full h-full flex items-center justify-center text-5xl bg-gradient-to-br ${tab.color} opacity-20`}>
+          <div
+            className={`w-full h-full flex items-center justify-center text-5xl bg-gradient-to-br ${tab.color} opacity-20`}
+          >
             {activity.image}
           </div>
         )}
-        
+
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-        
+
         {/* Category Badge */}
         <div className="absolute top-4 left-4">
-          <div className={`px-3 py-1 rounded-full text-xs font-bold text-white bg-gradient-to-r ${tab.color} shadow-lg`}>
+          <div
+            className={`px-3 py-1 rounded-full text-xs font-bold text-white bg-gradient-to-r ${tab.color} shadow-lg`}
+          >
             {tab.key.toUpperCase()}
           </div>
         </div>
@@ -461,7 +489,7 @@ function ModernActivityCard({
         <h3 className="text-lg font-bold text-white mb-3 group-hover:text-amber-400 transition-colors line-clamp-2">
           {activity.title}
         </h3>
-        
+
         <div className="space-y-2 mb-4">
           <div className="flex items-center gap-2 text-zinc-400 text-sm">
             <MapPin className="w-4 h-4 text-amber-400" />
@@ -481,7 +509,9 @@ function ModernActivityCard({
       </div>
 
       {/* Shine Effect */}
-      <div className={`absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000`}></div>
+      <div
+        className={`absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000`}
+      ></div>
     </div>
   );
 }
