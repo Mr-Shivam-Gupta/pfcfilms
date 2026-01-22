@@ -2,7 +2,15 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { BookOpen, Clock, Users, GraduationCap, Star, CheckCircle, Award } from "lucide-react";
+import {
+  BookOpen,
+  Clock,
+  Users,
+  GraduationCap,
+  Star,
+  CheckCircle,
+  Award,
+} from "lucide-react";
 
 export default function Academy() {
   const [selectedCourse, setSelectedCourse] = useState<number | null>(null);
@@ -17,7 +25,8 @@ export default function Academy() {
       rating: "4.9",
       price: "₹75,000",
       image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Film+Direction",
-      description: "Master the art of directing feature films with hands-on experience",
+      description:
+        "Master the art of directing feature films with hands-on experience",
       modules: [
         "Screenplay Analysis",
         "Shot Composition",
@@ -51,7 +60,8 @@ export default function Academy() {
       rating: "4.9",
       price: "₹45,000",
       image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Video+Editing",
-      description: "Complete training in editing software and post-production workflow",
+      description:
+        "Complete training in editing software and post-production workflow",
       modules: [
         "Adobe Premiere Pro",
         "DaVinci Resolve",
@@ -68,7 +78,8 @@ export default function Academy() {
       rating: "4.7",
       price: "₹35,000",
       image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Acting",
-      description: "Develop your acting skills specifically for film and television",
+      description:
+        "Develop your acting skills specifically for film and television",
       modules: [
         "Method Acting",
         "Emotional Range",
@@ -85,7 +96,8 @@ export default function Academy() {
       rating: "4.8",
       price: "₹40,000",
       image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Screenwriting",
-      description: "Craft compelling stories and develop your unique writing voice",
+      description:
+        "Craft compelling stories and develop your unique writing voice",
       modules: [
         "Story Structure",
         "Character Arc",
@@ -102,7 +114,8 @@ export default function Academy() {
       rating: "4.9",
       price: "₹55,000",
       image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Production",
-      description: "Learn to manage film productions from pre to post-production",
+      description:
+        "Learn to manage film productions from pre to post-production",
       modules: [
         "Budget Planning",
         "Schedule Management",
@@ -116,7 +129,8 @@ export default function Academy() {
     {
       icon: <GraduationCap className="w-8 h-8" />,
       title: "Expert Faculty",
-      description: "Learn from industry professionals with 15+ years experience",
+      description:
+        "Learn from industry professionals with 15+ years experience",
     },
     {
       icon: <Users className="w-8 h-8" />,
@@ -132,6 +146,51 @@ export default function Academy() {
       icon: <Star className="w-8 h-8" />,
       title: "Placement Support",
       description: "100% placement assistance with leading production houses",
+    },
+  ];
+
+  const academies = [
+    {
+      id: 1,
+      title: "Acting School",
+      tagline: "Train for Camera, Theatre & OTT",
+      image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Acting+School",
+      highlights: [
+        "Acting for Camera",
+        "Audition Techniques",
+        "Character Development",
+        "Industry Exposure",
+      ],
+      duration: "2–6 Months",
+      students: "500+",
+    },
+    {
+      id: 2,
+      title: "Dance Academy",
+      tagline: "Classical • Contemporary • Bollywood",
+      image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Dance+Academy",
+      highlights: [
+        "Classical & Western Forms",
+        "Stage Performance",
+        "Choreography",
+        "Fitness Training",
+      ],
+      duration: "3–12 Months",
+      students: "400+",
+    },
+    {
+      id: 3,
+      title: "Film Academy",
+      tagline: "Direction • Cinematography • Editing",
+      image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Film+Academy",
+      highlights: [
+        "Film Direction",
+        "Cinematography",
+        "Editing & Post",
+        "Production Management",
+      ],
+      duration: "3–9 Months",
+      students: "600+",
     },
   ];
 
@@ -194,97 +253,79 @@ export default function Academy() {
               <div className="flex justify-center mb-4 text-amber-500">
                 {feature.icon}
               </div>
-              <h3 className="text-lg font-bold mb-2 text-black">{feature.title}</h3>
-              <p className="text-sm text-zinc-600 font-medium">{feature.description}</p>
+              <h3 className="text-lg font-bold mb-2 text-black">
+                {feature.title}
+              </h3>
+              <p className="text-sm text-zinc-600 font-medium">
+                {feature.description}
+              </p>
             </div>
           ))}
         </div>
-
-        {/* Courses Grid */}
-        <div className="mb-16">
-          <h3
-            className="text-3xl font-bold text-center mb-10 animate-fadeInUp text-black"
-            style={{ animationDelay: "400ms" }}
-          >
-            Our <span className="text-amber-500">Courses</span>
+        {/* ACADEMY CATEGORIES */}
+        <section className="mb-32">
+          <h3 className="text-4xl font-bold text-center mb-16 text-black">
+            Our <span className="text-amber-500">Academies</span>
           </h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {courses.map((course, index) => (
+
+          <div className="grid md:grid-cols-3 gap-10">
+            {academies.map((academy) => (
               <div
-                key={course.id}
-                className="group bg-white rounded-2xl overflow-hidden border border-zinc-200 transform transition-all duration-300 hover:scale-105 hover:border-amber-400 hover:shadow-xl shadow-md animate-fadeInUp"
-                style={{ animationDelay: `${600 + index * 100}ms` }}
+                key={academy.id}
+                className="group bg-white rounded-3xl overflow-hidden border border-zinc-200 hover:shadow-2xl transition"
               >
                 {/* Image */}
-                <div className="relative h-48 overflow-hidden">
+                <div className="relative h-64">
                   <Image
-                    src={course.image}
-                    alt={course.title}
+                    src={academy.image}
+                    alt={academy.title}
                     fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="object-cover group-hover:scale-110 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
-
-                  {/* Level Badge */}
-                  <div className="absolute top-4 right-4 bg-amber-400 text-black px-3 py-1 rounded-full text-xs font-bold">
-                    {course.level}
+                  <div className="absolute inset-0 bg-black/50" />
+                  <div className="absolute bottom-6 left-6 right-6">
+                    <h4 className="text-2xl font-bold text-white">
+                      {academy.title}
+                    </h4>
+                    <p className="text-amber-400 font-medium">
+                      {academy.tagline}
+                    </p>
                   </div>
                 </div>
 
                 {/* Content */}
                 <div className="p-6">
-                  <h3 className="text-xl font-bold mb-3 text-black group-hover:text-amber-500 transition-colors">
-                    {course.title}
-                  </h3>
-
-                  <p className="text-zinc-600 text-sm mb-4">
-                    {course.description}
-                  </p>
-
-                  {/* Course Stats */}
-                  <div className="grid grid-cols-3 gap-4 mb-4 text-sm">
-                    <div className="flex items-center space-x-2 text-zinc-500">
+                  <div className="grid grid-cols-2 gap-4 text-sm mb-4">
+                    <div className="flex items-center gap-2 text-zinc-600">
                       <Clock className="w-4 h-4 text-amber-500" />
-                      <span>{course.duration}</span>
+                      {academy.duration}
                     </div>
-                    <div className="flex items-center space-x-2 text-zinc-500">
+                    <div className="flex items-center gap-2 text-zinc-600">
                       <Users className="w-4 h-4 text-amber-500" />
-                      <span>{course.students}</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-zinc-500">
-                      <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
-                      <span>{course.rating}</span>
+                      {academy.students}
                     </div>
                   </div>
 
-                  {/* Modules */}
-                  <div className="mb-4">
-                    <h4 className="text-sm font-semibold text-amber-600 mb-2">Key Modules:</h4>
-                    <ul className="space-y-1">
-                      {course.modules.slice(0, 3).map((module, idx) => (
-                        <li key={idx} className="flex items-center space-x-2 text-xs text-zinc-500">
-                          <CheckCircle className="w-3 h-3 text-amber-500" />
-                          <span>{module}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  <ul className="space-y-2 mb-6">
+                    {academy.highlights.map((item, idx) => (
+                      <li
+                        key={idx}
+                        className="flex items-center gap-2 text-sm text-zinc-600"
+                      >
+                        <CheckCircle className="w-4 h-4 text-amber-500" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
 
-                  {/* Price and CTA */}
-                  <div className="flex items-center justify-between pt-4 border-t border-zinc-100">
-                    <div>
-                      <div className="text-2xl font-bold text-amber-500">{course.price}</div>
-                      <div className="text-xs text-zinc-400">One-time fee</div>
-                    </div>
-                    <button className="bg-amber-400 hover:bg-amber-500 text-black px-4 py-2 rounded-lg font-semibold text-sm transition-all transform hover:scale-105">
-                      Enroll Now
-                    </button>
-                  </div>
+                  <button className="w-full border border-amber-400 text-amber-600 hover:bg-amber-400 hover:text-black py-3 rounded-xl font-semibold transition">
+                    Join Us
+                  </button>
                 </div>
               </div>
             ))}
           </div>
-        </div>
+        </section>
 
         {/* Testimonials */}
         <div className="mb-16">
@@ -312,15 +353,22 @@ export default function Academy() {
                   </div>
                   <div>
                     <h4 className="font-bold text-black">{testimonial.name}</h4>
-                    <p className="text-sm text-amber-600 font-medium">{testimonial.course}</p>
+                    <p className="text-sm text-amber-600 font-medium">
+                      {testimonial.course}
+                    </p>
                   </div>
                 </div>
                 <div className="flex mb-3">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 text-amber-500 fill-amber-500" />
+                    <Star
+                      key={i}
+                      className="w-4 h-4 text-amber-500 fill-amber-500"
+                    />
                   ))}
                 </div>
-                <p className="text-zinc-600 text-sm italic">"{testimonial.text}"</p>
+                <p className="text-zinc-600 text-sm italic">
+                  "{testimonial.text}"
+                </p>
               </div>
             ))}
           </div>
@@ -332,9 +380,12 @@ export default function Academy() {
           style={{ animationDelay: "1700ms" }}
         >
           <div className="bg-white p-8 rounded-2xl border border-amber-200 shadow-xl relative overflow-hidden">
-            <h3 className="text-2xl font-bold mb-4 text-black">Ready to Start Your Journey?</h3>
+            <h3 className="text-2xl font-bold mb-4 text-black">
+              Ready to Start Your Journey?
+            </h3>
             <p className="text-zinc-600 mb-6">
-              Join over 1000+ students who have transformed their passion into profession
+              Join over 1000+ students who have transformed their passion into
+              profession
             </p>
             <button className="bg-amber-400 hover:bg-amber-500 text-black px-8 py-4 rounded-full font-semibold transition-all transform hover:scale-105 hover:shadow-2xl hover:shadow-amber-500/50">
               Schedule a Free Demo Class

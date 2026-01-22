@@ -40,6 +40,27 @@ export default function Contact() {
     }, 1000);
   };
 
+  const socialMediaLinks = [
+    {
+      name: "Instagram",
+      handle: "@pfcfilms",
+      url: "#",
+      qrCode: "/qr-codes/instagram-qr.png", // Update with actual path
+    },
+    {
+      name: "YouTube",
+      handle: "PFC Films",
+      url: "#",
+      qrCode: "/qr-codes/youtube-qr.png", // Update with actual path
+    },
+    {
+      name: "Facebook",
+      handle: "PFC Films",
+      url: "#",
+      qrCode: "/qr-codes/facebook-qr.png", // Update with actual path
+    },
+  ];
+
   return (
     <section className="relative min-h-screen py-20 bg-zinc-50">
       {/* Animated Background Orbs */}
@@ -120,30 +141,44 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Social Media */}
+            {/* Social Media with QR Codes */}
             <div>
               <h3 className="text-2xl font-bold mb-6 text-black">
-                Follow Us
+                Follow Us on Social Media
               </h3>
-              <div className="flex space-x-4">
-                <a
-                  href="#"
-                  className="bg-white p-4 rounded-lg hover:bg-amber-50 border border-zinc-200 shadow-sm transition-all duration-300 transform hover:scale-110"
-                >
-                  <Instagram className="w-6 h-6 text-amber-500" />
-                </a>
-                <a
-                  href="#"
-                  className="bg-white p-4 rounded-lg hover:bg-amber-50 border border-zinc-200 shadow-sm transition-all duration-300 transform hover:scale-110"
-                >
-                  <Youtube className="w-6 h-6 text-amber-500" />
-                </a>
-                <a
-                  href="#"
-                  className="bg-white p-4 rounded-lg hover:bg-amber-50 border border-zinc-200 shadow-sm transition-all duration-300 transform hover:scale-110"
-                >
-                  <Facebook className="w-6 h-6 text-amber-500" />
-                </a>
+              <div className="relative overflow-hidden bg-white p-6 rounded-2xl border border-zinc-200 shadow-sm">
+                <div className="social-scroll-container group">
+                  <div className="social-scroll-content">
+                    {socialMediaLinks.map((social, index) => (
+                      <a
+                        key={`social-${index}`}
+                        href={social.url}
+                        className="social-card"
+                      >
+                        <div className="qr-placeholder bg-zinc-100 w-40 h-40 rounded-lg mb-3 flex items-center justify-center text-sm text-zinc-400">
+                          QR Code
+                        </div>
+                        <p className="text-base font-semibold text-black">{social.name}</p>
+                        <p className="text-sm text-zinc-500">{social.handle}</p>
+                      </a>
+                    ))}
+                    
+                    {/* Duplicate for infinite scroll effect */}
+                    {socialMediaLinks.map((social, index) => (
+                      <a
+                        key={`social-duplicate-${index}`}
+                        href={social.url}
+                        className="social-card"
+                      >
+                        <div className="qr-placeholder bg-zinc-100 w-40 h-40 rounded-lg mb-3 flex items-center justify-center text-sm text-zinc-400">
+                          QR Code
+                        </div>
+                        <p className="text-base font-semibold text-black">{social.name}</p>
+                        <p className="text-sm text-zinc-500">{social.handle}</p>
+                      </a>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
