@@ -1,0 +1,1220 @@
+{
+	"info": {
+		"_postman_id": "pfcfilms-api-collection",
+		"name": "PFC Films API",
+		"description": "Complete API collection for PFC Films backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{adminToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:5000/api",
+			"type": "string"
+		},
+		{
+			"key": "adminToken",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const response = pm.response.json();",
+									"    if (response.token) {",
+									"        pm.collectionVariables.set('adminToken', response.token);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"admin\",\n    \"email\": \"admin@pfcfilms.com\",\n    \"password\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/register",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "register"]
+						}
+					}
+				},
+				{
+					"name": "Login Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    if (response.token) {",
+									"        pm.collectionVariables.set('adminToken', response.token);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@pfcfilms.com\",\n    \"password\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "login"]
+						}
+					}
+				},
+				{
+					"name": "Get Current Admin",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/auth/me",
+							"host": ["{{baseUrl}}"],
+							"path": ["auth", "me"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Productions",
+			"item": [
+				{
+					"name": "Get All Productions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/productions?category=Feature Films&featured=true",
+							"host": ["{{baseUrl}}"],
+							"path": ["productions"],
+							"query": [
+								{
+									"key": "category",
+									"value": "Feature Films",
+									"description": "Filter by category (optional)"
+								},
+								{
+									"key": "featured",
+									"value": "true",
+									"description": "Filter featured productions (optional)"
+								},
+								{
+									"key": "status",
+									"value": "Released",
+									"description": "Filter by status (optional)"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Single Production",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/productions/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["productions", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Production",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Echoes of Silence\",\n    \"category\": \"Feature Films\",\n    \"year\": \"2024\",\n    \"image\": \"https://placehold.co/600x400/111827/fbbf24?text=Echoes\",\n    \"awards\": \"Best Regional Film 2024\",\n    \"description\": \"A gripping tale of love and loss set in rural India\",\n    \"duration\": \"142 min\",\n    \"genre\": \"Drama\",\n    \"status\": \"Released\",\n    \"featured\": true,\n    \"order\": 0\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/productions",
+							"host": ["{{baseUrl}}"],
+							"path": ["productions"]
+						}
+					}
+				},
+				{
+					"name": "Update Production",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Echoes of Silence - Updated\",\n    \"category\": \"Feature Films\",\n    \"year\": \"2024\",\n    \"featured\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/productions/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["productions", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Production",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/productions/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["productions", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Courses",
+			"item": [
+				{
+					"name": "Get All Courses",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/courses?academy=Film Academy&level=Beginner&featured=true",
+							"host": ["{{baseUrl}}"],
+							"path": ["courses"],
+							"query": [
+								{
+									"key": "academy",
+									"value": "Film Academy",
+									"description": "Filter by academy (optional)"
+								},
+								{
+									"key": "level",
+									"value": "Beginner",
+									"description": "Filter by level (optional)"
+								},
+								{
+									"key": "featured",
+									"value": "true",
+									"description": "Filter featured courses (optional)"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Single Course",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/courses/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["courses", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Course",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Film Direction Masterclass\",\n    \"level\": \"Advanced\",\n    \"duration\": \"6 Months\",\n    \"students\": \"150+\",\n    \"rating\": \"4.9\",\n    \"price\": \"₹75,000\",\n    \"image\": \"https://placehold.co/600x400/1a1a1a/fbbf24?text=Film+Direction\",\n    \"description\": \"Master the art of directing feature films with hands-on experience\",\n    \"modules\": [\n        \"Screenplay Analysis\",\n        \"Shot Composition\",\n        \"Actor Direction\",\n        \"Post-Production Workflow\"\n    ],\n    \"academy\": \"Film Academy\",\n    \"featured\": true,\n    \"order\": 0\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/courses",
+							"host": ["{{baseUrl}}"],
+							"path": ["courses"]
+						}
+					}
+				},
+				{
+					"name": "Update Course",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Film Direction Masterclass - Updated\",\n    \"price\": \"₹80,000\",\n    \"featured\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/courses/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["courses", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Course",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/courses/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["courses", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Gallery",
+			"item": [
+				{
+					"name": "Get All Gallery Items",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/gallery?type=photo&category=Production&featured=true",
+							"host": ["{{baseUrl}}"],
+							"path": ["gallery"],
+							"query": [
+								{
+									"key": "type",
+									"value": "photo",
+									"description": "Filter by type: photo or video (optional)"
+								},
+								{
+									"key": "category",
+									"value": "Production",
+									"description": "Filter by category (optional)"
+								},
+								{
+									"key": "featured",
+									"value": "true",
+									"description": "Filter featured items (optional)"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Single Gallery Item",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/gallery/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["gallery", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Gallery Item (Photo)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Behind the Scenes - Echoes of Silence\",\n    \"category\": \"Production\",\n    \"type\": \"photo\",\n    \"image\": \"https://placehold.co/800x600/1a1a1a/fbbf24?text=BTS+1\",\n    \"featured\": true,\n    \"order\": 0\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/gallery",
+							"host": ["{{baseUrl}}"],
+							"path": ["gallery"]
+						}
+					}
+				},
+				{
+					"name": "Create Gallery Item (Video)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Echoes of Silence - Official Trailer\",\n    \"category\": \"Trailers\",\n    \"type\": \"video\",\n    \"thumbnail\": \"https://placehold.co/800x600/1a1a1a/fbbf24?text=Trailer+1\",\n    \"videoUrl\": \"https://example.com/video.mp4\",\n    \"duration\": \"2:30\",\n    \"featured\": true,\n    \"order\": 0\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/gallery",
+							"host": ["{{baseUrl}}"],
+							"path": ["gallery"]
+						}
+					}
+				},
+				{
+					"name": "Update Gallery Item",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Updated Title\",\n    \"featured\": false\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/gallery/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["gallery", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Gallery Item",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/gallery/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["gallery", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Contact",
+			"item": [
+				{
+					"name": "Submit Contact Form (Public)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john@example.com\",\n    \"phone\": \"+91 1234567890\",\n    \"subject\": \"Inquiry about courses\",\n    \"message\": \"I would like to know more about your film direction course.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact",
+							"host": ["{{baseUrl}}"],
+							"path": ["contact"]
+						}
+					}
+				},
+				{
+					"name": "Get All Contacts (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/contact?status=new",
+							"host": ["{{baseUrl}}"],
+							"path": ["contact"],
+							"query": [
+								{
+									"key": "status",
+									"value": "new",
+									"description": "Filter by status: new, read, replied, archived (optional)"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Single Contact (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/contact/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["contact", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Contact Status (Admin)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\": \"read\",\n    \"replyMessage\": \"Thank you for your inquiry. We will get back to you soon.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/contact/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["contact", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Contact (Admin)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/contact/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["contact", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Celebrities",
+			"item": [
+				{
+					"name": "Get All Celebrities",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/celebrities?featured=true",
+							"host": ["{{baseUrl}}"],
+							"path": ["celebrities"],
+							"query": [
+								{
+									"key": "featured",
+									"value": "true",
+									"description": "Filter featured celebrities (optional)"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Single Celebrity",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/celebrities/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["celebrities", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Celebrity",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Rajesh Kumar\",\n    \"image\": \"https://placehold.co/400x400/1a1a1a/fbbf24?text=Celebrity+1\",\n    \"role\": \"Bollywood Actor\",\n    \"bio\": \"Renowned actor with 20+ years of experience\",\n    \"gallery\": [\n        \"https://placehold.co/400x600/1a1a1a/fbbf24?text=Rajesh+1\",\n        \"https://placehold.co/600x400/2a2a2a/fbbf24?text=Rajesh+2\"\n    ],\n    \"featured\": true,\n    \"order\": 0\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/celebrities",
+							"host": ["{{baseUrl}}"],
+							"path": ["celebrities"]
+						}
+					}
+				},
+				{
+					"name": "Update Celebrity",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Rajesh Kumar - Updated\",\n    \"featured\": false\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/celebrities/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["celebrities", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Celebrity",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/celebrities/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["celebrities", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Testimonials",
+			"item": [
+				{
+					"name": "Get All Testimonials",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/testimonials?featured=true",
+							"host": ["{{baseUrl}}"],
+							"path": ["testimonials"],
+							"query": [
+								{
+									"key": "featured",
+									"value": "true",
+									"description": "Filter featured testimonials (optional)"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Single Testimonial",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/testimonials/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["testimonials", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Testimonial",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Arjun Mehta\",\n    \"course\": \"Film Direction\",\n    \"image\": \"https://placehold.co/100x100/1a1a1a/fbbf24?text=AM\",\n    \"text\": \"The course transformed my understanding of filmmaking. Now working as an assistant director in Bollywood!\",\n    \"rating\": 5,\n    \"featured\": true,\n    \"order\": 0\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/testimonials",
+							"host": ["{{baseUrl}}"],
+							"path": ["testimonials"]
+						}
+					}
+				},
+				{
+					"name": "Update Testimonial",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"rating\": 5,\n    \"featured\": false\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/testimonials/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["testimonials", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Testimonial",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/testimonials/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["testimonials", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Awards",
+			"item": [
+				{
+					"name": "Get All Awards",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/awards?featured=true",
+							"host": ["{{baseUrl}}"],
+							"path": ["awards"],
+							"query": [
+								{
+									"key": "featured",
+									"value": "true",
+									"description": "Filter featured awards (optional)"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Single Award",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/awards/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["awards", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Award",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"National Film Award\",\n    \"year\": \"2024\",\n    \"category\": \"Best Feature Film\",\n    \"project\": \"Echoes of Silence\",\n    \"image\": \"https://placehold.co/400x300/111827/fbbf24?text=Award\",\n    \"description\": \"Awarded for outstanding contribution to regional cinema\",\n    \"featured\": true,\n    \"order\": 0\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/awards",
+							"host": ["{{baseUrl}}"],
+							"path": ["awards"]
+						}
+					}
+				},
+				{
+					"name": "Update Award",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"year\": \"2025\",\n    \"featured\": false\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/awards/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["awards", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Award",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/awards/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["awards", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "About",
+			"item": [
+				{
+					"name": "Get About Content",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/about",
+							"host": ["{{baseUrl}}"],
+							"path": ["about"]
+						}
+					}
+				},
+				{
+					"name": "Create/Update About Content",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"directorName\": \"Mr. Pramod Kumar Gupta\",\n    \"directorTitle\": \"Founder & Creative Director\",\n    \"directorImage\": \"https://placehold.co/600x600/1a1a1a/fbbf24?text=Director\",\n    \"directorBio\": \"With over 15 years of experience in the film industry, Mr. Pramod Kumar Gupta has established himself as a visionary director and mentor in Kanpur, Uttar Pradesh.\",\n    \"quote\": \"Cinema is not just about telling stories; it's about creating experiences that touch hearts and transform lives. Every frame is an opportunity to inspire.\",\n    \"vision\": \"To be the global benchmark in film production and cinematic education, creating a legacy of storytelling that transcends borders and cultures.\",\n    \"mission\": \"To nurture raw talent into world-class cinematic artists through immersive training, while simultaneously producing high-caliber content.\",\n    \"achievements\": [\n        {\n            \"icon\": \"Film\",\n            \"number\": \"50+\",\n            \"label\": \"Films Produced\"\n        },\n        {\n            \"icon\": \"Award\",\n            \"number\": \"25+\",\n            \"label\": \"Awards Won\"\n        },\n        {\n            \"icon\": \"Users\",\n            \"number\": \"1000+\",\n            \"label\": \"Students Trained\"\n        },\n        {\n            \"icon\": \"Star\",\n            \"number\": \"15+\",\n            \"label\": \"Years Experience\"\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/about",
+							"host": ["{{baseUrl}}"],
+							"path": ["about"]
+						}
+					}
+				},
+				{
+					"name": "Update About Content",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"vision\": \"Updated vision statement\",\n    \"mission\": \"Updated mission statement\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/about",
+							"host": ["{{baseUrl}}"],
+							"path": ["about"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Stats",
+			"item": [
+				{
+					"name": "Get All Stats",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/stats",
+							"host": ["{{baseUrl}}"],
+							"path": ["stats"]
+						}
+					}
+				},
+				{
+					"name": "Create Stat",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"number\": \"50+\",\n    \"label\": \"Projects Completed\",\n    \"icon\": \"Film\",\n    \"order\": 0\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/stats",
+							"host": ["{{baseUrl}}"],
+							"path": ["stats"]
+						}
+					}
+				},
+				{
+					"name": "Update Stat",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"number\": \"60+\",\n    \"label\": \"Projects Completed\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/stats/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["stats", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Stat",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/stats/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["stats", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Services",
+			"item": [
+				{
+					"name": "Get All Services",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/services?featured=true",
+							"host": ["{{baseUrl}}"],
+							"path": ["services"],
+							"query": [
+								{
+									"key": "featured",
+									"value": "true",
+									"description": "Filter featured services (optional)"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Single Service",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/services/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["services", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Service",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Film Production\",\n    \"description\": \"Feature films, short films, and commercial projects with cutting-edge technology\",\n    \"icon\": \"Film\",\n    \"order\": 0,\n    \"featured\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/services",
+							"host": ["{{baseUrl}}"],
+							"path": ["services"]
+						}
+					}
+				},
+				{
+					"name": "Update Service",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Film Production - Updated\",\n    \"featured\": false\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/services/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["services", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Service",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/services/:id",
+							"host": ["{{baseUrl}}"],
+							"path": ["services", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Get Dashboard Stats",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/admin/dashboard",
+							"host": ["{{baseUrl}}"],
+							"path": ["admin", "dashboard"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Health Check",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/health",
+							"host": ["{{baseUrl}}"],
+							"path": ["health"]
+						}
+					}
+				}
+			]
+		}
+	]
+}
