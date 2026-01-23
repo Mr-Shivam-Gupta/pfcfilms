@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import { ChevronRight, ArrowRight, Calendar, MapPin, X, Award, Film, Clock, Tag } from "lucide-react";
 import { getProductions, getAwards, imageUrl, type Production, type Award as AwardType } from "../lib/api";
 
@@ -41,10 +42,11 @@ function ActivityDetailsModal({
         {/* Header */}
         <div className="relative h-64 md:h-80 overflow-hidden">
           {hasImage ? (
-            <img
+            <Image
               src={imageUrl(activity.image)}
               alt={activity.title}
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-amber-500/20 to-amber-600/20">

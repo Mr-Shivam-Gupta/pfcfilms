@@ -3,9 +3,37 @@ const API_BASE = API_URL.replace(/\/api\/?$/, '') || 'http://localhost:5000';
 
 /** Resolve image path to full URL. Uploaded images (/uploads/...) use API base; /projects etc. stay as-is. */
 export function imageUrl(path: string | undefined | null): string {
-  if (!path) return '';
-  if (path.startsWith('http://') || path.startsWith('https://')) return path;
-  if (path.startsWith('/uploads')) return `${API_BASE}${path}`;
+  if (!path || path.trim() === '') {
+    return '';
+  }
+  
+  // Already a full URL
+  if (path.startsWith('http://') || path.startsWith('https://')) {
+    return path;
+  }
+  
+  // Backend uploaded images - always prepend API_BASE
+  if (path.startsWith('/uploads/') || path.startsWith('/uploads')) {
+    return `${API_BASE}${path}`;
+  }
+  
+  // Handle paths that start with 'uploads/' (without leading slash)
+  if (path.startsWith('uploads/')) {
+    return `${API_BASE}/${path}`;
+  }
+  
+  // If path doesn't start with /, it might be a relative backend path
+  // Only treat it as backend path if it doesn't look like a public asset
+  if (!path.startsWith('/')) {
+    // Check if it's likely a filename (has extension)
+    const hasExtension = /\.(jpg|jpeg|png|gif|webp|svg|bmp)$/i.test(path);
+    if (hasExtension) {
+      // Likely a backend-uploaded file - prepend API_BASE/uploads
+      return `${API_BASE}/uploads/${path}`;
+    }
+  }
+  
+  // Public assets (like /projects/...) stay as-is
   return path;
 }
 

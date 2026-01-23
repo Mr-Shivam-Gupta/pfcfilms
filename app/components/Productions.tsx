@@ -24,14 +24,12 @@ function ModernProductionCard({
   production,
   index,
   onViewDetails,
-  isUrl,
 }: {
   production: Production;
   index: number;
   onViewDetails: (production: Production) => void;
-  isUrl: (str: string) => boolean;
 }) {
-  const hasImage = production.image && isUrl(production.image);
+  const hasImage = production.image && production.image.trim() !== '';
   const [isHovered, setIsHovered] = useState(false);
 
   // Color mapping for different categories
@@ -63,12 +61,19 @@ function ModernProductionCard({
       <div className="relative h-48 overflow-hidden">
         {hasImage ? (
           <Image
-            src={imageUrl(production.image)}
+            src={production.image ? (imageUrl(production.image) || "/projects/feature-film.png") : "/projects/feature-film.png"}
             alt={production.title}
             fill
             className={`object-cover transition-transform duration-700 ${
               isHovered ? "scale-110" : "scale-100"
             }`}
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              if (target.src !== "/projects/feature-film.png") {
+                target.src = "/projects/feature-film.png";
+              }
+            }}
+            unoptimized={true}
           />
         ) : (
           <div
@@ -160,8 +165,7 @@ function ProductionDetailsModal({
   production: Production;
   onClose: () => void;
 }) {
-  const isUrl = (str: string) => str.startsWith("http") || str.startsWith("/");
-  const hasImage = production.image && isUrl(production.image);
+  const hasImage = production.image && production.image.trim() !== '';
 
   const categoryColors: Record<string, string> = {
     "Feature Films": "from-purple-400 to-pink-500",
@@ -188,10 +192,17 @@ function ProductionDetailsModal({
         <div className="relative h-64 md:h-80 overflow-hidden">
           {hasImage ? (
             <Image
-              src={imageUrl(production.image)}
+              src={production.image ? (imageUrl(production.image) || "/projects/feature-film.png") : "/projects/feature-film.png"}
               alt={production.title}
               fill
               className="object-cover"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                if (target.src !== "/projects/feature-film.png") {
+                  target.src = "/projects/feature-film.png";
+                }
+              }}
+              unoptimized={true}
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-amber-100 to-amber-200">
@@ -358,7 +369,6 @@ export default function Productions() {
     setSelectedProduction(null);
   };
 
-  const isUrl = (str: string) => str.startsWith("http") || str.startsWith("/");
 
   /* ===================== UI ===================== */
 
@@ -432,7 +442,6 @@ export default function Productions() {
                   production={production}
                   index={idx}
                   onViewDetails={handleViewDetails}
-                  isUrl={isUrl}
                 />
               ))}
             </div>
@@ -477,7 +486,6 @@ export default function Productions() {
                   production={production}
                   index={idx}
                   onViewDetails={handleViewDetails}
-                  isUrl={isUrl}
                 />
               ))}
             </div>
@@ -527,10 +535,17 @@ export default function Productions() {
                   <div className="absolute inset-0 bg-gradient-to-br from-amber-500/0 to-amber-600/0 group-hover:from-amber-500/5 group-hover:to-amber-600/5 transition-opacity duration-500"></div>
                   <div className="relative h-48 overflow-hidden">
                     <Image
-                      src={imageUrl(a.image)}
+                      src={a.image ? (imageUrl(a.image) || "/projects/feature-film.png") : "/projects/feature-film.png"}
                       alt={a.title}
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        if (target.src !== "/projects/feature-film.png") {
+                          target.src = "/projects/feature-film.png";
+                        }
+                      }}
+                      unoptimized={true}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
                     <div className="absolute top-4 left-4">
@@ -583,10 +598,17 @@ export default function Productions() {
                   <div className="absolute inset-0 bg-gradient-to-br from-green-500/0 to-emerald-600/0 group-hover:from-green-500/5 group-hover:to-emerald-600/5 transition-opacity duration-500"></div>
                   <div className="relative h-64 overflow-hidden">
                     <Image
-                      src={imageUrl(r.image)}
+                      src={r.image ? (imageUrl(r.image) || "/projects/feature-film.png") : "/projects/feature-film.png"}
                       alt={r.title}
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        if (target.src !== "/projects/feature-film.png") {
+                          target.src = "/projects/feature-film.png";
+                        }
+                      }}
+                      unoptimized={true}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
                     <div className="absolute top-4 left-4">

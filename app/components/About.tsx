@@ -22,6 +22,181 @@ import {
 } from "lucide-react";
 import { imageUrl } from "../lib/api";
 
+// Component for Director Image with reliable animation
+function DirectorImageSection({ aboutData }: { aboutData: any }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    // Check if element is already visible on mount
+    const checkInitialVisibility = () => {
+      if (ref.current) {
+        const rect = ref.current.getBoundingClientRect();
+        const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+        if (isInViewport) {
+          setIsVisible(true);
+          return;
+        }
+      }
+    };
+
+    // Initial check
+    checkInitialVisibility();
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      }
+    );
+
+    // Small delay to ensure DOM is ready
+    const timeoutId = setTimeout(() => {
+      if (ref.current) {
+        observer.observe(ref.current);
+      }
+    }, 100);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className={`relative transition-all duration-700 delay-200 ${
+        isVisible
+          ? "opacity-100 translate-x-0"
+          : "opacity-0 -translate-x-5"
+      }`}
+    >
+      <div className="relative w-full aspect-square rounded-2xl overflow-hidden border border-zinc-200 shadow-2xl">
+        <Image
+          src={imageUrl(aboutData.directorImage) || "https://placehold.co/600x600/1a1a1a/fbbf24?text=Director"}
+          alt={aboutData.directorName}
+          fill
+          className="object-cover hover:scale-105 transition-transform duration-700"
+        />
+      </div>
+      <div className="absolute -bottom-6 -right-6 w-48 h-48 bg-amber-50 rounded-full -z-10 blur-3xl"></div>
+    </div>
+  );
+}
+
+// Component for Director Content with reliable animation
+function DirectorContentSection({ aboutData }: { aboutData: any }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    // Check if element is already visible on mount
+    const checkInitialVisibility = () => {
+      if (ref.current) {
+        const rect = ref.current.getBoundingClientRect();
+        const isInViewport = rect.top < window.innerHeight && rect.bottom > 0;
+        if (isInViewport) {
+          setIsVisible(true);
+          return;
+        }
+      }
+    };
+
+    // Initial check
+    checkInitialVisibility();
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      }
+    );
+
+    // Small delay to ensure DOM is ready
+    const timeoutId = setTimeout(() => {
+      if (ref.current) {
+        observer.observe(ref.current);
+      }
+    }, 100);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className={`space-y-6 transition-all duration-700 delay-400 ${
+        isVisible
+          ? "opacity-100 translate-x-0"
+          : "opacity-0 translate-x-5"
+      }`}
+    >
+      <div>
+        <h3 className="text-3xl font-bold text-black mb-2">
+          {aboutData.directorName}
+        </h3>
+        <p className="text-xl text-amber-600 font-medium">
+          {aboutData.directorTitle}
+        </p>
+      </div>
+
+      <div className="space-y-4 text-zinc-600 leading-relaxed">
+        <p>
+          With over 15 years of experience in the film industry, Mr.
+          Pramod Kumar Gupta has established himself as a visionary
+          director and mentor in Kanpur, Uttar Pradesh. His journey began as an assistant
+          director in Mumbai's bustling film industry, and through
+          dedication and passion, he rose to become one of the most
+          respected names in regional cinema.
+        </p>
+        <p>
+          Under his leadership, PFC Films in Kanpur has produced numerous
+          critically acclaimed films and has become Kanpur's premier
+          destination for aspiring filmmakers, dancers, and actors. His unique approach
+          combines traditional storytelling with modern cinematic
+          techniques.
+        </p>
+        <p>
+          Beyond filmmaking, he is passionate about education and has
+          trained over 1000 students in Kanpur, helping them pursue their dreams
+          in the entertainment industry. PFC FILMS and Dhamal India Dance Academy in Kanpur continue to be the top choice for dance and acting training in Uttar Pradesh.
+        </p>
+      </div>
+
+      <div className="flex items-center space-x-3 text-amber-600 bg-amber-50 w-fit px-4 py-2 rounded-full border border-amber-100">
+        <Trophy className="w-5 h-5" />
+        <span className="font-semibold">
+          National Film Award Winner 2023
+        </span>
+      </div>
+    </div>
+  );
+}
+
 // --- Utility: useTicker Hook (Copied/Adapted for reuse) ---
 function useTicker({
   initialSpeed = 1,
@@ -87,115 +262,6 @@ export default function About() {
     fetchData();
   }, []);
 
-  const achievements = aboutData.achievements.length > 0 ? aboutData.achievements : [
-    {
-      icon: <Film className="w-6 h-6" />,
-      number: "50+",
-      label: "Films Produced",
-    },
-    {
-      icon: <Award className="w-6 h-6" />,
-      number: "25+",
-      label: "Awards Won",
-    },
-    {
-      icon: <Users className="w-6 h-6" />,
-      number: "1000+",
-      label: "Students Trained",
-    },
-    {
-      icon: <Star className="w-6 h-6" />,
-      number: "15+",
-      label: "Years Experience",
-    },
-  ];
-
-  // Default celebrities if none from backend
-  const defaultCelebrities = [
-    {
-      name: "Rajesh Kumar",
-      image: "https://placehold.co/400x400/1a1a1a/fbbf24?text=Celebrity+1",
-      role: "Bollywood Actor",
-      gallery: [
-        "https://placehold.co/400x600/1a1a1a/fbbf24?text=Rajesh+1",
-        "https://placehold.co/600x400/2a2a2a/fbbf24?text=Rajesh+2",
-        "https://placehold.co/500x500/3a3a3a/fbbf24?text=Rajesh+3",
-        "https://placehold.co/400x500/4a4a4a/fbbf24?text=Rajesh+4",
-      ],
-    },
-    {
-      name: "Priya Sharma",
-      image: "https://placehold.co/400x400/1a1a1a/fbbf24?text=Celebrity+2",
-      role: "Film Producer",
-      gallery: [
-        "https://placehold.co/600x400/1a1a1a/fbbf24?text=Priya+1",
-        "https://placehold.co/400x600/2a2a2a/fbbf24?text=Priya+2",
-        "https://placehold.co/600x400/3a3a3a/fbbf24?text=Priya+3",
-        "https://placehold.co/500x500/4a4a4a/fbbf24?text=Priya+4",
-      ],
-    },
-    {
-      name: "Amit Verma",
-      image: "https://placehold.co/400x400/1a1a1a/fbbf24?text=Celebrity+3",
-      role: "Director",
-      gallery: [
-        "https://placehold.co/600x400/1a1a1a/fbbf24?text=Amit+1",
-        "https://placehold.co/400x600/2a2a2a/fbbf24?text=Amit+2",
-        "https://placehold.co/500x400/3a3a3a/fbbf24?text=Amit+3",
-      ],
-    },
-    {
-      name: "Neha Kapoor",
-      image: "https://placehold.co/400x400/1a1a1a/fbbf24?text=Celebrity+4",
-      role: "Actress",
-      gallery: [
-        "https://placehold.co/400x500/1a1a1a/fbbf24?text=Neha+1",
-        "https://placehold.co/600x400/2a2a2a/fbbf24?text=Neha+2",
-        "https://placehold.co/500x500/3a3a3a/fbbf24?text=Neha+3",
-        "https://placehold.co/400x600/4a4a4a/fbbf24?text=Neha+4",
-      ],
-    },
-    {
-      name: "Vikram Singh",
-      image: "https://placehold.co/400x400/1a1a1a/fbbf24?text=Celebrity+5",
-      role: "Music Director",
-      gallery: [
-        "https://placehold.co/600x400/1a1a1a/fbbf24?text=Vikram+1",
-        "https://placehold.co/400x400/2a2a2a/fbbf24?text=Vikram+2",
-        "https://placehold.co/600x500/3a3a3a/fbbf24?text=Vikram+3",
-      ],
-    },
-    {
-      name: "Ananya Reddy",
-      image: "https://placehold.co/400x400/1a1a1a/fbbf24?text=Celebrity+6",
-      role: "Choreographer",
-      gallery: [
-        "https://placehold.co/400x600/1a1a1a/fbbf24?text=Ananya+1",
-        "https://placehold.co/600x400/2a2a2a/fbbf24?text=Ananya+2",
-        "https://placehold.co/500x500/3a3a3a/fbbf24?text=Ananya+3",
-      ],
-    },
-    {
-      name: "Sanjay Dutta",
-      image: "https://placehold.co/400x400/1a1a1a/fbbf24?text=Celebrity+7",
-      role: "Action Director",
-      gallery: [
-        "https://placehold.co/600x400/1a1a1a/fbbf24?text=Sanjay+1",
-        "https://placehold.co/400x600/2a2a2a/fbbf24?text=Sanjay+2",
-        "https://placehold.co/500x500/3a3a3a/fbbf24?text=Sanjay+3",
-      ],
-    },
-    {
-      name: "Meera Iyer",
-      image: "https://placehold.co/400x400/1a1a1a/fbbf24?text=Celebrity+8",
-      role: "Screenwriter",
-      gallery: [
-        "https://placehold.co/600x400/1a1a1a/fbbf24?text=Meera+1",
-        "https://placehold.co/400x500/2a2a2a/fbbf24?text=Meera+2",
-        "https://placehold.co/500x400/3a3a3a/fbbf24?text=Meera+3",
-      ],
-    },
-  ];
 
   // --- Marquee Logic ---
   const [selectedCelebrity, setSelectedCelebrity] = useState<
@@ -281,61 +347,10 @@ export default function About() {
       
       {/* Director Section */}
       <section className="py-20 px-4 bg-white">
-        
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="relative animate-on-scroll opacity-0 translate-x-[-20px] transition-all duration-700 delay-200 forwards" suppressHydrationWarning>
-              <div className="relative w-full aspect-square rounded-2xl overflow-hidden border border-zinc-200 shadow-2xl">
-                <Image
-                  src={imageUrl(aboutData.directorImage) || "https://placehold.co/600x600/1a1a1a/fbbf24?text=Director"}
-                  alt={aboutData.directorName}
-                  fill
-                  className="object-cover hover:scale-105 transition-transform duration-700"
-                />
-              </div>
-              <div className="absolute -bottom-6 -right-6 w-48 h-48 bg-amber-50 rounded-full -z-10 blur-3xl"></div>
-            </div>
-
-            <div className="space-y-6 animate-on-scroll opacity-0 translate-x-[20px] transition-all duration-700 delay-400 forwards" suppressHydrationWarning>
-              <div>
-                <h3 className="text-3xl font-bold text-black mb-2">
-                  {aboutData.directorName}
-                </h3>
-                <p className="text-xl text-amber-600 font-medium">
-                  {aboutData.directorTitle}
-                </p>
-              </div>
-
-              <div className="space-y-4 text-zinc-600 leading-relaxed">
-                <p>
-                  With over 15 years of experience in the film industry, Mr.
-                  Pramod Kumar Gupta has established himself as a visionary
-                  director and mentor in Kanpur, Uttar Pradesh. His journey began as an assistant
-                  director in Mumbai's bustling film industry, and through
-                  dedication and passion, he rose to become one of the most
-                  respected names in regional cinema.
-                </p>
-                <p>
-                  Under his leadership, PFC Films in Kanpur has produced numerous
-                  critically acclaimed films and has become Kanpur's premier
-                  destination for aspiring filmmakers, dancers, and actors. His unique approach
-                  combines traditional storytelling with modern cinematic
-                  techniques.
-                </p>
-                <p>
-                  Beyond filmmaking, he is passionate about education and has
-                  trained over 1000 students in Kanpur, helping them pursue their dreams
-                  in the entertainment industry. PFC FILMS and Dhamal India Dance Academy in Kanpur continue to be the top choice for dance and acting training in Uttar Pradesh.
-                </p>
-              </div>
-
-              <div className="flex items-center space-x-3 text-amber-600 bg-amber-50 w-fit px-4 py-2 rounded-full border border-amber-100">
-                <Trophy className="w-5 h-5" />
-                <span className="font-semibold">
-                  National Film Award Winner 2023
-                </span>
-              </div>
-            </div>
+            <DirectorImageSection aboutData={aboutData} />
+            <DirectorContentSection aboutData={aboutData} />
           </div>
         </div>
       </section>
@@ -432,11 +447,18 @@ export default function About() {
                   >
                     <div className="relative aspect-square rounded-lg overflow-hidden mb-3 bg-zinc-100">
                       <Image
-                        src={imageUrl(celebrity.image)}
+                        src={celebrity.image ? (imageUrl(celebrity.image) || "/projects/feature-film.png") : "/projects/feature-film.png"}
                         alt={celebrity.name}
                         fill
                         className="object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500"
                         draggable={false}
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          if (target.src !== "/projects/feature-film.png") {
+                            target.src = "/projects/feature-film.png";
+                          }
+                        }}
+                        unoptimized={true}
                       />
                     </div>
                     <div className="text-center">
@@ -492,10 +514,17 @@ export default function About() {
                       className="relative aspect-[3/4] sm:aspect-[4/3] rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all group"
                     >
                       <Image
-                        src={imageUrl(img)}
+                        src={img ? (imageUrl(img) || "/projects/feature-film.png") : "/projects/feature-film.png"}
                         alt={`${selectedCelebrity.name} gallery ${idx}`}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          if (target.src !== "/projects/feature-film.png") {
+                            target.src = "/projects/feature-film.png";
+                          }
+                        }}
+                        unoptimized={true}
                       />
                     </div>
                   ))}

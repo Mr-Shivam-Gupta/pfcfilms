@@ -14,15 +14,6 @@ const categoryColors: Record<string, string> = {
   "Feature Films": "from-purple-500/20 to-pink-500/20",
 };
 
-const categoryImages: Record<string, string> = {
-  "Music Videos": "/projects/music-video.png",
-  "Short Films": "/projects/short-film.png",
-  "Commercials": "/projects/commercial.png",
-  "Reality Shows": "/projects/reality-show.png",
-  "Web Series": "/projects/web-series.png",
-  "Feature Films": "/projects/feature-film.png",
-};
-
 export default function RecentProjects() {
   const [topProjects, setTopProjects] = useState<TopProject[]>([]);
   const [loading, setLoading] = useState(true);
@@ -43,13 +34,16 @@ export default function RecentProjects() {
     fetchData();
   }, []);
 
-  const projects = topProjects.map((p, idx) => ({
-    id: p._id || `project-${idx}`,
-    title: p.title,
-    category: p.category,
-    image: p.image || categoryImages[p.category] || "/projects/feature-film.png",
-    color: categoryColors[p.category] || "from-purple-500/20 to-pink-500/20",
-  }));
+  const projects = topProjects.map((p, idx) => {
+    const imagePath = p.image ? imageUrl(p.image) : "/projects/feature-film.png";
+    return {
+      id: p._id || `project-${idx}`,
+      title: p.title,
+      category: p.category,
+      image: imagePath || "/projects/feature-film.png",
+      color: categoryColors[p.category] || "from-purple-500/20 to-pink-500/20",
+    };
+  });
 
   // Duplicate projects multiple times for smooth infinite scroll
   // If there are few projects, duplicate more times to ensure seamless scrolling
@@ -99,10 +93,17 @@ export default function RecentProjects() {
                       className={`aspect-square flex items-center justify-center text-6xl bg-gradient-to-br ${project.color} relative overflow-hidden`}
                     >
                       <Image
-                        src={imageUrl(project.image)}
+                        src={project.image}
                         alt={project.title}
                         fill
                         className="object-cover transform transition-all duration-700 group-hover:scale-110"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          if (target.src !== "/projects/feature-film.png") {
+                            target.src = "/projects/feature-film.png";
+                          }
+                        }}
+                        unoptimized={project.image.startsWith("http://") || project.image.startsWith("https://")}
                       />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-500"></div>
                     </div>

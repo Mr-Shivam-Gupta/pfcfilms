@@ -246,10 +246,17 @@ export default function Gallery() {
                   onClick={() => setSelectedMedia({ ...photo, type: "photo" })}
                 >
                   <Image
-                    src={imageUrl(photo.image)}
+                    src={photo.image ? (imageUrl(photo.image) || "/projects/feature-film.png") : "/projects/feature-film.png"}
                     alt={photo.title}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      if (target.src !== "/projects/feature-film.png") {
+                        target.src = "/projects/feature-film.png";
+                      }
+                    }}
+                    unoptimized={true}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="absolute bottom-0 left-0 right-0 p-4">
@@ -286,10 +293,17 @@ export default function Gallery() {
                   onClick={() => setSelectedMedia({ ...video, type: "video" })}
                 >
                   <Image
-                    src={imageUrl(video.thumbnail || video.image)}
+                    src={(video.thumbnail || video.image) ? (imageUrl(video.thumbnail || video.image) || "/projects/feature-film.png") : "/projects/feature-film.png"}
                     alt={video.title}
                     fill
                     className="object-cover"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      if (target.src !== "/projects/feature-film.png") {
+                        target.src = "/projects/feature-film.png";
+                      }
+                    }}
+                    unoptimized={true}
                   />
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors duration-300 flex items-center justify-center">
                     <div className="bg-amber-400 rounded-full p-4 transform transition-all duration-300 group-hover:scale-110">
@@ -332,10 +346,17 @@ export default function Gallery() {
             {selectedMedia.type === "photo" ? (
               <div className="relative w-full aspect-video">
                 <Image
-                  src={imageUrl(selectedMedia.image)}
+                  src={selectedMedia.image ? (imageUrl(selectedMedia.image) || "/projects/feature-film.png") : "/projects/feature-film.png"}
                   alt={selectedMedia.title}
                   fill
                   className="object-contain"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    if (target.src !== "/projects/feature-film.png") {
+                      target.src = "/projects/feature-film.png";
+                    }
+                  }}
+                  unoptimized={true}
                 />
               </div>
             ) : (

@@ -351,10 +351,17 @@ export default function Academy() {
                     {/* Image */}
                     <div className="relative h-64">
                       <Image
-                        src={imageUrl(course.image)}
+                        src={course.image ? (imageUrl(course.image) || "/projects/feature-film.png") : "/projects/feature-film.png"}
                         alt={course.title}
                         fill
                         className="object-cover group-hover:scale-110 transition-transform duration-700"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          if (target.src !== "/projects/feature-film.png") {
+                            target.src = "/projects/feature-film.png";
+                          }
+                        }}
+                        unoptimized={true}
                       />
                       <div className="absolute inset-0 bg-black/50" />
                       <div className="absolute bottom-6 left-6 right-6">
@@ -478,11 +485,18 @@ export default function Academy() {
                         <div className="flex items-center space-x-4 mb-4">
                           <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-amber-400">
                             <Image
-                              src={imageUrl(testimonial.image)}
+                              src={testimonial.image ? (imageUrl(testimonial.image) || "/projects/feature-film.png") : "/projects/feature-film.png"}
                               alt={testimonial.name}
                               fill
                               className="object-cover"
                               draggable={false}
+                              onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                if (target.src !== "/projects/feature-film.png") {
+                                  target.src = "/projects/feature-film.png";
+                                }
+                              }}
+                              unoptimized={true}
                             />
                           </div>
                           <div>

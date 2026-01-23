@@ -44,32 +44,6 @@ export default function Hero() {
         >
           PFC FILMS - Premier Dance Academy & Acting School in Kanpur | Dhamal India Dance | Professional Training by Pramod Kumar Gupta
         </p>
-
-        {/* <div
-          className="flex flex-col sm:flex-row gap-4 justify-center animate-fadeInUp"
-          style={{ animationDelay: "600ms" }}>
-          <button className="group bg-amber-400 hover:bg-amber-500 text-black px-8 py-4 rounded-full font-semibold flex items-center justify-center space-x-2 transition-all transform hover:scale-105 hover:shadow-2xl hover:shadow-amber-500/30">
-            <Play
-              size={20}
-              className="transition-transform group-hover:scale-110"
-            />
-            <span>View Our Work</span>
-            <ArrowRight
-              size={20}
-              className="transition-transform group-hover:translate-x-1"
-            />
-          </button>
-          <button className="group border-2 border-amber-400 hover:bg-amber-400 text-black px-8 py-4 rounded-full font-semibold transition-all transform hover:scale-105 relative overflow-hidden">
-            <span className="relative z-10 flex items-center space-x-2">
-              <span>Join Dance Academy</span>
-              <Sparkles
-                size={20}
-                className="transition-transform group-hover:rotate-12"
-              />
-            </span>
-            <div className="absolute inset-0 bg-amber-400 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
-          </button>
-        </div> */}
       </div>
 
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
