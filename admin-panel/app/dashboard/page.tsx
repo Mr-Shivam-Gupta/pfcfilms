@@ -24,8 +24,7 @@ import Celebrities from "../components/Celebrities";
 import Testimonials from "../components/Testimonials";
 import Awards from "../components/Awards";
 import Stats from "../components/Stats";
-import Services from "../components/Services";
-import About from "../components/About";
+import TopProjects from "../components/TopProjects";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
@@ -87,8 +86,7 @@ export default function Dashboard() {
     { id: "testimonials", label: "Testimonials", icon: MessageSquare },
     { id: "awards", label: "Awards", icon: Award },
     { id: "stats", label: "Stats", icon: BarChart3 },
-    { id: "services", label: "Services", icon: Film },
-    { id: "about", label: "About", icon: Users },
+    { id: "top-projects", label: "Top Projects", icon: Film },
   ];
 
   return (
@@ -266,8 +264,7 @@ export default function Dashboard() {
           {activeTab === "testimonials" && <Testimonials />}
           {activeTab === "awards" && <Awards />}
           {activeTab === "stats" && <Stats />}
-          {activeTab === "services" && <Services />}
-          {activeTab === "about" && <About />}
+          {activeTab === "top-projects" && <TopProjects />}
         </main>
       </div>
 

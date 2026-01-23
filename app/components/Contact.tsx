@@ -70,28 +70,36 @@ export default function Contact() {
   ];
 
   return (
-    <section className="relative min-h-screen py-20 bg-zinc-50">
-      {/* Animated Background Orbs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/20 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-400/20 rounded-full blur-3xl animate-float-delayed"></div>
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16 animate-fadeInUp">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-black">
+    <section className="relative min-h-screen bg-gradient-to-br from-zinc-50 via-white to-amber-50/30">
+      {/* HERO */}
+      <section className="py-24 text-center relative overflow-hidden">
+        {/* Animated Background Gradient Orbs */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-amber-200/30 to-transparent rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-blue-200/20 to-transparent rounded-full blur-3xl"></div>
+        </div>
+        <div className="relative z-10">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tight">
             Get In{" "}
-            <span className="text-amber-500 inline-block animate-shimmer bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 bg-clip-text text-transparent bg-[length:200%_100%]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700">
               Touch
             </span>
-          </h2>
-          <p className="text-zinc-600 text-lg max-w-2xl mx-auto">
-            Join the best Dance Academy & Acting School in Kanpur! Contact PFC FILMS for dance classes, acting courses, and film training. Located in Kanpur, Uttar Pradesh.
+          </h1>
+          <p className="max-w-2xl mx-auto text-xl text-zinc-600 leading-relaxed">
+            Join the best Dance Academy & Acting School in Kanpur! Contact PFC FILMS for dance classes, acting courses, and film training.
           </p>
         </div>
+      </section>
 
-        <div className="grid md:grid-cols-2 gap-12">
+      <div className="relative py-20">
+        {/* Animated Background Orbs */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/20 rounded-full blur-3xl animate-float"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-400/20 rounded-full blur-3xl animate-float-delayed"></div>
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-2 gap-12">
           {/* Contact Information */}
           <div
             className="space-y-8 animate-fadeInUp"
@@ -286,6 +294,7 @@ export default function Contact() {
                 <Send className="w-5 h-5" />
               </button>
             </form>
+          </div>
           </div>
         </div>
       </div>

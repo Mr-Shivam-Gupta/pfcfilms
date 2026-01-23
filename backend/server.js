@@ -33,9 +33,8 @@ app.use('/api/contact', require('./routes/contact'));
 app.use('/api/celebrities', require('./routes/celebrities'));
 app.use('/api/testimonials', require('./routes/testimonials'));
 app.use('/api/awards', require('./routes/awards'));
-app.use('/api/about', require('./routes/about'));
 app.use('/api/stats', require('./routes/stats'));
-app.use('/api/services', require('./routes/services'));
+app.use('/api/top-projects', require('./routes/top-projects'));
 app.use('/api/admin', require('./routes/admin'));
 
 // MongoDB Connection

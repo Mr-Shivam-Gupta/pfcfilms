@@ -95,29 +95,17 @@ export interface Stat {
   order?: number;
 }
 
-export interface Service {
+export interface TopProject {
   _id: string;
   title: string;
-  description: string;
-  icon: string;
+  category: string;
+  image: string;
+  description?: string;
+  productionId?: string;
   order?: number;
   featured?: boolean;
 }
 
-export interface About {
-  directorName: string;
-  directorTitle: string;
-  directorImage: string;
-  directorBio: string;
-  quote: string;
-  vision: string;
-  mission: string;
-  achievements: Array<{
-    icon: string;
-    number: string;
-    label: string;
-  }>;
-}
 
 // API Functions
 export async function getProductions(category?: string, featured?: boolean): Promise<Production[]> {
@@ -218,30 +206,20 @@ export async function getStats(): Promise<Stat[]> {
   }
 }
 
-export async function getServices(featured?: boolean): Promise<Service[]> {
+export async function getTopProjects(featured?: boolean): Promise<TopProject[]> {
   try {
     const params = new URLSearchParams();
     if (featured) params.append('featured', 'true');
     
-    const response = await fetch(`${API_URL}/services?${params.toString()}`);
+    const response = await fetch(`${API_URL}/top-projects?${params.toString()}`);
     const data = await response.json();
     return data.success ? data.data : [];
   } catch (error) {
-    console.error('Error fetching services:', error);
+    console.error('Error fetching top projects:', error);
     return [];
   }
 }
 
-export async function getAbout(): Promise<About | null> {
-  try {
-    const response = await fetch(`${API_URL}/about`);
-    const data = await response.json();
-    return data.success ? data.data : null;
-  } catch (error) {
-    console.error('Error fetching about:', error);
-    return null;
-  }
-}
 
 export async function submitContact(formData: {
   name: string;

@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Film, Camera, Music, Drama } from "lucide-react";
-import { getServices, type Service } from "../lib/api";
 
 const iconMap: Record<string, React.ReactNode> = {
   Film: <Film size={40} />,
@@ -12,21 +11,8 @@ const iconMap: Record<string, React.ReactNode> = {
 };
 
 export default function Services() {
-  const [services, setServices] = useState<Service[]>([]);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      // Fetch in background without blocking initial render
-      const data = await getServices();
-      if (data.length > 0) {
-        setServices(data);
-      }
-    };
-    fetchData();
-  }, []);
-
-  const defaultServices = [
+  // Static services data
+  const services = [
     {
       _id: "1",
       title: "Film Production",
@@ -57,8 +43,6 @@ export default function Services() {
     },
   ];
 
-  const displayServices = services.length > 0 ? services : defaultServices;
-
   return (
     <section className="py-20 px-4 bg-white relative">
       <div className="max-w-7xl mx-auto relative z-10">
@@ -69,7 +53,7 @@ export default function Services() {
           What our <span className="text-amber-500">expertise</span>
         </h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {displayServices.map((service, idx) => {
+          {services.map((service, idx) => {
             const IconComponent = iconMap[service.icon] || <Film size={40} />;
             return (
               <div

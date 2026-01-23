@@ -61,26 +61,33 @@ function useTicker({
 }
 
 export default function About() {
-  const [aboutData, setAboutData] = useState<any>(null);
   const [celebrities, setCelebrities] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Static about data
+  const aboutData = {
+    directorName: "Mr. Pramod Kumar Gupta",
+    directorTitle: "Founder & Creative Director",
+    directorImage: "",
+    directorBio: "",
+    quote: "Cinema is not just about telling stories; it's about creating experiences that touch hearts and transform lives. Every frame is an opportunity to inspire.",
+    vision: "To be the global benchmark in film production and cinematic education, creating a legacy of storytelling that transcends borders and cultures, inspiring generations to dream beyond the ordinary.",
+    mission: "To nurture raw talent into world-class cinematic artists through immersive training, while simultaneously producing high-caliber content that entertains, educates, and elevates the standards of regional and national cinema.",
+    achievements: []
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const { getAbout, getCelebrities } = await import("../lib/api");
-      const [about, celebs] = await Promise.all([
-        getAbout(),
-        getCelebrities(),
-      ]);
-      setAboutData(about);
+      const { getCelebrities } = await import("../lib/api");
+      const celebs = await getCelebrities();
       setCelebrities(celebs);
       setLoading(false);
     };
     fetchData();
   }, []);
 
-  const achievements = aboutData?.achievements || [
+  const achievements = aboutData.achievements.length > 0 ? aboutData.achievements : [
     {
       icon: <Film className="w-6 h-6" />,
       number: "50+",
@@ -248,10 +255,31 @@ export default function About() {
 
   return (
     <div className="flex flex-col w-full">
+      {/* HERO */}
+      <section className="py-24 text-center relative overflow-hidden">
+        {/* Animated Background Gradient Orbs */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-amber-200/30 to-transparent rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-blue-200/20 to-transparent rounded-full blur-3xl"></div>
+        </div>
+        <div className="relative z-10">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tight">
+            About{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700">
+              Us
+            </span>
+          </h1>
+          <p className="max-w-2xl mx-auto text-xl text-zinc-600 leading-relaxed">
+            Discover our story, vision, and the passionate team behind PFC Films
+          </p>
+        </div>
+      </section>
+      
       {/* Director Section */}
       <section className="py-20 px-4 bg-white">
+        
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16 animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 forwards" suppressHydrationWarning>
+          {/* <div className="text-center mb-16 animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 forwards" suppressHydrationWarning>
             <h2 className="text-4xl md:text-5xl font-bold text-black mb-4">
               About the <span className="text-amber-500">Director</span>
             </h2>
@@ -259,14 +287,14 @@ export default function About() {
               Visionary filmmaker, mentor, and the driving force behind PFC
               Films
             </p>
-          </div>
+          </div> */}
 
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="relative animate-on-scroll opacity-0 translate-x-[-20px] transition-all duration-700 delay-200 forwards" suppressHydrationWarning>
               <div className="relative w-full aspect-square rounded-2xl overflow-hidden border border-zinc-200 shadow-2xl">
                 <Image
-                  src={imageUrl(aboutData?.directorImage) || "https://placehold.co/600x600/1a1a1a/fbbf24?text=Director"}
-                  alt={aboutData?.directorName || "Director"}
+                  src={imageUrl(aboutData.directorImage) || "https://placehold.co/600x600/1a1a1a/fbbf24?text=Director"}
+                  alt={aboutData.directorName}
                   fill
                   className="object-cover hover:scale-105 transition-transform duration-700"
                 />
@@ -277,40 +305,34 @@ export default function About() {
             <div className="space-y-6 animate-on-scroll opacity-0 translate-x-[20px] transition-all duration-700 delay-400 forwards" suppressHydrationWarning>
               <div>
                 <h3 className="text-3xl font-bold text-black mb-2">
-                  {aboutData?.directorName || "Mr. Pramod Kumar Gupta"}
+                  {aboutData.directorName}
                 </h3>
                 <p className="text-xl text-amber-600 font-medium">
-                  {aboutData?.directorTitle || "Founder & Creative Director"}
+                  {aboutData.directorTitle}
                 </p>
               </div>
 
               <div className="space-y-4 text-zinc-600 leading-relaxed">
-                {aboutData?.directorBio ? (
-                  <p>{aboutData.directorBio}</p>
-                ) : (
-                  <>
-                    <p>
-                      With over 15 years of experience in the film industry, Mr.
-                      Pramod Kumar Gupta has established himself as a visionary
-                      director and mentor in Kanpur, Uttar Pradesh. His journey began as an assistant
-                      director in Mumbai's bustling film industry, and through
-                      dedication and passion, he rose to become one of the most
-                      respected names in regional cinema.
-                    </p>
-                    <p>
-                      Under his leadership, PFC Films in Kanpur has produced numerous
-                      critically acclaimed films and has become Kanpur's premier
-                      destination for aspiring filmmakers, dancers, and actors. His unique approach
-                      combines traditional storytelling with modern cinematic
-                      techniques.
-                    </p>
-                    <p>
-                      Beyond filmmaking, he is passionate about education and has
-                      trained over 1000 students in Kanpur, helping them pursue their dreams
-                      in the entertainment industry. PFC FILMS and Dhamal India Dance Academy in Kanpur continue to be the top choice for dance and acting training in Uttar Pradesh.
-                    </p>
-                  </>
-                )}
+                <p>
+                  With over 15 years of experience in the film industry, Mr.
+                  Pramod Kumar Gupta has established himself as a visionary
+                  director and mentor in Kanpur, Uttar Pradesh. His journey began as an assistant
+                  director in Mumbai's bustling film industry, and through
+                  dedication and passion, he rose to become one of the most
+                  respected names in regional cinema.
+                </p>
+                <p>
+                  Under his leadership, PFC Films in Kanpur has produced numerous
+                  critically acclaimed films and has become Kanpur's premier
+                  destination for aspiring filmmakers, dancers, and actors. His unique approach
+                  combines traditional storytelling with modern cinematic
+                  techniques.
+                </p>
+                <p>
+                  Beyond filmmaking, he is passionate about education and has
+                  trained over 1000 students in Kanpur, helping them pursue their dreams
+                  in the entertainment industry. PFC FILMS and Dhamal India Dance Academy in Kanpur continue to be the top choice for dance and acting training in Uttar Pradesh.
+                </p>
               </div>
 
               <div className="flex items-center space-x-3 text-amber-600 bg-amber-50 w-fit px-4 py-2 rounded-full border border-amber-100">
@@ -346,13 +368,13 @@ export default function About() {
               </div>
 
               <p className="text-2xl md:text-3xl text-zinc-300 font-serif italic mb-8 relative z-10 leading-relaxed">
-                "{aboutData?.quote || "Cinema is not just about telling stories; it's about creating experiences that touch hearts and transform lives. Every frame is an opportunity to inspire."}"
+                "{aboutData.quote}"
               </p>
 
               <div className="inline-flex items-center space-x-3 relative z-10">
                 <div className="h-px w-12 bg-amber-500"></div>
                 <p className="text-white font-bold uppercase tracking-widest text-sm">
-                  {aboutData?.directorName || "Mr. Pramod Kumar Gupta"}
+                  {aboutData.directorName}
                 </p>
                 <div className="h-px w-12 bg-amber-500"></div>
               </div>
@@ -518,7 +540,7 @@ export default function About() {
                   Our Vision
                 </h3>
                 <p className="text-zinc-600 leading-relaxed text-lg font-medium">
-                  {aboutData?.vision || "To be the global benchmark in film production and cinematic education, creating a legacy of storytelling that transcends borders and cultures, inspiring generations to dream beyond the ordinary."}
+                  {aboutData.vision}
                 </p>
               </div>
 
@@ -538,7 +560,7 @@ export default function About() {
                   Our Mission
                 </h3>
                 <p className="text-zinc-600 leading-relaxed text-lg font-medium">
-                  {aboutData?.mission || "To nurture raw talent into world-class cinematic artists through immersive training, while simultaneously producing high-caliber content that entertains, educates, and elevates the standards of regional and national cinema."}
+                  {aboutData.mission}
                 </p>
               </div>
 

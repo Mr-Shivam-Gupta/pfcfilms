@@ -1,286 +1,240 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { ChevronRight, ArrowRight, Calendar, MapPin } from "lucide-react";
+import { ChevronRight, ArrowRight, Calendar, MapPin, X, Award, Film, Clock, Tag } from "lucide-react";
+import { getProductions, getAwards, imageUrl, type Production, type Award as AwardType } from "../lib/api";
 
 interface Activity {
   title: string;
   event: string;
   date: string;
   image: string;
+  originalData?: Production | AwardType;
+  type: "production" | "award";
 }
 
-type ActivityTab = "awards" | "shows" | "shooting" | "releases";
+type ActivityTab = "awards" | "productions";
+
+// Activity Details Modal Component
+function ActivityDetailsModal({
+  activity,
+  onClose,
+}: {
+  activity: Activity;
+  onClose: () => void;
+}) {
+  const isProduction = activity.type === "production";
+  const production = isProduction ? (activity.originalData as Production) : null;
+  const award = !isProduction ? (activity.originalData as AwardType) : null;
+  const isUrl = (str: string) => str.startsWith("http") || str.startsWith("/");
+  const hasImage = activity.image && isUrl(activity.image);
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div
+        className="bg-gradient-to-br from-zinc-900 via-zinc-800 to-black rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-white/10 shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="relative h-64 md:h-80 overflow-hidden">
+          {hasImage ? (
+            <img
+              src={imageUrl(activity.image)}
+              alt={activity.title}
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-amber-500/20 to-amber-600/20">
+              <span className="text-6xl">{isProduction ? "🎬" : "🏆"}</span>
+            </div>
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/50 to-transparent"></div>
+          
+          {/* Close Button */}
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 p-2 rounded-full bg-black/50 hover:bg-black/70 text-white transition-colors z-10"
+            aria-label="Close"
+          >
+            <X className="w-6 h-6" />
+          </button>
+
+          {/* Title Overlay */}
+          <div className="absolute bottom-0 left-0 right-0 p-6">
+            <div className="flex items-center gap-2 mb-2">
+              {isProduction ? (
+                <Film className="w-5 h-5 text-amber-400" />
+              ) : (
+                <Award className="w-5 h-5 text-amber-400" />
+              )}
+              <span className="text-sm font-semibold text-amber-400 uppercase tracking-wider">
+                {activity.event}
+              </span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
+              {activity.title}
+            </h2>
+            <div className="flex items-center gap-4 text-zinc-400 text-sm">
+              <div className="flex items-center gap-1">
+                <Calendar className="w-4 h-4" />
+                <span>{activity.date}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="p-6 md:p-8 space-y-6">
+          {/* Description */}
+          {(production?.description || award?.description) && (
+            <div>
+              <h3 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
+                <Tag className="w-5 h-5 text-amber-400" />
+                Description
+              </h3>
+              <p className="text-zinc-300 leading-relaxed">
+                {production?.description || award?.description}
+              </p>
+            </div>
+          )}
+
+          {/* Production Specific Details */}
+          {isProduction && production && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {production.genre && (
+                <div>
+                  <h4 className="text-sm font-semibold text-amber-400 mb-2 uppercase tracking-wider">
+                    Genre
+                  </h4>
+                  <p className="text-zinc-300">{production.genre}</p>
+                </div>
+              )}
+              {production.duration && (
+                <div>
+                  <h4 className="text-sm font-semibold text-amber-400 mb-2 uppercase tracking-wider flex items-center gap-2">
+                    <Clock className="w-4 h-4" />
+                    Duration
+                  </h4>
+                  <p className="text-zinc-300">{production.duration}</p>
+                </div>
+              )}
+              {production.status && (
+                <div>
+                  <h4 className="text-sm font-semibold text-amber-400 mb-2 uppercase tracking-wider">
+                    Status
+                  </h4>
+                  <p className="text-zinc-300">{production.status}</p>
+                </div>
+              )}
+              {production.awards && (
+                <div>
+                  <h4 className="text-sm font-semibold text-amber-400 mb-2 uppercase tracking-wider flex items-center gap-2">
+                    <Award className="w-4 h-4" />
+                    Awards
+                  </h4>
+                  <p className="text-zinc-300">{production.awards}</p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Award Specific Details */}
+          {!isProduction && award && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {award.project && (
+                <div>
+                  <h4 className="text-sm font-semibold text-amber-400 mb-2 uppercase tracking-wider flex items-center gap-2">
+                    <Film className="w-4 h-4" />
+                    Project
+                  </h4>
+                  <p className="text-zinc-300">{award.project}</p>
+                </div>
+              )}
+              {award.category && (
+                <div>
+                  <h4 className="text-sm font-semibold text-amber-400 mb-2 uppercase tracking-wider">
+                    Category
+                  </h4>
+                  <p className="text-zinc-300">{award.category}</p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Action Buttons */}
+          <div className="flex gap-4 pt-4 border-t border-white/10">
+            <button
+              onClick={onClose}
+              className="flex-1 px-6 py-3 rounded-lg bg-white/5 hover:bg-white/10 text-white font-semibold border border-white/10 hover:border-white/20 transition-all duration-300"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function RecentActivity() {
   const [activeActivityTab, setActiveActivityTab] =
     useState<ActivityTab>("awards");
+  const [productions, setProductions] = useState<Production[]>([]);
+  const [awards, setAwards] = useState<AwardType[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedActivity, setSelectedActivity] = useState<Activity | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const [prodsData, awardsData] = await Promise.all([
+          getProductions(undefined, true), // Get featured productions
+          getAwards(true), // Get featured awards
+        ]);
+        setProductions(prodsData);
+        setAwards(awardsData);
+      } catch (error) {
+        console.error("Failed to fetch activities:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
+  // Map backend data to Activity format
   const recentActivities: Record<ActivityTab, Activity[]> = {
-    awards: [
-      {
-        title: "Best Cinematography Award",
-        event: "Chennai International Film Festival",
-        date: "Jan 15, 2026",
-        image:
-          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Cinematography+Award",
-      },
-      {
-        title: "Best Director - Short Film",
-        event: "National Film Awards",
-        date: "Jan 10, 2026",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Best+Director",
-      },
-      {
-        title: "Audience Choice Award",
-        event: "Mumbai Film Festival",
-        date: "Dec 28, 2025",
-        image:
-          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Audience+Choice",
-      },
-      {
-        title: "Best Editing Award",
-        event: "South Indian Cinema Awards",
-        date: "Dec 20, 2025",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Best+Editing",
-      },
-      {
-        title: "Excellence in Production",
-        event: "Tamil Film Producers Council",
-        date: "Dec 15, 2025",
-        image:
-          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Production+Excellence",
-      },
-      {
-        title: "Best Music Video",
-        event: "MTV Music Awards",
-        date: "Dec 5, 2025",
-        image:
-          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Best+Music+Video",
-      },
-      {
-        title: "Outstanding Dance Performance",
-        event: "National Dance Championship",
-        date: "Nov 28, 2025",
-        image:
-          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Dance+Performance",
-      },
-      {
-        title: "Best Documentary",
-        event: "Documentary Film Festival",
-        date: "Nov 20, 2025",
-        image:
-          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Best+Documentary",
-      },
-      {
-        title: "Rising Star Production House",
-        event: "Film Industry Excellence Awards",
-        date: "Nov 10, 2025",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Rising+Star",
-      },
-      {
-        title: "Best Commercial Ad Campaign",
-        event: "Advertising Excellence Awards",
-        date: "Nov 5, 2025",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Ad+Campaign",
-      },
-    ],
-    shows: [
-      {
-        title: "Dance Reality Show - Season 2",
-        event: "Star Network",
-        date: "Jan 20, 2026",
-        image:
-          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Dance+Reality+Show",
-      },
-      {
-        title: "Behind The Scenes Documentary",
-        event: "Netflix Original",
-        date: "Jan 18, 2026",
-        image:
-          "https://placehold.co/600x400/1a1a1a/fbbf24?text=BTS+Documentary",
-      },
-      {
-        title: "Talent Hunt Show Finale",
-        event: "Zee Tamil",
-        date: "Jan 12, 2026",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Talent+Hunt",
-      },
-      {
-        title: "Celebrity Dance Battle",
-        event: "Vijay TV",
-        date: "Jan 8, 2026",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Dance+Battle",
-      },
-      {
-        title: "Film Making Workshop Series",
-        event: "PFC Studios Live",
-        date: "Jan 5, 2026",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Film+Workshop",
-      },
-      {
-        title: "Music Video Countdown Show",
-        event: "MTV India",
-        date: "Dec 30, 2025",
-        image:
-          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Music+Countdown",
-      },
-      {
-        title: "Dance Academy Showcase",
-        event: "Sun TV",
-        date: "Dec 25, 2025",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Dance+Showcase",
-      },
-      {
-        title: "Production House Special",
-        event: "Colors Tamil",
-        date: "Dec 20, 2025",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=TV+Special",
-      },
-      {
-        title: "Award Ceremony Live",
-        event: "Hotstar Premium",
-        date: "Dec 15, 2025",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Award+Ceremony",
-      },
-      {
-        title: "Making of Reality Show",
-        event: "Amazon Prime",
-        date: "Dec 10, 2025",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Making+Of",
-      },
-    ],
-    shooting: [
-      {
-        title: 'Feature Film - "Vaanam"',
-        event: "Outdoor Location - Ooty",
-        date: "Jan 22, 2026",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Vaanam+Shoot",
-      },
-      {
-        title: "Web Series Episode 5-8",
-        event: "Studio Shoot - Chennai",
-        date: "Jan 19, 2026",
-        image:
-          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Web+Series+Shoot",
-      },
-      {
-        title: "Commercial Ad - Tech Brand",
-        event: "Green Screen Studio",
-        date: "Jan 17, 2026",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Ad+Shoot",
-      },
-      {
-        title: "Music Video - Classical Fusion",
-        event: "Heritage Temple Location",
-        date: "Jan 14, 2026",
-        image:
-          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Music+Video+Shoot",
-      },
-      {
-        title: "Documentary - Traditional Arts",
-        event: "Village Location - Thanjavur",
-        date: "Jan 11, 2026",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Docu+Shoot",
-      },
-      {
-        title: 'Short Film - "Nizhal"',
-        event: "Night Shoot - Chennai Beach",
-        date: "Jan 7, 2026",
-        image:
-          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Short+Film+Shoot",
-      },
-      {
-        title: "Reality Show - Final Episode",
-        event: "Studio Set - Hyderabad",
-        date: "Jan 3, 2026",
-        image:
-          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Reality+Show+Set",
-      },
-      {
-        title: "Behind The Scenes Content",
-        event: "Multiple Locations",
-        date: "Dec 29, 2025",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=BTS+Content",
-      },
-      {
-        title: "Dance Performance Video",
-        event: "PFC Dance Academy",
-        date: "Dec 24, 2025",
-        image:
-          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Dance+Video+Shoot",
-      },
-      {
-        title: "Corporate Film Shoot",
-        event: "Office Location - Bangalore",
-        date: "Dec 18, 2025",
-        image:
-          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Corporate+Shoot",
-      },
-    ],
-    releases: [
-      {
-        title: 'Feature Film - "Kadhal Kavithai"',
-        event: "Theatrical Release - Nationwide",
-        date: "Jan 26, 2026",
-        image:
-          "https://placehold.co/600x400/1a1a1a/fbbf24?text=Kadhal+Kavithai",
-      },
-      {
-        title: 'Web Series - "City Lights"',
-        event: "Amazon Prime Video",
-        date: "Jan 21, 2026",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=City+Lights",
-      },
-      {
-        title: 'Short Film - "Kanneer"',
-        event: "YouTube Premiere",
-        date: "Jan 16, 2026",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Kanneer",
-      },
-      {
-        title: 'Documentary - "Art of Dance"',
-        event: "Netflix Documentary",
-        date: "Jan 13, 2026",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Art+of+Dance",
-      },
-      {
-        title: 'Music Video - "Mazhai"',
-        event: "All Music Platforms",
-        date: "Jan 9, 2026",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Mazhai",
-      },
-      {
-        title: "Commercial Ad Campaign",
-        event: "National Television",
-        date: "Jan 6, 2026",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Ad+Release",
-      },
-      {
-        title: "Web Series - Season 2",
-        event: "Hotstar Premium",
-        date: "Jan 1, 2026",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Web+Series+S2",
-      },
-      {
-        title: 'Short Film - "Veyil"',
-        event: "Film Festival Circuit",
-        date: "Dec 27, 2025",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Veyil",
-      },
-      {
-        title: "Dance Performance Film",
-        event: "YouTube & Social Media",
-        date: "Dec 22, 2025",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Dance+Film",
-      },
-      {
-        title: 'Feature Film - "Uyir"',
-        event: "International Release",
-        date: "Dec 16, 2025",
-        image: "https://placehold.co/600x400/1a1a1a/fbbf24?text=Uyir",
-      },
-    ],
+    productions: productions.map((prod) => ({
+      title: prod.title,
+      event: prod.category || "Production",
+      date: prod.year || new Date().getFullYear().toString(),
+      image: prod.image || "",
+      originalData: prod,
+      type: "production" as const,
+    })),
+    awards: awards.map((award) => ({
+      title: award.title,
+      event: award.category || "Award",
+      date: award.year || "",
+      image: award.image || "",
+      originalData: award,
+      type: "award" as const,
+    })),
+  };
+
+  const handleViewDetails = (activity: Activity) => {
+    setSelectedActivity(activity);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedActivity(null);
   };
 
   const tabs = [
@@ -294,31 +248,13 @@ export default function RecentActivity() {
       borderColor: "border-yellow-200",
     },
     {
-      key: "shows" as ActivityTab,
-      label: "TV Shows",
-      shortLabel: "Shows",
-      icon: "📺",
-      color: "from-blue-400 to-purple-500",
-      bgColor: "bg-blue-50",
-      borderColor: "border-blue-200",
-    },
-    {
-      key: "shooting" as ActivityTab,
-      label: "Production",
-      shortLabel: "Shooting",
+      key: "productions" as ActivityTab,
+      label: "Featured Productions",
+      shortLabel: "Productions",
       icon: "🎬",
       color: "from-red-400 to-pink-500",
       bgColor: "bg-red-50",
       borderColor: "border-red-200",
-    },
-    {
-      key: "releases" as ActivityTab,
-      label: "Releases",
-      shortLabel: "Releases",
-      icon: "🎞️",
-      color: "from-green-400 to-emerald-500",
-      bgColor: "bg-green-50",
-      borderColor: "border-green-200",
     },
   ];
 
@@ -393,20 +329,38 @@ export default function RecentActivity() {
                   id={`section-${tab.key}`}
                   className="relative"
                 >
-                  {/* Modern Grid Layout */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {recentActivities[tab.key]
-                      .slice(0, 6)
-                      .map((activity, idx) => (
-                        <ModernActivityCard
-                          key={`${tab.key}-${idx}`}
-                          activity={activity}
-                          isUrl={isUrl}
-                          tab={tab}
-                          index={idx}
-                        />
-                      ))}
-                  </div>
+                  {loading ? (
+                    <div className="text-center py-12">
+                      <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-amber-500"></div>
+                      <p className="mt-4 text-zinc-400">Loading...</p>
+                    </div>
+                  ) : recentActivities[tab.key].length === 0 ? (
+                    <div className="text-center py-12">
+                      <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/5 mb-4">
+                        <span className="text-4xl">{tab.icon}</span>
+                      </div>
+                      <h3 className="text-xl font-semibold text-white mb-2">No {tab.label} Found</h3>
+                      <p className="text-zinc-400 max-w-md mx-auto">
+                        {tab.label} will appear here once they are added to the system.
+                      </p>
+                    </div>
+                  ) : (
+                    /* Modern Grid Layout */
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {recentActivities[tab.key]
+                        .slice(0, 6)
+                        .map((activity, idx) => (
+                          <ModernActivityCard
+                            key={`${tab.key}-${idx}`}
+                            activity={activity}
+                            isUrl={isUrl}
+                            tab={tab}
+                            index={idx}
+                            onViewDetails={handleViewDetails}
+                          />
+                        ))}
+                    </div>
+                  )}
 
                   {/* View More Button */}
                   <div className="mt-12 text-center">
@@ -422,6 +376,14 @@ export default function RecentActivity() {
           </div>
         </div>
       </div>
+
+      {/* Details Modal */}
+      {isModalOpen && selectedActivity && (
+        <ActivityDetailsModal
+          activity={selectedActivity}
+          onClose={closeModal}
+        />
+      )}
     </section>
   );
 }
@@ -432,11 +394,13 @@ function ModernActivityCard({
   isUrl,
   tab,
   index,
+  onViewDetails,
 }: {
   activity: Activity;
   isUrl: (s: string) => boolean;
-  tab: { key: ActivityTab; color: string; bgColor: string };
+  tab: { key: ActivityTab; color: string; bgColor: string; icon: string };
   index: number;
+  onViewDetails: (activity: Activity) => void;
 }) {
   const hasImage = isUrl(activity.image);
   const [isHovered, setIsHovered] = useState(false);
@@ -457,7 +421,7 @@ function ModernActivityCard({
       <div className="relative h-48 overflow-hidden">
         {hasImage ? (
           <img
-            src={activity.image}
+            src={imageUrl(activity.image)}
             alt={activity.title}
             className={`w-full h-full object-cover transition-transform duration-700 ${
               isHovered ? "scale-110" : "scale-100"
@@ -467,7 +431,7 @@ function ModernActivityCard({
           <div
             className={`w-full h-full flex items-center justify-center text-5xl bg-gradient-to-br ${tab.color} opacity-20`}
           >
-            {activity.image}
+            {tab.icon}
           </div>
         )}
 
@@ -502,7 +466,10 @@ function ModernActivityCard({
         </div>
 
         {/* Action Button */}
-        <button className="w-full mt-4 px-4 py-2.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-sm font-semibold border border-white/10 hover:border-white/20 transition-all duration-300 flex items-center justify-center gap-2 group/btn">
+        <button 
+          onClick={() => onViewDetails(activity)}
+          className="w-full mt-4 px-4 py-2.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-sm font-semibold border border-white/10 hover:border-white/20 transition-all duration-300 flex items-center justify-center gap-2 group/btn"
+        >
           View Details
           <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
         </button>

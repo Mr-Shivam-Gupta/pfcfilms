@@ -214,32 +214,40 @@ export default function Academy() {
 
 
   return (
-    <section className="relative min-h-screen py-20 bg-zinc-50">
-      {/* Animated Background Orbs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/20 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-400/20 rounded-full blur-3xl animate-float-delayed"></div>
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16 animate-fadeInUp">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-black">
-            Dance Academy & Acting School{" "}
-            <span className="text-amber-500 inline-block animate-shimmer bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 bg-clip-text text-transparent bg-[length:200%_100%]">
-              in Kanpur
+    <section className="relative min-h-screen bg-gradient-to-br from-zinc-50 via-white to-amber-50/30">
+      {/* HERO */}
+      <section className="py-24 text-center relative overflow-hidden">
+        {/* Animated Background Gradient Orbs */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-amber-200/30 to-transparent rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-blue-200/20 to-transparent rounded-full blur-3xl"></div>
+        </div>
+        <div className="relative z-10">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tight">
+            Our{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700">
+              Academy
             </span>
-          </h2>
-          <p className="text-zinc-600 text-lg max-w-2xl mx-auto">
-            PFC FILMS - Best Dance Academy & Acting School in Kanpur. Join Dhamal India Dance for professional dance and acting training. Learn from industry experts in Kanpur, Uttar Pradesh.
+          </h1>
+          <p className="max-w-2xl mx-auto text-xl text-zinc-600 leading-relaxed">
+            Professional dance and acting training in Kanpur. Transform your passion into profession with industry experts.
           </p>
         </div>
+      </section>
 
-        {/* Features */}
-        <div
-          className="grid md:grid-cols-4 gap-6 mb-16 animate-fadeInUp"
-          style={{ animationDelay: "200ms" }}
-        >
+      <div className="relative py-20">
+        {/* Animated Background Orbs */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/20 rounded-full blur-3xl animate-float"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-400/20 rounded-full blur-3xl animate-float-delayed"></div>
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Features */}
+          <div
+            className="grid md:grid-cols-4 gap-6 mb-16 animate-fadeInUp"
+            style={{ animationDelay: "200ms" }}
+          >
           {features.map((feature, index) => (
             <div
               key={index}
@@ -256,9 +264,9 @@ export default function Academy() {
               </p>
             </div>
           ))}
-        </div>
-        {/* ACADEMY CATEGORIES */}
-        <section className="mb-32">
+          </div>
+          {/* ACADEMY CATEGORIES */}
+          <section className="mb-32">
           <h3 className="text-4xl font-bold text-center mb-16 text-black">
             Our <span className="text-amber-500">Academies</span>
           </h3>
@@ -320,10 +328,10 @@ export default function Academy() {
               </div>
             ))}
           </div>
-        </section>
+          </section>
 
-        {/* Testimonials */}
-        <div className="mb-16">
+          {/* Testimonials */}
+          <div className="mb-16">
           <h3
             className="text-3xl font-bold text-center mb-10 animate-fadeInUp text-black"
             style={{ animationDelay: "1200ms" }}
@@ -385,13 +393,13 @@ export default function Academy() {
               ))
             )}
           </div>
-        </div>
+          </div>
 
-        {/* CTA */}
-        <div
-          className="text-center animate-fadeInUp"
-          style={{ animationDelay: "1700ms" }}
-        >
+          {/* CTA */}
+          <div
+            className="text-center animate-fadeInUp"
+            style={{ animationDelay: "1700ms" }}
+          >
           <div className="bg-white p-8 rounded-2xl border border-amber-200 shadow-xl relative overflow-hidden">
             <h3 className="text-2xl font-bold mb-4 text-black">
               Ready to Start Your Journey?
@@ -403,6 +411,7 @@ export default function Academy() {
             <button className="bg-amber-400 hover:bg-amber-500 text-black px-8 py-4 rounded-full font-semibold transition-all transform hover:scale-105 hover:shadow-2xl hover:shadow-amber-500/50">
               Schedule a Free Demo Class
             </button>
+          </div>
           </div>
         </div>
       </div>

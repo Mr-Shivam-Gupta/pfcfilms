@@ -9,7 +9,6 @@ const Celebrity = require('../models/Celebrity');
 const Testimonial = require('../models/Testimonial');
 const Award = require('../models/Award');
 const Stat = require('../models/Stat');
-const Service = require('../models/Service');
 
 // Get dashboard stats (admin only)
 router.get('/dashboard', auth, async (req, res) => {
