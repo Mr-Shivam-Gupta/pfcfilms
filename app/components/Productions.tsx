@@ -13,7 +13,7 @@ import {
   Rocket,
   ChevronRight,
 } from "lucide-react";
-import { getProductions, getAwards, type Production, type Award as AwardType } from "../lib/api";
+import { getProductions, getAwards, imageUrl, type Production, type Award as AwardType } from "../lib/api";
 
 export default function Productions() {
   const [activeCategory, setActiveCategory] = useState("all");
@@ -107,7 +107,16 @@ export default function Productions() {
       {/* PRODUCTIONS GRID */}
       <section className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-32">
         {loading ? (
-          <div className="col-span-full text-center py-12">Loading productions...</div>
+          Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="bg-white rounded-xl overflow-hidden border">
+              <div className="h-56 bg-zinc-200 animate-pulse" />
+              <div className="p-6">
+                <div className="h-6 bg-zinc-200 rounded animate-pulse mb-2" />
+                <div className="h-4 bg-zinc-200 rounded animate-pulse mb-3 w-2/3" />
+                <div className="h-4 bg-zinc-200 rounded animate-pulse mb-4" />
+              </div>
+            </div>
+          ))
         ) : filteredProductions.length === 0 ? (
           <div className="col-span-full text-center py-12 text-zinc-500">No productions found</div>
         ) : (
@@ -118,7 +127,7 @@ export default function Productions() {
             >
               <div className="relative h-56">
                 <Image
-                  src={p.image}
+                  src={imageUrl(p.image)}
                   alt={p.title}
                   fill
                   className="object-cover"
@@ -153,13 +162,19 @@ export default function Productions() {
         </h2>
         <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-6">
           {loading ? (
-            <div className="col-span-full text-center py-12">Loading awards...</div>
+            Array.from({ length: 3 }).map((_, i) => (
+              <div key={i} className="bg-zinc-50 rounded-xl border p-4">
+                <div className="w-full h-48 bg-zinc-200 rounded-lg animate-pulse mb-4" />
+                <div className="h-5 bg-zinc-200 rounded animate-pulse mb-2" />
+                <div className="h-4 bg-zinc-200 rounded animate-pulse w-2/3" />
+              </div>
+            ))
           ) : awards.length === 0 ? (
             <div className="col-span-full text-center py-12 text-zinc-500">No awards found</div>
           ) : (
             awards.map((a) => (
               <div key={a._id} className="bg-zinc-50 rounded-xl border p-4">
-                <Image src={a.image} alt={a.title} width={400} height={300} className="w-full h-auto rounded-lg" />
+                <Image src={imageUrl(a.image)} alt={a.title} width={400} height={300} className="w-full h-auto rounded-lg" />
                 <div className="mt-4">
                   <h3 className="font-bold">{a.title}</h3>
                   <p className="text-sm text-zinc-600">
@@ -184,7 +199,7 @@ export default function Productions() {
                 key={r._id}
                 className="bg-white rounded-xl border overflow-hidden"
               >
-                <Image src={r.image} alt={r.title} width={600} height={400} className="w-full h-auto" />
+                <Image src={imageUrl(r.image)} alt={r.title} width={600} height={400} className="w-full h-auto" />
                 <div className="p-6">
                   <h3 className="font-bold text-xl mb-2">{r.title}</h3>
                   <p className="text-zinc-600 mb-4">{r.description}</p>

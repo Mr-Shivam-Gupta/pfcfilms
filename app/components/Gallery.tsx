@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Play, X, Image as ImageIcon, Video, Camera } from "lucide-react";
-import { getGallery, type GalleryItem } from "../lib/api";
+import { getGallery, imageUrl, type GalleryItem } from "../lib/api";
 
 export default function Gallery() {
   const [activeTab, setActiveTab] = useState<"photos" | "videos">("photos");
@@ -236,7 +236,12 @@ export default function Gallery() {
         {activeTab === "photos" && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {loading ? (
-              <div className="col-span-full text-center py-12">Loading photos...</div>
+              Array.from({ length: 8 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="aspect-square rounded-xl bg-zinc-200 animate-pulse"
+                />
+              ))
             ) : photos.length === 0 ? (
               <div className="col-span-full text-center py-12 text-zinc-500">No photos found</div>
             ) : (
@@ -245,10 +250,10 @@ export default function Gallery() {
                   key={photo._id}
                   className="group relative aspect-square rounded-xl overflow-hidden border border-zinc-200 transform transition-all duration-300 hover:scale-105 hover:border-amber-400 hover:shadow-2xl hover:shadow-amber-500/20 cursor-pointer animate-fadeInUp shadow-sm"
                   style={{ animationDelay: `${600 + index * 50}ms` }}
-                  onClick={() => setSelectedMedia({ type: "photo", ...photo })}
+                  onClick={() => setSelectedMedia({ ...photo, type: "photo" })}
                 >
                   <Image
-                    src={photo.image}
+                    src={imageUrl(photo.image)}
                     alt={photo.title}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
@@ -271,7 +276,12 @@ export default function Gallery() {
         {activeTab === "videos" && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {loading ? (
-              <div className="col-span-full text-center py-12">Loading videos...</div>
+              Array.from({ length: 8 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="aspect-video rounded-xl bg-zinc-200 animate-pulse"
+                />
+              ))
             ) : videos.length === 0 ? (
               <div className="col-span-full text-center py-12 text-zinc-500">No videos found</div>
             ) : (
@@ -280,10 +290,10 @@ export default function Gallery() {
                   key={video._id}
                   className="group relative aspect-video rounded-xl overflow-hidden border border-zinc-200 transform transition-all duration-300 hover:scale-105 hover:border-amber-400 hover:shadow-2xl hover:shadow-amber-500/20 cursor-pointer animate-fadeInUp shadow-sm"
                   style={{ animationDelay: `${600 + index * 50}ms` }}
-                  onClick={() => setSelectedMedia({ type: "video", ...video })}
+                  onClick={() => setSelectedMedia({ ...video, type: "video" })}
                 >
                   <Image
-                    src={video.thumbnail || video.image}
+                    src={imageUrl(video.thumbnail || video.image)}
                     alt={video.title}
                     fill
                     className="object-cover"
@@ -328,7 +338,7 @@ export default function Gallery() {
             {selectedMedia.type === "photo" ? (
               <div className="relative w-full aspect-video">
                 <Image
-                  src={selectedMedia.image}
+                  src={imageUrl(selectedMedia.image)}
                   alt={selectedMedia.title}
                   fill
                   className="object-contain"

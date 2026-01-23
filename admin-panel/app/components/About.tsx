@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Save } from "lucide-react";
+import { uploadImage, imageUrl } from "../lib/upload";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
@@ -25,6 +26,8 @@ export default function About() {
     number: "",
     label: "",
   });
+  const [imageUploading, setImageUploading] = useState(false);
+  const imageInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetchAbout();
@@ -52,8 +55,27 @@ export default function About() {
     }
   };
 
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setImageUploading(true);
+    try {
+      const path = await uploadImage(file);
+      setFormData((prev) => ({ ...prev, directorImage: path }));
+    } catch (err) {
+      console.error(err);
+      alert("Image upload failed. Please try again.");
+    } finally {
+      setImageUploading(false);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData.directorImage) {
+      alert("Please upload a director image.");
+      return;
+    }
     setSaving(true);
     try {
       const token = localStorage.getItem("adminToken");
@@ -121,14 +143,21 @@ export default function About() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">Director Image URL *</label>
+              <label className="block text-sm font-medium mb-2">Director Image *</label>
               <input
-                type="url"
-                value={formData.directorImage}
-                onChange={(e) => setFormData({ ...formData, directorImage: e.target.value })}
-                required
+                ref={imageInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/gif,image/webp"
+                onChange={handleImageChange}
                 className="w-full px-4 py-2 border rounded-lg"
               />
+              {imageUploading && <p className="text-sm text-amber-600 mt-1">Uploading...</p>}
+              {formData.directorImage && (
+                <div className="mt-2 flex items-center gap-3">
+                  <img src={imageUrl(formData.directorImage)} alt="Director" className="h-24 w-24 object-cover rounded border" />
+                  <span className="text-sm text-zinc-500">Uploaded</span>
+                </div>
+              )}
             </div>
 
             <div>

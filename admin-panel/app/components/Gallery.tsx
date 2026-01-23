@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Plus, Edit, Trash2, X } from "lucide-react";
+import { uploadImage, imageUrl } from "../lib/upload";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
@@ -22,6 +23,8 @@ export default function Gallery() {
     featured: false,
     order: 0,
   });
+  const [imageUploading, setImageUploading] = useState(false);
+  const imageInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetchItems();
@@ -40,8 +43,41 @@ export default function Gallery() {
     }
   };
 
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setImageUploading(true);
+    try {
+      const path = await uploadImage(file);
+      if (formData.type === "photo") {
+        setFormData((prev) => ({ ...prev, image: path }));
+      } else {
+        setFormData((prev) => ({ ...prev, image: path, thumbnail: path }));
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Image upload failed. Please try again.");
+    } finally {
+      setImageUploading(false);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (formData.type === "photo" && !formData.image) {
+      alert("Please upload an image.");
+      return;
+    }
+    if (formData.type === "video") {
+      if (!formData.videoUrl) {
+        alert("Please enter Video URL.");
+        return;
+      }
+      if (!formData.image) {
+        alert("Please upload a thumbnail image for the video.");
+        return;
+      }
+    }
     try {
       const token = localStorage.getItem("adminToken");
       if (editing) {
@@ -107,6 +143,7 @@ export default function Gallery() {
       featured: false,
       order: 0,
     });
+    imageInputRef.current && (imageInputRef.current.value = "");
   };
 
   if (loading) return <div className="text-center py-12">Loading...</div>;
@@ -222,33 +259,66 @@ export default function Gallery() {
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium mb-2">
-                    {formData.type === "photo" ? "Image URL *" : "Thumbnail URL *"}
-                  </label>
-                  <input
-                    type="url"
-                    value={formData.type === "photo" ? formData.image : formData.thumbnail}
-                    onChange={(e) =>
-                      formData.type === "photo"
-                        ? setFormData({ ...formData, image: e.target.value })
-                        : setFormData({ ...formData, thumbnail: e.target.value })
-                    }
-                    required
-                    className="w-full px-4 py-2 border rounded-lg"
-                  />
-                </div>
+                {formData.type === "photo" && (
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Image *</label>
+                    <input
+                      ref={imageInputRef}
+                      type="file"
+                      accept="image/jpeg,image/png,image/gif,image/webp"
+                      onChange={handleImageChange}
+                      className="w-full px-4 py-2 border rounded-lg"
+                    />
+                    {imageUploading && <p className="text-sm text-amber-600 mt-1">Uploading...</p>}
+                    {formData.image && (
+                      <div className="mt-2 flex items-center gap-3">
+                        <img src={imageUrl(formData.image)} alt="Preview" className="h-20 w-28 object-cover rounded border" />
+                        <span className="text-sm text-zinc-500">Uploaded</span>
+                      </div>
+                    )}
+                    {!formData.image && editing && editing.type === "photo" && (
+                      <div className="mt-2 flex items-center gap-3">
+                        <img src={imageUrl(editing.image)} alt="Current" className="h-20 w-28 object-cover rounded border" />
+                        <span className="text-sm text-zinc-500">Current image (upload new to replace)</span>
+                      </div>
+                    )}
+                  </div>
+                )}
 
                 {formData.type === "video" && (
                   <>
                     <div>
-                      <label className="block text-sm font-medium mb-2">Video URL</label>
+                      <label className="block text-sm font-medium mb-2">Video URL *</label>
                       <input
                         type="url"
                         value={formData.videoUrl}
                         onChange={(e) => setFormData({ ...formData, videoUrl: e.target.value })}
                         className="w-full px-4 py-2 border rounded-lg"
+                        placeholder="https://..."
                       />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Thumbnail image *</label>
+                      <input
+                        ref={imageInputRef}
+                        type="file"
+                        accept="image/jpeg,image/png,image/gif,image/webp"
+                        onChange={handleImageChange}
+                        className="w-full px-4 py-2 border rounded-lg"
+                      />
+                      {imageUploading && <p className="text-sm text-amber-600 mt-1">Uploading...</p>}
+                      {formData.image && (
+                        <div className="mt-2 flex items-center gap-3">
+                          <img src={imageUrl(formData.image)} alt="Thumbnail" className="h-20 w-28 object-cover rounded border" />
+                          <span className="text-sm text-zinc-500">Uploaded</span>
+                        </div>
+                      )}
+                      {!formData.image && editing && editing.type === "video" && (
+                        <div className="mt-2 flex items-center gap-3">
+                          <img src={imageUrl(editing.image)} alt="Current" className="h-20 w-28 object-cover rounded border" />
+                          <span className="text-sm text-zinc-500">Current thumbnail (upload new to replace)</span>
+                        </div>
+                      )}
                     </div>
                     <div>
                       <label className="block text-sm font-medium mb-2">Duration</label>

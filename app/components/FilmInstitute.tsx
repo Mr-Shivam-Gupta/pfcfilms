@@ -60,7 +60,7 @@ export default function FilmInstitute() {
   return (
     <section className="py-20 px-4 bg-zinc-900/30 relative">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 animate-on-scroll opacity-0 transition-all duration-1000 translate-y-10">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 animate-on-scroll opacity-0 transition-all duration-1000 translate-y-10" suppressHydrationWarning>
           Film & Media <span className="text-amber-400">Institute</span>
         </h2>
 
@@ -70,6 +70,7 @@ export default function FilmInstitute() {
               key={idx}
               className="animate-on-scroll opacity-0 transition-all duration-1000 translate-y-10"
               style={{ transitionDelay: `${idx * 100}ms` }}
+              suppressHydrationWarning
             >
               <div className="group bg-zinc-900 border border-zinc-800 rounded-2xl p-6 hover:border-amber-400 transition-all transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-amber-500/10 h-full flex flex-col">
                 <div className="w-16 h-16 bg-zinc-800 rounded-xl flex items-center justify-center text-amber-400 mb-6 group-hover:scale-110 group-hover:bg-amber-400 group-hover:text-black transition-all duration-300">

@@ -35,6 +35,7 @@ export default function Stats() {
               key={stat._id || idx}
               className="animate-on-scroll opacity-0 transition-all duration-1000 translate-y-10 p-6 group"
               style={{ transitionDelay: `${idx * 100}ms` }}
+              suppressHydrationWarning
             >
               <div className="text-5xl font-bold text-amber-500 mb-2 transform transition-all duration-500 group-hover:scale-125">
                 {stat.number}

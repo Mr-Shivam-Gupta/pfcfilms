@@ -20,6 +20,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
+import { imageUrl } from "../lib/api";
 
 // --- Utility: useTicker Hook (Copied/Adapted for reuse) ---
 function useTicker({
@@ -250,7 +251,7 @@ export default function About() {
       {/* Director Section */}
       <section className="py-20 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16 animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 forwards">
+          <div className="text-center mb-16 animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 forwards" suppressHydrationWarning>
             <h2 className="text-4xl md:text-5xl font-bold text-black mb-4">
               About the <span className="text-amber-500">Director</span>
             </h2>
@@ -261,10 +262,10 @@ export default function About() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="relative animate-on-scroll opacity-0 translate-x-[-20px] transition-all duration-700 delay-200 forwards">
+            <div className="relative animate-on-scroll opacity-0 translate-x-[-20px] transition-all duration-700 delay-200 forwards" suppressHydrationWarning>
               <div className="relative w-full aspect-square rounded-2xl overflow-hidden border border-zinc-200 shadow-2xl">
                 <Image
-                  src={aboutData?.directorImage || "https://placehold.co/600x600/1a1a1a/fbbf24?text=Director"}
+                  src={imageUrl(aboutData?.directorImage) || "https://placehold.co/600x600/1a1a1a/fbbf24?text=Director"}
                   alt={aboutData?.directorName || "Director"}
                   fill
                   className="object-cover hover:scale-105 transition-transform duration-700"
@@ -273,7 +274,7 @@ export default function About() {
               <div className="absolute -bottom-6 -right-6 w-48 h-48 bg-amber-50 rounded-full -z-10 blur-3xl"></div>
             </div>
 
-            <div className="space-y-6 animate-on-scroll opacity-0 translate-x-[20px] transition-all duration-700 delay-400 forwards">
+            <div className="space-y-6 animate-on-scroll opacity-0 translate-x-[20px] transition-all duration-700 delay-400 forwards" suppressHydrationWarning>
               <div>
                 <h3 className="text-3xl font-bold text-black mb-2">
                   {aboutData?.directorName || "Mr. Pramod Kumar Gupta"}
@@ -393,7 +394,16 @@ export default function About() {
             }}
           >
             {loading ? (
-              <div className="w-full text-center py-12">Loading celebrities...</div>
+              Array.from({ length: 6 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="w-64 flex-shrink-0 bg-white rounded-xl overflow-hidden shadow-sm p-3 border border-zinc-100"
+                >
+                  <div className="aspect-square rounded-lg bg-zinc-200 animate-pulse mb-3" />
+                  <div className="h-4 bg-zinc-200 rounded animate-pulse mb-1" />
+                  <div className="h-3 bg-zinc-200 rounded animate-pulse w-2/3 mx-auto" />
+                </div>
+              ))
             ) : celebrities.length === 0 ? (
               <div className="w-full text-center py-12 text-zinc-500">No celebrities found</div>
             ) : (
@@ -406,7 +416,7 @@ export default function About() {
                   >
                     <div className="relative aspect-square rounded-lg overflow-hidden mb-3 bg-zinc-100">
                       <Image
-                        src={celebrity.image}
+                        src={imageUrl(celebrity.image)}
                         alt={celebrity.name}
                         fill
                         className="object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500"
@@ -460,13 +470,13 @@ export default function About() {
               {selectedCelebrity.gallery &&
               selectedCelebrity.gallery.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {selectedCelebrity.gallery.map((img, idx) => (
+                  {selectedCelebrity.gallery.map((img: string, idx: number) => (
                     <div
                       key={idx}
                       className="relative aspect-[3/4] sm:aspect-[4/3] rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all group"
                     >
                       <Image
-                        src={img}
+                        src={imageUrl(img)}
                         alt={`${selectedCelebrity.name} gallery ${idx}`}
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-500"

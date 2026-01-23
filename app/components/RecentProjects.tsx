@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { ChevronRight, Play } from "lucide-react";
-import { getProductions, type Production } from "../lib/api";
+import { getProductions, imageUrl, type Production } from "../lib/api";
 
 const categoryColors: Record<string, string> = {
   "Music Videos": "from-blue-500/20 to-cyan-500/20",
@@ -25,14 +25,15 @@ const categoryImages: Record<string, string> = {
 
 export default function RecentProjects() {
   const [productions, setProductions] = useState<Production[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      // Fetch in background without blocking initial render
       const data = await getProductions();
-      setProductions(data.slice(0, 6)); // Get first 6 productions
-      setLoading(false);
+      if (data.length > 0) {
+        setProductions(data.slice(0, 6)); // Get first 6 productions
+      }
     };
     fetchData();
   }, []);
@@ -88,12 +89,13 @@ export default function RecentProjects() {
   return (
     <section className="py-20 px-4 bg-zinc-50 relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-8 animate-on-scroll opacity-0 transition-all duration-1000 translate-y-10 text-black">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-8 animate-on-scroll opacity-0 transition-all duration-1000 translate-y-10 text-black" suppressHydrationWarning>
           Recent <span className="text-amber-500">Projects</span>
         </h2>
         <p
           className="text-center text-zinc-600 mb-12 animate-on-scroll opacity-0 transition-all duration-1000"
           style={{ transitionDelay: "100ms" }}
+          suppressHydrationWarning
         >
           Scroll through our latest work
         </p>
@@ -111,7 +113,7 @@ export default function RecentProjects() {
                     className={`aspect-square flex items-center justify-center text-6xl bg-gradient-to-br ${project.color} relative overflow-hidden`}
                   >
                     <Image
-                      src={project.image}
+                      src={imageUrl(project.image)}
                       alt={project.title}
                       fill
                       className="object-cover transform transition-all duration-700 group-hover:scale-110"

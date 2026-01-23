@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Plus, Edit, Trash2, X } from "lucide-react";
+import { uploadImage, imageUrl } from "../lib/upload";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
@@ -21,6 +22,10 @@ export default function Celebrities() {
     order: 0,
   });
   const [galleryInput, setGalleryInput] = useState("");
+  const [imageUploading, setImageUploading] = useState(false);
+  const [galleryUploading, setGalleryUploading] = useState(false);
+  const imageInputRef = useRef<HTMLInputElement>(null);
+  const galleryInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetchCelebrities();
@@ -41,6 +46,10 @@ export default function Celebrities() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData.image) {
+      alert("Please upload an image.");
+      return;
+    }
     try {
       const token = localStorage.getItem("adminToken");
       if (editing) {
@@ -103,6 +112,39 @@ export default function Celebrities() {
       order: 0,
     });
     setGalleryInput("");
+    imageInputRef.current && (imageInputRef.current.value = "");
+    galleryInputRef.current && (galleryInputRef.current.value = "");
+  };
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setImageUploading(true);
+    try {
+      const path = await uploadImage(file);
+      setFormData((prev) => ({ ...prev, image: path }));
+    } catch (err) {
+      console.error(err);
+      alert("Image upload failed. Please try again.");
+    } finally {
+      setImageUploading(false);
+    }
+  };
+
+  const handleGalleryUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setGalleryUploading(true);
+    try {
+      const path = await uploadImage(file);
+      setFormData((prev) => ({ ...prev, gallery: [...prev.gallery, path] }));
+      e.target.value = "";
+    } catch (err) {
+      console.error(err);
+      alert("Image upload failed. Please try again.");
+    } finally {
+      setGalleryUploading(false);
+    }
   };
 
   const addGalleryItem = () => {
@@ -213,14 +255,27 @@ export default function Celebrities() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Image URL *</label>
+                  <label className="block text-sm font-medium mb-2">Image *</label>
                   <input
-                    type="url"
-                    value={formData.image}
-                    onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                    required
+                    ref={imageInputRef}
+                    type="file"
+                    accept="image/jpeg,image/png,image/gif,image/webp"
+                    onChange={handleImageChange}
                     className="w-full px-4 py-2 border rounded-lg"
                   />
+                  {imageUploading && <p className="text-sm text-amber-600 mt-1">Uploading...</p>}
+                  {formData.image && (
+                    <div className="mt-2 flex items-center gap-3">
+                      <img src={imageUrl(formData.image)} alt="Preview" className="h-20 w-28 object-cover rounded border" />
+                      <span className="text-sm text-zinc-500">Uploaded</span>
+                    </div>
+                  )}
+                  {!formData.image && editing && (
+                    <div className="mt-2 flex items-center gap-3">
+                      <img src={imageUrl(editing.image)} alt="Current" className="h-20 w-28 object-cover rounded border" />
+                      <span className="text-sm text-zinc-500">Current image (upload new to replace)</span>
+                    </div>
+                  )}
                 </div>
 
                 <div>
@@ -234,37 +289,35 @@ export default function Celebrities() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Gallery Images</label>
-                  <div className="flex space-x-2 mb-2">
+                  <label className="block text-sm font-medium mb-2">Gallery Images (upload files)</label>
+                  <div className="flex flex-wrap gap-2 mb-2">
                     <input
-                      type="url"
-                      value={galleryInput}
-                      onChange={(e) => setGalleryInput(e.target.value)}
-                      onKeyPress={(e) =>
-                        e.key === "Enter" && (e.preventDefault(), addGalleryItem())
-                      }
-                      className="flex-1 px-4 py-2 border rounded-lg"
-                      placeholder="Add gallery image URL"
+                      ref={galleryInputRef}
+                      type="file"
+                      accept="image/jpeg,image/png,image/gif,image/webp"
+                      onChange={handleGalleryUpload}
+                      className="hidden"
+                      id="gallery-upload"
                     />
-                    <button
-                      type="button"
-                      onClick={addGalleryItem}
-                      className="px-4 py-2 bg-zinc-200 rounded-lg"
+                    <label
+                      htmlFor="gallery-upload"
+                      className="px-4 py-2 bg-zinc-200 rounded-lg cursor-pointer hover:bg-zinc-300"
                     >
-                      Add
-                    </button>
+                      {galleryUploading ? "Uploading..." : "Upload image"}
+                    </label>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {formData.gallery.map((url, index) => (
+                    {formData.gallery.map((path, index) => (
                       <span
                         key={index}
-                        className="bg-zinc-100 px-3 py-1 rounded-lg flex items-center space-x-2"
+                        className="bg-zinc-100 rounded-lg flex items-center space-x-2 overflow-hidden"
                       >
-                        <span className="text-xs truncate max-w-xs">{url}</span>
+                        <img src={imageUrl(path)} alt="" className="h-10 w-10 object-cover" />
+                        <span className="text-xs truncate max-w-[120px] px-1">{path}</span>
                         <button
                           type="button"
                           onClick={() => removeGalleryItem(index)}
-                          className="text-red-600"
+                          className="text-red-600 px-2"
                         >
                           ×
                         </button>

@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import { Instagram, Facebook, Twitter, Youtube } from "lucide-react";
@@ -21,7 +23,7 @@ export default function Footer() {
       
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid md:grid-cols-4 gap-8 mb-8">
-          <div className="animate-on-scroll opacity-0 transition-all duration-1000 translate-y-10">
+          <div className="animate-on-scroll opacity-0 transition-all duration-1000 translate-y-10" suppressHydrationWarning>
             <div className="flex items-center space-x-4 mb-6 group cursor-pointer">
               <div className="w-20 h-20 relative rounded-2xl overflow-hidden transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 shadow-2xl border-2 border-zinc-800 group-hover:border-amber-400/50">
                 <Image
@@ -84,6 +86,7 @@ export default function Footer() {
               key={idx}
               className="animate-on-scroll opacity-0 transition-all duration-1000 translate-y-10"
               style={{ transitionDelay: `${(idx + 1) * 100}ms` }}
+              suppressHydrationWarning
             >
               <h4 className="font-extrabold text-lg mb-6 text-white uppercase tracking-wider">{section.title}</h4>
               <div className="space-y-3 text-zinc-300 font-medium">

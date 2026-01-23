@@ -11,7 +11,7 @@ import {
   CheckCircle,
   Award,
 } from "lucide-react";
-import { getCourses, getTestimonials, type Course, type Testimonial } from "../lib/api";
+import { getCourses, getTestimonials, imageUrl, type Course, type Testimonial } from "../lib/api";
 
 export default function Academy() {
   const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
@@ -272,7 +272,7 @@ export default function Academy() {
                 {/* Image */}
                 <div className="relative h-64">
                   <Image
-                    src={academy.image}
+                    src={imageUrl(academy.image)}
                     alt={academy.title}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-700"
@@ -332,7 +332,19 @@ export default function Academy() {
           </h3>
           <div className="grid md:grid-cols-3 gap-8">
             {loading ? (
-              <div className="col-span-full text-center py-12">Loading testimonials...</div>
+              Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="bg-white rounded-xl p-6 border border-zinc-200">
+                  <div className="flex items-center mb-4">
+                    <div className="w-16 h-16 rounded-full bg-zinc-200 animate-pulse mr-4" />
+                    <div className="flex-1">
+                      <div className="h-5 bg-zinc-200 rounded animate-pulse mb-2" />
+                      <div className="h-4 bg-zinc-200 rounded animate-pulse w-2/3" />
+                    </div>
+                  </div>
+                  <div className="h-4 bg-zinc-200 rounded animate-pulse mb-2" />
+                  <div className="h-4 bg-zinc-200 rounded animate-pulse w-5/6" />
+                </div>
+              ))
             ) : testimonials.length === 0 ? (
               <div className="col-span-full text-center py-12 text-zinc-500">No testimonials found</div>
             ) : (
@@ -345,7 +357,7 @@ export default function Academy() {
                   <div className="flex items-center space-x-4 mb-4">
                     <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-amber-400">
                       <Image
-                        src={testimonial.image}
+                        src={imageUrl(testimonial.image)}
                         alt={testimonial.name}
                         fill
                         className="object-cover"

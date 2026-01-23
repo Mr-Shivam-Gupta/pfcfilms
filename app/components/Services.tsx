@@ -13,14 +13,15 @@ const iconMap: Record<string, React.ReactNode> = {
 
 export default function Services() {
   const [services, setServices] = useState<Service[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
+      // Fetch in background without blocking initial render
       const data = await getServices();
-      setServices(data);
-      setLoading(false);
+      if (data.length > 0) {
+        setServices(data);
+      }
     };
     fetchData();
   }, []);
@@ -61,7 +62,10 @@ export default function Services() {
   return (
     <section className="py-20 px-4 bg-white relative">
       <div className="max-w-7xl mx-auto relative z-10">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 animate-on-scroll opacity-0 transition-all duration-1000 translate-y-10 text-black">
+        <h2 
+          className="text-4xl md:text-5xl font-bold text-center mb-16 animate-on-scroll opacity-0 transition-all duration-1000 translate-y-10 text-black"
+          suppressHydrationWarning
+        >
           What our <span className="text-amber-500">expertise</span>
         </h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -72,6 +76,7 @@ export default function Services() {
                 key={service._id || idx}
                 className="animate-on-scroll opacity-0 transition-all duration-1000 translate-y-10"
                 style={{ transitionDelay: `${(service.order || idx) * 100}ms` }}
+                suppressHydrationWarning
               >
                 <div className="group bg-white border border-zinc-100 rounded-2xl p-8 hover:border-amber-400 transition-all transform hover:-translate-y-4 hover:shadow-2xl hover:shadow-amber-500/10 relative overflow-hidden shadow-lg">
                   <div className="absolute inset-0 bg-gradient-to-br from-amber-500/0 to-amber-500/0 group-hover:from-amber-500/5 group-hover:to-transparent transition-all duration-500"></div>

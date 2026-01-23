@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Plus, Edit, Trash2, X } from "lucide-react";
+import { uploadImage, imageUrl } from "../lib/upload";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
@@ -20,6 +21,8 @@ export default function Testimonials() {
     featured: false,
     order: 0,
   });
+  const [imageUploading, setImageUploading] = useState(false);
+  const imageInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetchTestimonials();
@@ -40,6 +43,10 @@ export default function Testimonials() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData.image) {
+      alert("Please upload an image.");
+      return;
+    }
     try {
       const token = localStorage.getItem("adminToken");
       if (editing) {
@@ -101,6 +108,22 @@ export default function Testimonials() {
       featured: false,
       order: 0,
     });
+    imageInputRef.current && (imageInputRef.current.value = "");
+  };
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setImageUploading(true);
+    try {
+      const path = await uploadImage(file);
+      setFormData((prev) => ({ ...prev, image: path }));
+    } catch (err) {
+      console.error(err);
+      alert("Image upload failed. Please try again.");
+    } finally {
+      setImageUploading(false);
+    }
   };
 
   if (loading) return <div className="text-center py-12">Loading...</div>;
@@ -198,14 +221,27 @@ export default function Testimonials() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Image URL *</label>
+                  <label className="block text-sm font-medium mb-2">Image *</label>
                   <input
-                    type="url"
-                    value={formData.image}
-                    onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                    required
+                    ref={imageInputRef}
+                    type="file"
+                    accept="image/jpeg,image/png,image/gif,image/webp"
+                    onChange={handleImageChange}
                     className="w-full px-4 py-2 border rounded-lg"
                   />
+                  {imageUploading && <p className="text-sm text-amber-600 mt-1">Uploading...</p>}
+                  {formData.image && (
+                    <div className="mt-2 flex items-center gap-3">
+                      <img src={imageUrl(formData.image)} alt="Preview" className="h-20 w-28 object-cover rounded border" />
+                      <span className="text-sm text-zinc-500">Uploaded</span>
+                    </div>
+                  )}
+                  {!formData.image && editing && (
+                    <div className="mt-2 flex items-center gap-3">
+                      <img src={imageUrl(editing.image)} alt="Current" className="h-20 w-28 object-cover rounded border" />
+                      <span className="text-sm text-zinc-500">Current image (upload new to replace)</span>
+                    </div>
+                  )}
                 </div>
 
                 <div>

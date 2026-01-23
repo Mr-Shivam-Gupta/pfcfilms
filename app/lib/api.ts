@@ -1,4 +1,13 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+const API_BASE = API_URL.replace(/\/api\/?$/, '') || 'http://localhost:5000';
+
+/** Resolve image path to full URL. Uploaded images (/uploads/...) use API base; /projects etc. stay as-is. */
+export function imageUrl(path: string | undefined | null): string {
+  if (!path) return '';
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  if (path.startsWith('/uploads')) return `${API_BASE}${path}`;
+  return path;
+}
 
 export interface Production {
   _id: string;
