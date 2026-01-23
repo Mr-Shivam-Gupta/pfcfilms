@@ -70,7 +70,11 @@ export default function Contact() {
   ];
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-zinc-50 via-white to-amber-50/30">
+    <section className="relative min-h-screen bg-zinc-50 text-zinc-900">
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+          <div className="absolute top-20 -left-20 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 -right-20 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
+        </div>
       {/* HERO */}
       <section className="py-24 text-center relative overflow-hidden">
         {/* Animated Background Gradient Orbs */}

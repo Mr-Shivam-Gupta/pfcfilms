@@ -254,7 +254,11 @@ export default function About() {
   };
 
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full bg-zinc-50 text-zinc-900">
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+          <div className="absolute top-20 -left-20 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 -right-20 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
+        </div>
       {/* HERO */}
       <section className="py-24 text-center relative overflow-hidden">
         {/* Animated Background Gradient Orbs */}
@@ -264,9 +268,9 @@ export default function About() {
         </div>
         <div className="relative z-10">
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tight">
-            About{" "}
+          About{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700">
-              Us
+            Us
             </span>
           </h1>
           <p className="max-w-2xl mx-auto text-xl text-zinc-600 leading-relaxed">
@@ -279,16 +283,6 @@ export default function About() {
       <section className="py-20 px-4 bg-white">
         
         <div className="max-w-7xl mx-auto">
-          {/* <div className="text-center mb-16 animate-on-scroll opacity-0 translate-y-10 transition-all duration-700 forwards" suppressHydrationWarning>
-            <h2 className="text-4xl md:text-5xl font-bold text-black mb-4">
-              About the <span className="text-amber-500">Director</span>
-            </h2>
-            <p className="text-zinc-600 text-lg max-w-2xl mx-auto">
-              Visionary filmmaker, mentor, and the driving force behind PFC
-              Films
-            </p>
-          </div> */}
-
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="relative animate-on-scroll opacity-0 translate-x-[-20px] transition-all duration-700 delay-200 forwards" suppressHydrationWarning>
               <div className="relative w-full aspect-square rounded-2xl overflow-hidden border border-zinc-200 shadow-2xl">

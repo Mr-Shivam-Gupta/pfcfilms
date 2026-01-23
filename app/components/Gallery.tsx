@@ -24,148 +24,152 @@ export default function Gallery() {
   const photos = galleryItems.filter((item) => item.type === "photo");
   const videos = galleryItems.filter((item) => item.type === "video");
 
-  const defaultPhotos = [
-    {
-      id: 1,
-      title: "Behind the Scenes - Echoes of Silence",
-      category: "Production",
-      image: "https://placehold.co/800x600/1a1a1a/fbbf24?text=BTS+1",
-    },
-    {
-      id: 2,
-      title: "Film Direction Workshop",
-      category: "Academy",
-      image: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Workshop+1",
-    },
-    {
-      id: 3,
-      title: "Cinematography Training Session",
-      category: "Academy",
-      image: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Training+1",
-    },
-    {
-      id: 4,
-      title: "Award Ceremony 2024",
-      category: "Events",
-      image: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Awards+2024",
-    },
-    {
-      id: 5,
-      title: "On Set - Beyond Horizons",
-      category: "Production",
-      image: "https://placehold.co/800x600/1a1a1a/fbbf24?text=On+Set+1",
-    },
-    {
-      id: 6,
-      title: "Student Graduation Ceremony",
-      category: "Academy",
-      image: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Graduation",
-    },
-    {
-      id: 7,
-      title: "Camera Equipment Setup",
-      category: "Production",
-      image: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Equipment",
-    },
-    {
-      id: 8,
-      title: "Acting Workshop",
-      category: "Academy",
-      image: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Acting+Workshop",
-    },
-    {
-      id: 9,
-      title: "Film Festival Screening",
-      category: "Events",
-      image: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Festival",
-    },
-    {
-      id: 10,
-      title: "Lighting Setup - Night Shoot",
-      category: "Production",
-      image: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Night+Shoot",
-    },
-    {
-      id: 11,
-      title: "Post-Production Lab",
-      category: "Academy",
-      image: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Post+Production",
-    },
-    {
-      id: 12,
-      title: "Celebrity Guest Lecture",
-      category: "Events",
-      image: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Guest+Lecture",
-    },
-  ];
+  // const defaultPhotos = [
+  //   {
+  //     id: 1,
+  //     title: "Behind the Scenes - Echoes of Silence",
+  //     category: "Production",
+  //     image: "https://placehold.co/800x600/1a1a1a/fbbf24?text=BTS+1",
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Film Direction Workshop",
+  //     category: "Academy",
+  //     image: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Workshop+1",
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Cinematography Training Session",
+  //     category: "Academy",
+  //     image: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Training+1",
+  //   },
+  //   {
+  //     id: 4,
+  //     title: "Award Ceremony 2024",
+  //     category: "Events",
+  //     image: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Awards+2024",
+  //   },
+  //   {
+  //     id: 5,
+  //     title: "On Set - Beyond Horizons",
+  //     category: "Production",
+  //     image: "https://placehold.co/800x600/1a1a1a/fbbf24?text=On+Set+1",
+  //   },
+  //   {
+  //     id: 6,
+  //     title: "Student Graduation Ceremony",
+  //     category: "Academy",
+  //     image: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Graduation",
+  //   },
+  //   {
+  //     id: 7,
+  //     title: "Camera Equipment Setup",
+  //     category: "Production",
+  //     image: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Equipment",
+  //   },
+  //   {
+  //     id: 8,
+  //     title: "Acting Workshop",
+  //     category: "Academy",
+  //     image: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Acting+Workshop",
+  //   },
+  //   {
+  //     id: 9,
+  //     title: "Film Festival Screening",
+  //     category: "Events",
+  //     image: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Festival",
+  //   },
+  //   {
+  //     id: 10,
+  //     title: "Lighting Setup - Night Shoot",
+  //     category: "Production",
+  //     image: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Night+Shoot",
+  //   },
+  //   {
+  //     id: 11,
+  //     title: "Post-Production Lab",
+  //     category: "Academy",
+  //     image: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Post+Production",
+  //   },
+  //   {
+  //     id: 12,
+  //     title: "Celebrity Guest Lecture",
+  //     category: "Events",
+  //     image: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Guest+Lecture",
+  //   },
+  // ];
 
-  const defaultVideos = [
-    {
-      id: 1,
-      title: "Echoes of Silence - Official Trailer",
-      category: "Trailers",
-      thumbnail: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Trailer+1",
-      duration: "2:30",
-    },
-    {
-      id: 2,
-      title: "Film Direction Course Overview",
-      category: "Academy",
-      thumbnail: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Course+Video",
-      duration: "5:45",
-    },
-    {
-      id: 3,
-      title: "Behind the Scenes Montage",
-      category: "BTS",
-      thumbnail: "https://placehold.co/800x600/1a1a1a/fbbf24?text=BTS+Video",
-      duration: "8:20",
-    },
-    {
-      id: 4,
-      title: "Student Success Stories",
-      category: "Testimonials",
-      thumbnail: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Testimonials",
-      duration: "4:15",
-    },
-    {
-      id: 5,
-      title: "Beyond Horizons - Teaser",
-      category: "Trailers",
-      thumbnail: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Teaser",
-      duration: "1:30",
-    },
-    {
-      id: 6,
-      title: "Cinematography Masterclass Highlights",
-      category: "Academy",
-      thumbnail: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Masterclass",
-      duration: "6:50",
-    },
-    {
-      id: 7,
-      title: "Award Night Highlights 2024",
-      category: "Events",
-      thumbnail: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Award+Night",
-      duration: "3:40",
-    },
-    {
-      id: 8,
-      title: "Making of Urban Stories Documentary",
-      category: "BTS",
-      thumbnail: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Documentary+BTS",
-      duration: "7:25",
-    },
-  ];
+  // const defaultVideos = [
+  //   {
+  //     id: 1,
+  //     title: "Echoes of Silence - Official Trailer",
+  //     category: "Trailers",
+  //     thumbnail: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Trailer+1",
+  //     duration: "2:30",
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Film Direction Course Overview",
+  //     category: "Academy",
+  //     thumbnail: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Course+Video",
+  //     duration: "5:45",
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Behind the Scenes Montage",
+  //     category: "BTS",
+  //     thumbnail: "https://placehold.co/800x600/1a1a1a/fbbf24?text=BTS+Video",
+  //     duration: "8:20",
+  //   },
+  //   {
+  //     id: 4,
+  //     title: "Student Success Stories",
+  //     category: "Testimonials",
+  //     thumbnail: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Testimonials",
+  //     duration: "4:15",
+  //   },
+  //   {
+  //     id: 5,
+  //     title: "Beyond Horizons - Teaser",
+  //     category: "Trailers",
+  //     thumbnail: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Teaser",
+  //     duration: "1:30",
+  //   },
+  //   {
+  //     id: 6,
+  //     title: "Cinematography Masterclass Highlights",
+  //     category: "Academy",
+  //     thumbnail: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Masterclass",
+  //     duration: "6:50",
+  //   },
+  //   {
+  //     id: 7,
+  //     title: "Award Night Highlights 2024",
+  //     category: "Events",
+  //     thumbnail: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Award+Night",
+  //     duration: "3:40",
+  //   },
+  //   {
+  //     id: 8,
+  //     title: "Making of Urban Stories Documentary",
+  //     category: "BTS",
+  //     thumbnail: "https://placehold.co/800x600/1a1a1a/fbbf24?text=Documentary+BTS",
+  //     duration: "7:25",
+  //   },
+  // ];
 
-  const stats = [
-    { icon: <ImageIcon className="w-6 h-6" />, number: "500+", label: "Photos" },
-    { icon: <Video className="w-6 h-6" />, number: "100+", label: "Videos" },
-    { icon: <Camera className="w-6 h-6" />, number: "50+", label: "Productions" },
-  ];
+  // const stats = [
+  //   { icon: <ImageIcon className="w-6 h-6" />, number: "500+", label: "Photos" },
+  //   { icon: <Video className="w-6 h-6" />, number: "100+", label: "Videos" },
+  //   { icon: <Camera className="w-6 h-6" />, number: "50+", label: "Productions" },
+  // ];
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-zinc-50 via-white to-amber-50/30">
+    <section className="relative min-h-screen bg-zinc-50 text-zinc-900">
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+          <div className="absolute top-20 -left-20 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 -right-20 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
+        </div>
       {/* HERO */}
       <section className="py-24 text-center relative overflow-hidden">
         {/* Animated Background Gradient Orbs */}
@@ -193,26 +197,7 @@ export default function Gallery() {
           <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-400/20 rounded-full blur-3xl animate-float-delayed"></div>
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Stats */}
-          <div
-            className="grid grid-cols-3 gap-6 mb-12 animate-fadeInUp"
-            style={{ animationDelay: "200ms" }}
-          >
-            {stats.map((stat, index) => (
-            <div
-              key={index}
-              className="bg-white p-6 rounded-xl border border-zinc-200 text-center transform transition-all duration-300 hover:scale-105 shadow-md hover:shadow-xl"
-            >
-              <div className="flex justify-center mb-3 text-amber-500">
-                {stat.icon}
-              </div>
-              <div className="text-3xl font-bold text-amber-500 mb-1">{stat.number}</div>
-              <div className="text-sm text-zinc-600">{stat.label}</div>
-            </div>
-            ))}
-          </div>
-
+        <div className="relative z-10 max-w-7xl mx-auto  ">
           {/* Tab Navigation */}
           <div
             className="flex justify-center mb-12 animate-fadeInUp"
