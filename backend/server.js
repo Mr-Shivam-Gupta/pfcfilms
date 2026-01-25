@@ -30,6 +30,22 @@ try {
 // Serve uploaded images (before API routes)
 app.use('/uploads', express.static(uploadsBase));
 
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/pfcfilms';
+const connectPromise = mongoose.connect(MONGODB_URI, {
+  serverSelectionTimeoutMS: 10000,
+  connectTimeoutMS: 10000,
+});
+
+// Wait for MongoDB before handling API requests (avoids "buffering timed out" on serverless/cold start)
+app.use(async (req, res, next) => {
+  try {
+    await connectPromise;
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
+
 // Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/upload', require('./routes/upload'));
@@ -43,17 +59,6 @@ app.use('/api/awards', require('./routes/awards'));
 app.use('/api/stats', require('./routes/stats'));
 app.use('/api/top-projects', require('./routes/top-projects'));
 app.use('/api/admin', require('./routes/admin'));
-
-// MongoDB Connection
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/pfcfilms';
-
-mongoose.connect(MONGODB_URI)
-.then(() => {
-  console.log('✅ Connected to MongoDB');
-})
-.catch((error) => {
-  console.error('❌ MongoDB connection error:', error);
-});
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -72,6 +77,18 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
+async function start() {
+  try {
+    await connectPromise;
+    console.log('✅ Connected to MongoDB');
+  } catch (error) {
+    console.error('❌ MongoDB connection error:', error.message);
+    process.exit(1);
+  }
+
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+  });
+}
+
+start();

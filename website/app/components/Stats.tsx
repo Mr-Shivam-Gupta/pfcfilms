@@ -139,10 +139,7 @@ export default function Stats() {
         setStats([]);
       } finally {
         setLoading(false);
-        // Trigger animation after a short delay
-        setTimeout(() => {
-          setHasAnimated(true);
-        }, 300);
+        setHasAnimated(true);
       }
     };
     fetchData();
@@ -188,9 +185,7 @@ export default function Stats() {
             return (
               <div
                 key={stat._id || idx}
-                className="group relative animate-on-scroll opacity-0 transition-all duration-1000 translate-y-10"
-                style={{ transitionDelay: `${idx * 100}ms` }}
-                suppressHydrationWarning
+                className="group relative"
               >
                 <div className="relative bg-white rounded-2xl p-8 border border-amber-100 shadow-lg hover:shadow-2xl hover:shadow-amber-500/20 transition-all duration-500 transform hover:-translate-y-2 hover:scale-105 overflow-hidden">
                   {/* Gradient Background on Hover */}
