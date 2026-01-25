@@ -5,6 +5,8 @@ import Image from "next/image";
 import { ChevronRight, ArrowRight, Calendar, MapPin, X, Award, Film, Clock, Tag } from "lucide-react";
 import { getProductions, getAwards, imageUrl, type Production, type Award as AwardType } from "../lib/api";
 
+const DEFAULT_IMAGE = "/projects/feature-film.png";
+
 interface Activity {
   title: string;
   event: string;
@@ -27,8 +29,7 @@ function ActivityDetailsModal({
   const isProduction = activity.type === "production";
   const production = isProduction ? (activity.originalData as Production) : null;
   const award = !isProduction ? (activity.originalData as AwardType) : null;
-  const isUrl = (str: string) => str.startsWith("http") || str.startsWith("/");
-  const hasImage = activity.image && isUrl(activity.image);
+  const hasImage = activity.image && activity.image.trim() !== "";
 
   return (
     <div
@@ -43,10 +44,17 @@ function ActivityDetailsModal({
         <div className="relative h-64 md:h-80 overflow-hidden">
           {hasImage ? (
             <Image
-              src={imageUrl(activity.image)}
+              src={imageUrl(activity.image) || DEFAULT_IMAGE}
               alt={activity.title}
               fill
               className="object-cover"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                if (!target.src.endsWith("feature-film.png")) {
+                  target.src = DEFAULT_IMAGE;
+                }
+              }}
+              unoptimized
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-amber-500/20 to-amber-600/20">
@@ -260,9 +268,6 @@ export default function RecentActivity() {
     },
   ];
 
-  // Helper to determine if image is a URL
-  const isUrl = (str: string) => str.startsWith("http") || str.startsWith("/");
-
   return (
     <section
       className="py-20 px-4 bg-gradient-to-br from-black via-zinc-900 to-black relative overflow-hidden"
@@ -355,7 +360,6 @@ export default function RecentActivity() {
                           <ModernActivityCard
                             key={`${tab.key}-${idx}`}
                             activity={activity}
-                            isUrl={isUrl}
                             tab={tab}
                             index={idx}
                             onViewDetails={handleViewDetails}
@@ -393,18 +397,16 @@ export default function RecentActivity() {
 // Modern Card Component
 function ModernActivityCard({
   activity,
-  isUrl,
   tab,
   index,
   onViewDetails,
 }: {
   activity: Activity;
-  isUrl: (s: string) => boolean;
   tab: { key: ActivityTab; color: string; bgColor: string; icon: string };
   index: number;
   onViewDetails: (activity: Activity) => void;
 }) {
-  const hasImage = isUrl(activity.image);
+  const hasImage = activity.image && activity.image.trim() !== "";
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -423,11 +425,17 @@ function ModernActivityCard({
       <div className="relative h-48 overflow-hidden">
         {hasImage ? (
           <img
-            src={imageUrl(activity.image)}
+            src={imageUrl(activity.image) || DEFAULT_IMAGE}
             alt={activity.title}
             className={`w-full h-full object-cover transition-transform duration-700 ${
               isHovered ? "scale-110" : "scale-100"
             }`}
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              if (!target.src.endsWith("feature-film.png")) {
+                target.src = DEFAULT_IMAGE;
+              }
+            }}
           />
         ) : (
           <div
