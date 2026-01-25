@@ -16,14 +16,14 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Best Dance Academy & Acting School in Kanpur | PFC FILMS",
-  description: "PFC FILMS - Premier Dance Academy & Acting School in Kanpur. Join Dhamal India Dance for Bollywood, Hip Hop & Classical dance classes. Professional acting training by Pramod Kumar Gupta. Enroll now!",
+  description: "PFC FILMS - Premier Dance Academy & Acting School in Kanpur | Mumbai. Join Dhamal India Dance for Bollywood, Hip Hop & Classical dance classes. Professional acting training by Pramod Kumar Gupta. Enroll now!",
   keywords: "Dance Academy in Kanpur, Acting School in Kanpur, Best Dance Academy Kanpur, Best Acting School Kanpur, Dance Classes Kanpur, Acting Classes Kanpur, Bollywood Dance Classes Kanpur, Hip Hop Dance Classes Kanpur, Film Acting Course Kanpur, PFC FILMS Kanpur, Dhamal India Dance Kanpur, Pramod Kumar Gupta Dance Academy",
   authors: [{ name: "Pramod Kumar Gupta" }],
   creator: "PFC FILMS",
   publisher: "PFC FILMS",
   openGraph: {
     title: "Best Dance Academy & Acting School in Kanpur | PFC FILMS",
-    description: "Premier Dance Academy & Acting School in Kanpur. Join Dhamal India Dance for professional dance and acting training.",
+    description: "Premier Dance Academy & Acting School in Kanpur | Mumbai. Join Dhamal India Dance for professional dance and acting training.",
     url: "https://pfcfilms.com",
     siteName: "PFC FILMS",
     locale: "en_IN",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Best Dance Academy & Acting School in Kanpur | PFC FILMS",
-    description: "Premier Dance Academy & Acting School in Kanpur. Join Dhamal India Dance for professional training.",
+    description: "Premier Dance Academy & Acting School in Kanpur | Mumbai. Join Dhamal India Dance for professional training.",
     images: ["/logo.jpg"],
   },
   robots: {

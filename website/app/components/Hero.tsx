@@ -39,7 +39,7 @@ export default function Hero() {
           className="text-xl md:text-3xl font-light text-zinc-600 mb-8 max-w-3xl mx-auto animate-fadeInUp"
           style={{ animationDelay: "400ms" }}
         >
-          PFC FILMS - Premier Dance Academy & Acting School in Kanpur | Dhamal India Dance | Professional Training by Pramod Kumar Gupta
+          PFC FILMS - Premier Dance Academy & Acting School in Kanpur | Mumbai | Dhamal India Dance | Professional Training by Pramod Kumar Gupta
         </p>
       </div>
 
