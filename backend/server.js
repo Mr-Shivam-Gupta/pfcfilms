@@ -15,13 +15,20 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const uploadsDir = path.join(__dirname, 'uploads', 'images');
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true });
+// On Vercel, /var/task is read-only; use /tmp (ephemeral). For production uploads, use S3/Vercel Blob/Cloudinary.
+const uploadsBase = process.env.VERCEL ? '/tmp/pfcfilms-uploads' : path.join(__dirname, 'uploads');
+const uploadsImages = path.join(uploadsBase, 'images');
+
+try {
+  if (!fs.existsSync(uploadsImages)) {
+    fs.mkdirSync(uploadsImages, { recursive: true });
+  }
+} catch (err) {
+  console.warn('Could not create uploads directory:', err.message);
 }
 
 // Serve uploaded images (before API routes)
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(uploadsBase));
 
 // Routes
 app.use('/api/auth', require('./routes/auth'));

@@ -1,11 +1,16 @@
 const path = require('path');
 const multer = require('multer');
 
+// Match server.js: on Vercel use /tmp (ephemeral); otherwise project uploads folder
+const uploadsImages = process.env.VERCEL
+  ? path.join('/tmp/pfcfilms-uploads', 'images')
+  : path.join(__dirname, '../uploads', 'images');
+
 const ALLOWED_MIMES = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '../uploads/images'));
+    cb(null, uploadsImages);
   },
   filename: (req, file, cb) => {
     const ext = path.extname(file.originalname) || '.jpg';
