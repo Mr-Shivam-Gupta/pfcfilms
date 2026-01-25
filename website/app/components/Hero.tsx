@@ -32,7 +32,7 @@ export default function Hero() {
         >
           Best Dance Academy & Acting School{" "}
           <span className="text-amber-500 inline-block animate-shimmer bg-gradient-to-r from-amber-500 via-amber-300 to-amber-500 bg-clip-text text-transparent bg-[length:200%_100%]">
-            in Kanpur
+            in Kanpur | Mumbai  
           </span>
         </h1>
         <p
