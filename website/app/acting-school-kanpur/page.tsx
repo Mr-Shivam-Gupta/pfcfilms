@@ -20,7 +20,7 @@ export default function ActingSchoolPage() {
   return (
     <div className="min-h-screen bg-white text-black">
       <CursorEffect />
-      <Navbar activeSection="acting-school" setActiveSection={() => {}} />
+      <Navbar activeSection="acting-school" />
       
       {/* Hero Section */}
       <section className="py-20 px-4 bg-gradient-to-br from-zinc-900 to-black text-white">

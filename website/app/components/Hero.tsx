@@ -2,14 +2,11 @@ import React from "react";
 import Image from "next/image";
 import { Play, Sparkles, ArrowRight, ChevronRight } from "lucide-react";
 
-import Marquee3D from "./Marquee3D";
 
 export default function Hero() {
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
-      {/* <div className="hidden md:block">
-        <Marquee3D />
-      </div> */}
+
 
       {/* Animated Orbs */}
       <div className="absolute inset-0">

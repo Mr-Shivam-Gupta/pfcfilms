@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Navbar from "../components/Navbar";
 import CursorEffect from "../components/CursorEffect";
-import { useState } from "react";
 
 export const metadata: Metadata = {
   title: "Best Dance Academy in Kanpur | Dhamal India Dance | PFC FILMS",
@@ -21,7 +20,7 @@ export default function DanceAcademyPage() {
   return (
     <div className="min-h-screen bg-white text-black">
       <CursorEffect />
-      <Navbar activeSection="dance-academy" setActiveSection={() => {}} />
+      <Navbar activeSection="dance-academy" />
       
       {/* Hero Section */}
       <section className="py-20 px-4 bg-gradient-to-br from-amber-50 to-white">

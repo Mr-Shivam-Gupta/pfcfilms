@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation";
 
 interface NavbarProps {
   activeSection: string;
-  setActiveSection: (section: string) => void;
+  setActiveSection?: (section: string) => void;
 }
 
 export default function Navbar({
@@ -79,7 +79,7 @@ export default function Navbar({
                   <Link
                     key={item}
                     href={href}
-                    onClick={() => setActiveSection(item.toLowerCase())}
+                    onClick={() => setActiveSection?.(item.toLowerCase())}
                     className={`text-sm font-medium transition-all duration-300 relative group ${
                       isActive
                         ? "text-amber-500"
@@ -117,7 +117,7 @@ export default function Navbar({
                     key={item}
                     href={href}
                     onClick={() => {
-                      setActiveSection(item.toLowerCase());
+                      setActiveSection?.(item.toLowerCase());
                       setIsMenuOpen(false);
                     }}
                     className="block w-full text-left py-3 text-sm font-medium text-zinc-800 hover:text-amber-500 transition-all duration-300 hover:translate-x-2 border-l-2 border-transparent hover:border-amber-500 pl-4"
