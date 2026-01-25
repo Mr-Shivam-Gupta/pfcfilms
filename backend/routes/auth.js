@@ -26,7 +26,7 @@ router.post('/register', async (req, res) => {
     const token = jwt.sign(
       { id: admin._id },
       process.env.JWT_SECRET || 'your_super_secret_jwt_key_change_this_in_production',
-      { expiresIn: '7d' }
+      { expiresIn: '2h' }
     );
 
     res.status(201).json({
@@ -66,7 +66,7 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign(
       { id: admin._id },
       process.env.JWT_SECRET || 'your_super_secret_jwt_key_change_this_in_production',
-      { expiresIn: '7d' }
+      { expiresIn: '2h' }
     );
 
     res.json({
