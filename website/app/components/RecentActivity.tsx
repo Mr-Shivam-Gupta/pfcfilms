@@ -207,7 +207,7 @@ export default function RecentActivity() {
     productions: productions.map((prod) => ({
       title: prod.title,
       event: prod.category || "Production",
-      date: prod.year || new Date().getFullYear().toString(),
+      date: "",
       image: prod.image || "",
       originalData: prod,
       type: "production" as const,

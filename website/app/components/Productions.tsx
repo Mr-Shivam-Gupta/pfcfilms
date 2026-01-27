@@ -118,12 +118,6 @@ function ModernProductionCard({
               </span>
             </div>
           )}
-          {production.year && (
-            <div className="flex items-center gap-2 text-zinc-500 text-xs">
-              <Calendar className="w-3.5 h-3.5" />
-              <span>{production.year}</span>
-            </div>
-          )}
         </div>
 
         {production.description && (
@@ -185,130 +179,227 @@ function ProductionDetailsModal({
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-zinc-200 shadow-2xl"
+        className="bg-white rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden border border-zinc-200 shadow-2xl flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
-        <div className="relative h-64 md:h-80 overflow-hidden">
-          {hasImage ? (
-            <Image
-              src={production.image ? (imageUrl(production.image) || "/projects/feature-film.jpg") : "/projects/feature-film.jpg"}
-              alt={production.title}
-              fill
-              className="object-cover"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                if (target.src !== "/projects/feature-film.jpg") {
-                  target.src = "/projects/feature-film.jpg";
-                }
-              }}
-              unoptimized={true}
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-amber-100 to-amber-200">
-              <span className="text-6xl">🎬</span>
-            </div>
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-white via-white/50 to-transparent"></div>
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 p-2 rounded-full bg-white/90 hover:bg-white text-zinc-900 transition-colors z-10 shadow-lg"
+          aria-label="Close"
+        >
+          <X className="w-6 h-6" />
+        </button>
 
-          {/* Close Button */}
-          <button
-            onClick={onClose}
-            className="absolute top-4 right-4 p-2 rounded-full bg-white/90 hover:bg-white text-zinc-900 transition-colors z-10 shadow-lg"
-            aria-label="Close"
-          >
-            <X className="w-6 h-6" />
-          </button>
-
-          {/* Title Overlay */}
-          <div className="absolute bottom-0 left-0 right-0 p-6">
-            <div className="flex items-center gap-2 mb-2">
-              <Film className="w-5 h-5 text-amber-600" />
-              <span className={`px-3 py-1 rounded-full text-xs font-bold text-white bg-gradient-to-r ${color} shadow-lg`}>
-                {production.category}
-              </span>
+        {/* Main Content - Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 flex-1 overflow-hidden">
+          {/* Left Side - Details (Shows second on mobile, first on desktop) */}
+          <div className="p-6 md:p-8 overflow-y-auto space-y-6 order-2 md:order-1">
+            {/* Header */}
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <Film className="w-5 h-5 text-amber-600" />
+                <span className={`px-3 py-1 rounded-full text-xs font-bold text-white bg-gradient-to-r ${color} shadow-lg`}>
+                  {production.category}
+                </span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-zinc-900 mb-4">
+                {production.title}
+              </h2>
+              {production.status && (
+                <div className="flex items-center gap-4 text-zinc-600 text-sm mb-6">
+                  <div className="flex items-center gap-1">
+                    <Clock className="w-4 h-4" />
+                    <span>{production.status}</span>
+                  </div>
+                </div>
+              )}
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-zinc-900 mb-2">
-              {production.title}
-            </h2>
-            <div className="flex items-center gap-4 text-zinc-600 text-sm">
-              {production.year && (
-                <div className="flex items-center gap-1">
-                  <Calendar className="w-4 h-4" />
-                  <span>{production.year}</span>
+
+            {/* Description */}
+            {production.description && (
+              <div>
+                <h3 className="text-xl font-bold text-zinc-900 mb-3 flex items-center gap-2">
+                  <Tag className="w-5 h-5 text-amber-600" />
+                  Description
+                </h3>
+                <p className="text-zinc-700 leading-relaxed">
+                  {production.description}
+                </p>
+              </div>
+            )}
+
+            {/* Details Grid */}
+            <div className="grid grid-cols-1 gap-6">
+              {production.genre && (
+                <div>
+                  <h4 className="text-sm font-semibold text-amber-600 mb-2 uppercase tracking-wider">
+                    Genre
+                  </h4>
+                  <p className="text-zinc-700">{production.genre}</p>
+                </div>
+              )}
+              {production.duration && (
+                <div>
+                  <h4 className="text-sm font-semibold text-amber-600 mb-2 uppercase tracking-wider flex items-center gap-2">
+                    <Clock className="w-4 h-4" />
+                    Duration
+                  </h4>
+                  <p className="text-zinc-700">{production.duration}</p>
                 </div>
               )}
               {production.status && (
-                <div className="flex items-center gap-1">
-                  <Clock className="w-4 h-4" />
-                  <span>{production.status}</span>
+                <div>
+                  <h4 className="text-sm font-semibold text-amber-600 mb-2 uppercase tracking-wider">
+                    Status
+                  </h4>
+                  <p className="text-zinc-700">{production.status}</p>
+                </div>
+              )}
+              {production.awards && (
+                <div>
+                  <h4 className="text-sm font-semibold text-amber-600 mb-2 uppercase tracking-wider flex items-center gap-2">
+                    <Award className="w-4 h-4" />
+                    Awards
+                  </h4>
+                  <p className="text-zinc-700">{production.awards}</p>
                 </div>
               )}
             </div>
+
+            {/* Action Buttons */}
+            <div className="flex gap-4 pt-4 border-t border-zinc-200">
+              <button
+                onClick={onClose}
+                className="flex-1 px-6 py-3 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-700 font-semibold border border-amber-200 hover:border-amber-300 transition-all duration-300"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+
+          {/* Right Side - Image (Shows first on mobile, second on desktop) */}
+          <div className="relative bg-zinc-100 overflow-hidden order-1 md:order-2">
+            {hasImage ? (
+              <div className="relative w-full h-full min-h-[400px] md:min-h-[700px]">
+                <Image
+                  src={production.image ? (imageUrl(production.image) || "/projects/feature-film.jpg") : "/projects/feature-film.jpg"}
+                  alt={production.title}
+                  fill
+                  className="object-contain"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    if (target.src !== "/projects/feature-film.jpg") {
+                      target.src = "/projects/feature-film.jpg";
+                    }
+                  }}
+                  unoptimized={true}
+                />
+              </div>
+            ) : (
+              <div className="w-full h-full min-h-[400px] md:min-h-[700px] flex items-center justify-center bg-gradient-to-br from-amber-100 to-amber-200">
+                <span className="text-6xl">🎬</span>
+              </div>
+            )}
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
 
-        {/* Content */}
-        <div className="p-6 md:p-8 space-y-6">
-          {/* Description */}
-          {production.description && (
+// Award Details Modal Component
+function AwardDetailsModal({
+  award,
+  onClose,
+}: {
+  award: AwardType;
+  onClose: () => void;
+}) {
+  const hasImage = award.image && award.image.trim() !== '';
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden border border-zinc-200 shadow-2xl flex flex-col"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 p-2 rounded-full bg-white/90 hover:bg-white text-zinc-900 transition-colors z-10 shadow-lg"
+          aria-label="Close"
+        >
+          <X className="w-6 h-6" />
+        </button>
+
+        {/* Main Content - Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 flex-1 overflow-hidden">
+          {/* Left Side - Details (Shows second on mobile, first on desktop) */}
+          <div className="p-6 md:p-8 overflow-y-auto space-y-6 order-2 md:order-1">
+            {/* Header */}
             <div>
-              <h3 className="text-xl font-bold text-zinc-900 mb-3 flex items-center gap-2">
-                <Tag className="w-5 h-5 text-amber-600" />
-                Description
-              </h3>
-              <p className="text-zinc-700 leading-relaxed">
-                {production.description}
-              </p>
+              <div className="flex items-center gap-2 mb-2">
+                <Award className="w-5 h-5 text-amber-600" />
+                <span className="text-sm font-semibold text-amber-600 uppercase tracking-wider">
+                  Award & Celebrity
+                </span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-zinc-900 mb-4">
+                {award.title}
+              </h2>
             </div>
-          )}
 
-          {/* Details Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {production.genre && (
+            {/* Description */}
+            {award.description && (
               <div>
-                <h4 className="text-sm font-semibold text-amber-600 mb-2 uppercase tracking-wider">
-                  Genre
-                </h4>
-                <p className="text-zinc-700">{production.genre}</p>
+                <h3 className="text-xl font-bold text-zinc-900 mb-3 flex items-center gap-2">
+                  <Tag className="w-5 h-5 text-amber-600" />
+                  Description
+                </h3>
+                <p className="text-zinc-700 leading-relaxed">
+                  {award.description}
+                </p>
               </div>
             )}
-            {production.duration && (
-              <div>
-                <h4 className="text-sm font-semibold text-amber-600 mb-2 uppercase tracking-wider flex items-center gap-2">
-                  <Clock className="w-4 h-4" />
-                  Duration
-                </h4>
-                <p className="text-zinc-700">{production.duration}</p>
-              </div>
-            )}
-            {production.status && (
-              <div>
-                <h4 className="text-sm font-semibold text-amber-600 mb-2 uppercase tracking-wider">
-                  Status
-                </h4>
-                <p className="text-zinc-700">{production.status}</p>
-              </div>
-            )}
-            {production.awards && (
-              <div>
-                <h4 className="text-sm font-semibold text-amber-600 mb-2 uppercase tracking-wider flex items-center gap-2">
-                  <Award className="w-4 h-4" />
-                  Awards
-                </h4>
-                <p className="text-zinc-700">{production.awards}</p>
-              </div>
-            )}
+
+            {/* Action Buttons */}
+            <div className="flex gap-4 pt-4 border-t border-zinc-200">
+              <button
+                onClick={onClose}
+                className="flex-1 px-6 py-3 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-700 font-semibold border border-amber-200 hover:border-amber-300 transition-all duration-300"
+              >
+                Close
+              </button>
+            </div>
           </div>
 
-          {/* Action Buttons */}
-          <div className="flex gap-4 pt-4 border-t border-zinc-200">
-            <button
-              onClick={onClose}
-              className="flex-1 px-6 py-3 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-700 font-semibold border border-amber-200 hover:border-amber-300 transition-all duration-300"
-            >
-              Close
-            </button>
+          {/* Right Side - Image (Shows first on mobile, second on desktop) */}
+          <div className="relative bg-zinc-100 overflow-hidden order-1 md:order-2">
+            {hasImage ? (
+              <div className="relative w-full h-full min-h-[400px] md:min-h-[700px]">
+                <Image
+                  src={award.image ? (imageUrl(award.image) || "/projects/feature-film.jpg") : "/projects/feature-film.jpg"}
+                  alt={award.title}
+                  fill
+                  className="object-contain"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    if (target.src !== "/projects/feature-film.jpg") {
+                      target.src = "/projects/feature-film.jpg";
+                    }
+                  }}
+                  unoptimized={true}
+                />
+              </div>
+            ) : (
+              <div className="w-full h-full min-h-[400px] md:min-h-[700px] flex items-center justify-center bg-gradient-to-br from-amber-100 to-amber-200">
+                <span className="text-6xl">🏆</span>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -358,6 +449,8 @@ export default function Productions() {
   const inProduction = productions.filter((p) => p.status === "In Production");
   const [selectedProduction, setSelectedProduction] = useState<Production | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedAward, setSelectedAward] = useState<AwardType | null>(null);
+  const [isAwardModalOpen, setIsAwardModalOpen] = useState(false);
 
   const handleViewDetails = (production: Production) => {
     setSelectedProduction(production);
@@ -367,6 +460,16 @@ export default function Productions() {
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedProduction(null);
+  };
+
+  const handleViewAwardDetails = (award: AwardType) => {
+    setSelectedAward(award);
+    setIsAwardModalOpen(true);
+  };
+
+  const closeAwardModal = () => {
+    setIsAwardModalOpen(false);
+    setSelectedAward(null);
   };
 
 
@@ -498,7 +601,7 @@ export default function Productions() {
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-zinc-900 mb-6 tracking-tight">
-              Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700">Awards</span>
+              Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700">Awards & Celebrities</span>
             </h2>
             <p className="text-xl text-zinc-600 max-w-2xl mx-auto leading-relaxed">
               Recognition for excellence in filmmaking
@@ -529,7 +632,8 @@ export default function Productions() {
               awards.map((a, idx) => (
                 <div
                   key={a._id}
-                  className="group relative bg-white rounded-2xl overflow-hidden border border-zinc-200 hover:border-amber-300 transition-all duration-500 hover:shadow-xl hover:-translate-y-2"
+                  onClick={() => handleViewAwardDetails(a)}
+                  className="group relative bg-white rounded-2xl overflow-hidden border border-zinc-200 hover:border-amber-300 transition-all duration-500 hover:shadow-xl hover:-translate-y-2 cursor-pointer"
                   style={{ animationDelay: `${idx * 50}ms` }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-amber-500/0 to-amber-600/0 group-hover:from-amber-500/5 group-hover:to-amber-600/5 transition-opacity duration-500"></div>
@@ -613,12 +717,6 @@ export default function Productions() {
                       {r.title}
                     </h3>
                     <p className="text-zinc-600 mb-4 line-clamp-3">{r.description}</p>
-                    {r.year && (
-                      <div className="flex items-center gap-2 text-zinc-500 text-xs">
-                        <Calendar className="w-3.5 h-3.5" />
-                        <span>{r.year}</span>
-                      </div>
-                    )}
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                 </div>
@@ -633,6 +731,14 @@ export default function Productions() {
         <ProductionDetailsModal
           production={selectedProduction}
           onClose={closeModal}
+        />
+      )}
+
+      {/* Award Details Modal */}
+      {isAwardModalOpen && selectedAward && (
+        <AwardDetailsModal
+          award={selectedAward}
+          onClose={closeAwardModal}
         />
       )}
     </div>

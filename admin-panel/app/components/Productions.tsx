@@ -13,7 +13,6 @@ export default function Productions() {
   const [formData, setFormData] = useState({
     title: "",
     category: "Feature Films",
-    year: "",
     image: "",
     awards: "",
     description: "",
@@ -80,7 +79,6 @@ export default function Productions() {
     setFormData({
       title: production.title,
       category: production.category,
-      year: production.year,
       image: production.image,
       awards: production.awards || "",
       description: production.description,
@@ -98,7 +96,6 @@ export default function Productions() {
     setFormData({
       title: "",
       category: "Feature Films",
-      year: "",
       image: "",
       awards: "",
       description: "",
@@ -150,7 +147,6 @@ export default function Productions() {
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Title</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Category</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Year</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Status</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Actions</th>
             </tr>
@@ -160,7 +156,6 @@ export default function Productions() {
               <tr key={production._id} className="hover:bg-zinc-50">
                 <td className="px-6 py-4 whitespace-nowrap">{production.title}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{production.category}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{production.year}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{production.status}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex space-x-2">
@@ -209,35 +204,22 @@ export default function Productions() {
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Category *</label>
-                    <select
-                      value={formData.category}
-                      onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                      required
-                      className="w-full px-4 py-2 border rounded-lg"
-                    >
-                      <option>Feature Films</option>
-                      <option>Documentaries</option>
-                      <option>Music Videos</option>
-                      <option>Commercials</option>
-                      <option>Short Films</option>
-                      <option>Web Series</option>
-                      <option>Reality Shows</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Year *</label>
-                    <input
-                      type="text"
-                      value={formData.year}
-                      onChange={(e) => setFormData({ ...formData, year: e.target.value })}
-                      required
-                      className="w-full px-4 py-2 border rounded-lg"
-                    />
-                  </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">Category *</label>
+                  <select
+                    value={formData.category}
+                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                    required
+                    className="w-full px-4 py-2 border rounded-lg"
+                  >
+                    <option>Feature Films</option>
+                    <option>Documentaries</option>
+                    <option>Music Videos</option>
+                    <option>Commercials</option>
+                    <option>Short Films</option>
+                    <option>Web Series</option>
+                    <option>Reality Shows</option>
+                  </select>
                 </div>
 
                 <div>

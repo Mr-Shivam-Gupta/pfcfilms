@@ -41,7 +41,6 @@ export interface Production {
   _id: string;
   title: string;
   category: string;
-  year: string;
   image: string;
   awards?: string;
   description: string;

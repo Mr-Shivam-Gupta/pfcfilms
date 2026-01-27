@@ -12,10 +12,6 @@ const productionSchema = new mongoose.Schema({
     enum: ['Feature Films', 'Documentaries', 'Music Videos', 'Commercials', 'Short Films', 'Web Series', 'Reality Shows'],
     default: 'Feature Films'
   },
-  year: {
-    type: String,
-    required: true
-  },
   image: {
     type: String,
     required: true
