@@ -46,10 +46,25 @@ app.use('/images', (req, res, next) => {
 
 // Handle missing upload files (especially on Vercel where /tmp is ephemeral)
 const handleMissingFile = (req, res) => {
-  // If we're on Vercel and the file doesn't exist, it's likely in ephemeral storage
+  // Check if this is an image request (by extension or Accept header)
+  const isImageRequest = /\.(jpg|jpeg|png|gif|webp|svg|bmp)$/i.test(req.path) || 
+                         req.headers.accept?.includes('image/');
+  
+  if (isImageRequest) {
+    // Return a 1x1 transparent PNG placeholder for image requests
+    // This prevents broken image icons in the browser
+    const transparentPng = Buffer.from(
+      'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==',
+      'base64'
+    );
+    res.setHeader('Content-Type', 'image/png');
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    return res.status(404).send(transparentPng);
+  }
+  
+  // For non-image requests (like API calls), return JSON
   if (process.env.VERCEL) {
     console.warn(`File not found in ephemeral storage: ${req.path}`);
-    // Return 404 with helpful message
     return res.status(404).json({
       success: false,
       message: 'Image not found. This file was stored in ephemeral storage and has been lost. Please re-upload the image.',
@@ -57,6 +72,7 @@ const handleMissingFile = (req, res) => {
       note: 'On Vercel, files in /tmp are ephemeral. Use Vercel Blob Storage for persistent storage.'
     });
   }
+  
   // In development, return standard 404
   res.status(404).json({
     success: false,
