@@ -112,7 +112,7 @@ function ModernProductionCard({
         <div className="space-y-2 mb-4">
           {(production.genre || production.duration) && (
             <div className="flex items-center gap-2 text-zinc-600 text-sm">
-              <Tag className="w-4 h-4 text-amber-500" />
+              {/* <Tag className="w-4 h-4 text-amber-500" /> */}
               <span className="line-clamp-1">
                 {production.genre || ""} {production.genre && production.duration ? "•" : ""} {production.duration || ""}
               </span>
