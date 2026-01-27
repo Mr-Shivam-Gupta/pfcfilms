@@ -33,8 +33,19 @@ app.use('/uploads', express.static(uploadsBase, {
   fallthrough: true, // Continue to next middleware if file not found
 }));
 
+// Also handle /images/ paths (redirect to /uploads/images/)
+app.use('/images', (req, res, next) => {
+  // Redirect /images/... to /uploads/images/...
+  const newPath = `/uploads/images${req.path}`;
+  req.url = newPath;
+  req.originalUrl = newPath;
+  next();
+}, express.static(uploadsBase, {
+  fallthrough: true,
+}));
+
 // Handle missing upload files (especially on Vercel where /tmp is ephemeral)
-app.use('/uploads', (req, res, next) => {
+const handleMissingFile = (req, res) => {
   // If we're on Vercel and the file doesn't exist, it's likely in ephemeral storage
   if (process.env.VERCEL) {
     console.warn(`File not found in ephemeral storage: ${req.path}`);
@@ -52,7 +63,10 @@ app.use('/uploads', (req, res, next) => {
     message: 'File not found',
     path: req.path
   });
-});
+};
+
+app.use('/uploads', handleMissingFile);
+app.use('/images', handleMissingFile);
 
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/pfcfilms';
 const connectPromise = mongoose.connect(MONGODB_URI, {

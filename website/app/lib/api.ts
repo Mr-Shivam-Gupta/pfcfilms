@@ -17,9 +17,19 @@ export function imageUrl(path: string | undefined | null): string {
     return `${API_BASE}${path}`;
   }
   
+  // Handle paths that start with '/images/' (should be '/uploads/images/')
+  if (path.startsWith('/images/')) {
+    return `${API_BASE}/uploads${path}`;
+  }
+  
   // Handle paths that start with 'uploads/' (without leading slash)
   if (path.startsWith('uploads/')) {
     return `${API_BASE}/${path}`;
+  }
+  
+  // Handle paths that start with 'images/' (without leading slash)
+  if (path.startsWith('images/')) {
+    return `${API_BASE}/uploads/${path}`;
   }
   
   // If path doesn't start with /, it might be a relative backend path
@@ -28,8 +38,8 @@ export function imageUrl(path: string | undefined | null): string {
     // Check if it's likely a filename (has extension)
     const hasExtension = /\.(jpg|jpeg|png|gif|webp|svg|bmp)$/i.test(path);
     if (hasExtension) {
-      // Likely a backend-uploaded file - prepend API_BASE/uploads
-      return `${API_BASE}/uploads/${path}`;
+      // Likely a backend-uploaded file - prepend API_BASE/uploads/images
+      return `${API_BASE}/uploads/images/${path}`;
     }
   }
   
