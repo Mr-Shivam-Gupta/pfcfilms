@@ -52,6 +52,34 @@ After setting up Blob Storage:
 
 ## Troubleshooting
 
+### Error: "Cannot GET /uploads/images/..."
+This error occurs because:
+- On Vercel, files saved to `/tmp` are **ephemeral** and get deleted
+- Existing images in your database still have paths like `/uploads/images/filename.jpg`
+- These files no longer exist on the server
+
+**Solution:**
+1. **Set up Blob Storage** (see Setup Steps above)
+2. **Re-upload all images** through the admin panel - they will now be stored in Blob Storage permanently
+3. **OR** If you have the image files locally, you can run the migration endpoint (see below)
+
+### Migration Endpoint (Optional)
+If you have the original image files locally and want to migrate them to Blob Storage:
+
+```bash
+# Make a POST request to the migration endpoint
+POST https://your-backend-url/api/migrate/to-blob
+Headers: Authorization: Bearer <your-admin-token>
+```
+
+This will:
+- Find all database entries with `/uploads/images/...` paths
+- Upload those files to Blob Storage
+- Update the database with the new Blob URLs
+
+**Note:** This only works if the files still exist locally. On Vercel, files in `/tmp` are already lost.
+
+### Other Issues
 If images still show as default:
 1. Check that `BLOB_READ_WRITE_TOKEN` is set in Vercel environment variables
 2. Verify the backend is deployed and running

@@ -28,7 +28,31 @@ try {
 }
 
 // Serve uploaded images (before API routes)
-app.use('/uploads', express.static(uploadsBase));
+// On Vercel, files in /tmp are ephemeral, so we handle missing files gracefully
+app.use('/uploads', express.static(uploadsBase, {
+  fallthrough: true, // Continue to next middleware if file not found
+}));
+
+// Handle missing upload files (especially on Vercel where /tmp is ephemeral)
+app.use('/uploads', (req, res, next) => {
+  // If we're on Vercel and the file doesn't exist, it's likely in ephemeral storage
+  if (process.env.VERCEL) {
+    console.warn(`File not found in ephemeral storage: ${req.path}`);
+    // Return 404 with helpful message
+    return res.status(404).json({
+      success: false,
+      message: 'Image not found. This file was stored in ephemeral storage and has been lost. Please re-upload the image.',
+      path: req.path,
+      note: 'On Vercel, files in /tmp are ephemeral. Use Vercel Blob Storage for persistent storage.'
+    });
+  }
+  // In development, return standard 404
+  res.status(404).json({
+    success: false,
+    message: 'File not found',
+    path: req.path
+  });
+});
 
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/pfcfilms';
 const connectPromise = mongoose.connect(MONGODB_URI, {
@@ -58,6 +82,7 @@ app.use('/api/awards', require('./routes/awards'));
 app.use('/api/stats', require('./routes/stats'));
 app.use('/api/top-projects', require('./routes/top-projects'));
 app.use('/api/admin', require('./routes/admin'));
+app.use('/api/migrate', require('./routes/migrate-images'));
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
