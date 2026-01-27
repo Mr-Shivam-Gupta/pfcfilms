@@ -18,6 +18,20 @@ const nextConfig: NextConfig = {
     ],
     dangerouslyAllowSVG: true,
   },
+  // compiler: {
+  //   removeConsole: {
+  //     exclude: ['error'],
+  //   },
+  // },
+  // logging: {
+  //   fetches: {
+  //     fullUrl: false,
+  //   },
+  // },
+  // devIndicators: {
+  //   appIsrStatus: false,
+  //   buildActivity: false,
+  // },
 };
 
 export default nextConfig;

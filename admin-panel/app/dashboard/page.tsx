@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import apiClient from "../lib/api";
 import {
   Film,
   BookOpen,
@@ -20,13 +20,10 @@ import Productions from "../components/Productions";
 import Courses from "../components/Courses";
 import Gallery from "../components/Gallery";
 import Contacts from "../components/Contacts";
-import Celebrities from "../components/Celebrities";
 import Testimonials from "../components/Testimonials";
 import Awards from "../components/Awards";
 import Stats from "../components/Stats";
 import TopProjects from "../components/TopProjects";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
 type DashboardStats = {
   productions: number;
@@ -34,7 +31,6 @@ type DashboardStats = {
   gallery: number;
   contacts: number;
   newContacts: number;
-  celebrities: number;
   testimonials: number;
   awards: number;
 };
@@ -57,15 +53,17 @@ export default function Dashboard() {
 
   const fetchDashboardStats = async () => {
     try {
-      const token = localStorage.getItem("adminToken");
-      const response = await axios.get(`${API_URL}/admin/dashboard`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await apiClient.get("/admin/dashboard");
       if (response.data.success) {
         setStats(response.data.data);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Failed to fetch stats:", error);
+      // If token is invalid/expired, the interceptor will handle redirect
+      if (error.response?.status === 401 || error.response?.status === 403) {
+        // Interceptor will redirect, but we can also handle it here
+        return;
+      }
     } finally {
       setLoading(false);
     }
@@ -82,9 +80,8 @@ export default function Dashboard() {
     { id: "courses", label: "Courses", icon: BookOpen },
     { id: "gallery", label: "Gallery", icon: Image },
     { id: "contacts", label: "Contacts", icon: Mail },
-    { id: "celebrities", label: "Celebrities", icon: Users },
     { id: "testimonials", label: "Testimonials", icon: MessageSquare },
-    { id: "awards", label: "Awards", icon: Award },
+    { id: "awards", label: "Awards & Celebrities", icon: Award },
     { id: "stats", label: "Stats", icon: BarChart3 },
     { id: "top-projects", label: "Top Projects", icon: Film },
   ];
@@ -207,18 +204,6 @@ export default function Dashboard() {
                   <div className="bg-white p-6 rounded-xl shadow-sm border border-zinc-200">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-zinc-600 text-sm">Celebrities</p>
-                        <p className="text-3xl font-bold text-zinc-900 mt-2">
-                          {stats?.celebrities || 0}
-                        </p>
-                      </div>
-                      <Users className="w-12 h-12 text-amber-500" />
-                    </div>
-                  </div>
-
-                  <div className="bg-white p-6 rounded-xl shadow-sm border border-zinc-200">
-                    <div className="flex items-center justify-between">
-                      <div>
                         <p className="text-zinc-600 text-sm">Testimonials</p>
                         <p className="text-3xl font-bold text-zinc-900 mt-2">
                           {stats?.testimonials || 0}
@@ -260,7 +245,6 @@ export default function Dashboard() {
           {activeTab === "courses" && <Courses />}
           {activeTab === "gallery" && <Gallery />}
           {activeTab === "contacts" && <Contacts />}
-          {activeTab === "celebrities" && <Celebrities />}
           {activeTab === "testimonials" && <Testimonials />}
           {activeTab === "awards" && <Awards />}
           {activeTab === "stats" && <Stats />}

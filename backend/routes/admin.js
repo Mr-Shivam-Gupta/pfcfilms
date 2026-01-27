@@ -5,7 +5,6 @@ const Production = require('../models/Production');
 const Course = require('../models/Course');
 const Gallery = require('../models/Gallery');
 const Contact = require('../models/Contact');
-const Celebrity = require('../models/Celebrity');
 const Testimonial = require('../models/Testimonial');
 const Award = require('../models/Award');
 const Stat = require('../models/Stat');
@@ -18,7 +17,6 @@ router.get('/dashboard', auth, async (req, res) => {
       coursesCount,
       galleryCount,
       contactsCount,
-      celebritiesCount,
       testimonialsCount,
       awardsCount,
       newContacts
@@ -27,7 +25,6 @@ router.get('/dashboard', auth, async (req, res) => {
       Course.countDocuments(),
       Gallery.countDocuments(),
       Contact.countDocuments(),
-      Celebrity.countDocuments(),
       Testimonial.countDocuments(),
       Award.countDocuments(),
       Contact.countDocuments({ status: 'new' })
@@ -41,7 +38,6 @@ router.get('/dashboard', auth, async (req, res) => {
         gallery: galleryCount,
         contacts: contactsCount,
         newContacts,
-        celebrities: celebritiesCount,
         testimonials: testimonialsCount,
         awards: awardsCount
       }

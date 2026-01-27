@@ -1,11 +1,9 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import apiClient from "../lib/api";
 import { Plus, Edit, Trash2, X } from "lucide-react";
 import { uploadImage, imageUrl } from "../lib/upload";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
 export default function Gallery() {
   const [items, setItems] = useState<any[]>([]);
@@ -32,7 +30,7 @@ export default function Gallery() {
 
   const fetchItems = async () => {
     try {
-      const response = await axios.get(`${API_URL}/gallery`);
+      const response = await apiClient.get("/gallery");
       if (response.data.success) {
         setItems(response.data.data);
       }
@@ -79,17 +77,10 @@ export default function Gallery() {
       }
     }
     try {
-      const token = localStorage.getItem("adminToken");
       if (editing) {
-        await axios.put(
-          `${API_URL}/gallery/${editing._id}`,
-          formData,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
+        await apiClient.put(`/gallery/${editing._id}`, formData);
       } else {
-        await axios.post(`${API_URL}/gallery`, formData, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        await apiClient.post("/gallery", formData);
       }
       fetchItems();
       setShowModal(false);
@@ -103,10 +94,7 @@ export default function Gallery() {
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this item?")) return;
     try {
-      const token = localStorage.getItem("adminToken");
-      await axios.delete(`${API_URL}/gallery/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await apiClient.delete(`/gallery/${id}`);
       fetchItems();
     } catch (error) {
       console.error("Failed to delete item:", error);

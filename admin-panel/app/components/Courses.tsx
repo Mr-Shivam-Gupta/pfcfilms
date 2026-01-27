@@ -1,11 +1,9 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import apiClient from "../lib/api";
 import { Plus, Edit, Trash2, X } from "lucide-react";
 import { uploadImage, imageUrl } from "../lib/upload";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
 export default function Courses() {
   const [courses, setCourses] = useState<any[]>([]);
@@ -36,7 +34,7 @@ export default function Courses() {
 
   const fetchCourses = async () => {
     try {
-      const response = await axios.get(`${API_URL}/courses`);
+      const response = await apiClient.get("/courses");
       if (response.data.success) {
         setCourses(response.data.data);
       }
@@ -54,17 +52,10 @@ export default function Courses() {
       return;
     }
     try {
-      const token = localStorage.getItem("adminToken");
       if (editing) {
-        await axios.put(
-          `${API_URL}/courses/${editing._id}`,
-          formData,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
+        await apiClient.put(`/courses/${editing._id}`, formData);
       } else {
-        await axios.post(`${API_URL}/courses`, formData, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        await apiClient.post("/courses", formData);
       }
       fetchCourses();
       setShowModal(false);
@@ -78,10 +69,7 @@ export default function Courses() {
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this course?")) return;
     try {
-      const token = localStorage.getItem("adminToken");
-      await axios.delete(`${API_URL}/courses/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await apiClient.delete(`/courses/${id}`);
       fetchCourses();
     } catch (error) {
       console.error("Failed to delete course:", error);

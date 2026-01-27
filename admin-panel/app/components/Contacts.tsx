@@ -1,10 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import axios from "axios";
+import apiClient from "../lib/api";
 import { Trash2, Mail, CheckCircle } from "lucide-react";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
 export default function Contacts() {
   const [contacts, setContacts] = useState<any[]>([]);
@@ -17,10 +15,7 @@ export default function Contacts() {
 
   const fetchContacts = async () => {
     try {
-      const token = localStorage.getItem("adminToken");
-      const response = await axios.get(`${API_URL}/contact`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await apiClient.get("/contact");
       if (response.data.success) {
         setContacts(response.data.data);
       }
@@ -34,10 +29,7 @@ export default function Contacts() {
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this contact?")) return;
     try {
-      const token = localStorage.getItem("adminToken");
-      await axios.delete(`${API_URL}/contact/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await apiClient.delete(`/contact/${id}`);
       fetchContacts();
     } catch (error) {
       console.error("Failed to delete contact:", error);
@@ -47,12 +39,7 @@ export default function Contacts() {
 
   const updateStatus = async (id: string, status: string) => {
     try {
-      const token = localStorage.getItem("adminToken");
-      await axios.put(
-        `${API_URL}/contact/${id}`,
-        { status },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      await apiClient.put(`/contact/${id}`, { status });
       fetchContacts();
     } catch (error) {
       console.error("Failed to update status:", error);

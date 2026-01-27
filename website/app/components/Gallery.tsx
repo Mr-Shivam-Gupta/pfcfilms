@@ -246,14 +246,14 @@ export default function Gallery() {
                   onClick={() => setSelectedMedia({ ...photo, type: "photo" })}
                 >
                   <Image
-                    src={photo.image ? (imageUrl(photo.image) || "/projects/feature-film.png") : "/projects/feature-film.png"}
+                    src={photo.image ? (imageUrl(photo.image) || "/projects/feature-film.jpg") : "/projects/feature-film.jpg"}
                     alt={photo.title}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
-                      if (target.src !== "/projects/feature-film.png") {
-                        target.src = "/projects/feature-film.png";
+                      if (target.src !== "/projects/feature-film.jpg") {
+                        target.src = "/projects/feature-film.jpg";
                       }
                     }}
                     unoptimized={true}
@@ -293,14 +293,14 @@ export default function Gallery() {
                   onClick={() => setSelectedMedia({ ...video, type: "video" })}
                 >
                   <Image
-                    src={(video.thumbnail || video.image) ? (imageUrl(video.thumbnail || video.image) || "/projects/feature-film.png") : "/projects/feature-film.png"}
+                    src={(video.thumbnail || video.image) ? (imageUrl(video.thumbnail || video.image) || "/projects/feature-film.jpg") : "/projects/feature-film.jpg"}
                     alt={video.title}
                     fill
                     className="object-cover"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
-                      if (target.src !== "/projects/feature-film.png") {
-                        target.src = "/projects/feature-film.png";
+                      if (target.src !== "/projects/feature-film.jpg") {
+                        target.src = "/projects/feature-film.jpg";
                       }
                     }}
                     unoptimized={true}
@@ -346,14 +346,14 @@ export default function Gallery() {
             {selectedMedia.type === "photo" ? (
               <div className="relative w-full aspect-video">
                 <Image
-                  src={selectedMedia.image ? (imageUrl(selectedMedia.image) || "/projects/feature-film.png") : "/projects/feature-film.png"}
+                  src={selectedMedia.image ? (imageUrl(selectedMedia.image) || "/projects/feature-film.jpg") : "/projects/feature-film.jpg"}
                   alt={selectedMedia.title}
                   fill
                   className="object-contain"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
-                    if (target.src !== "/projects/feature-film.png") {
-                      target.src = "/projects/feature-film.png";
+                    if (target.src !== "/projects/feature-film.jpg") {
+                      target.src = "/projects/feature-film.jpg";
                     }
                   }}
                   unoptimized={true}

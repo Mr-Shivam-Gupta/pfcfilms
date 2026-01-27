@@ -351,14 +351,14 @@ export default function Academy() {
                     {/* Image */}
                     <div className="relative h-64">
                       <Image
-                        src={course.image ? (imageUrl(course.image) || "/projects/feature-film.png") : "/projects/feature-film.png"}
+                        src={course.image ? (imageUrl(course.image) || "/projects/feature-film.jpg") : "/projects/feature-film.jpg"}
                         alt={course.title}
                         fill
                         className="object-cover group-hover:scale-110 transition-transform duration-700"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;
-                          if (target.src !== "/projects/feature-film.png") {
-                            target.src = "/projects/feature-film.png";
+                          if (target.src !== "/projects/feature-film.jpg") {
+                            target.src = "/projects/feature-film.jpg";
                           }
                         }}
                         unoptimized={true}
@@ -485,15 +485,15 @@ export default function Academy() {
                         <div className="flex items-center space-x-4 mb-4">
                           <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-amber-400">
                             <Image
-                              src={testimonial.image ? (imageUrl(testimonial.image) || "/projects/feature-film.png") : "/projects/feature-film.png"}
+                              src={testimonial.image ? (imageUrl(testimonial.image) || "/projects/feature-film.jpg") : "/projects/feature-film.jpg"}
                               alt={testimonial.name}
                               fill
                               className="object-cover"
                               draggable={false}
                               onError={(e) => {
                                 const target = e.target as HTMLImageElement;
-                                if (target.src !== "/projects/feature-film.png") {
-                                  target.src = "/projects/feature-film.png";
+                                if (target.src !== "/projects/feature-film.jpg") {
+                                  target.src = "/projects/feature-film.jpg";
                                 }
                               }}
                               unoptimized={true}

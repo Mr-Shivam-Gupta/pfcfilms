@@ -81,16 +81,6 @@ export interface GalleryItem {
   order?: number;
 }
 
-export interface Celebrity {
-  _id: string;
-  name: string;
-  image: string;
-  role: string;
-  gallery: string[];
-  bio?: string;
-  featured?: boolean;
-  order?: number;
-}
 
 export interface Testimonial {
   _id: string;
@@ -107,9 +97,9 @@ export interface Award {
   _id: string;
   title: string;
   year: string;
-  category: string;
-  project: string;
   image: string;
+  category?: string;
+  project?: string;
   description?: string;
   featured?: boolean;
   order?: number;
@@ -181,19 +171,6 @@ export async function getGallery(type?: 'photo' | 'video', category?: string): P
   }
 }
 
-export async function getCelebrities(featured?: boolean): Promise<Celebrity[]> {
-  try {
-    const params = new URLSearchParams();
-    if (featured) params.append('featured', 'true');
-    
-    const response = await fetch(`${API_URL}/celebrities?${params.toString()}`);
-    const data = await response.json();
-    return data.success ? data.data : [];
-  } catch (error) {
-    console.error('Error fetching celebrities:', error);
-    return [];
-  }
-}
 
 export async function getTestimonials(featured?: boolean): Promise<Testimonial[]> {
   try {

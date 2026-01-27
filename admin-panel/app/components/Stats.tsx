@@ -1,10 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import axios from "axios";
+import apiClient from "../lib/api";
 import { Plus, Edit, Trash2, X } from "lucide-react";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
 export default function Stats() {
   const [stats, setStats] = useState<any[]>([]);
@@ -24,7 +22,7 @@ export default function Stats() {
 
   const fetchStats = async () => {
     try {
-      const response = await axios.get(`${API_URL}/stats`);
+      const response = await apiClient.get("/stats");
       if (response.data.success) {
         setStats(response.data.data);
       }
@@ -38,17 +36,10 @@ export default function Stats() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem("adminToken");
       if (editing) {
-        await axios.put(
-          `${API_URL}/stats/${editing._id}`,
-          formData,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
+        await apiClient.put(`/stats/${editing._id}`, formData);
       } else {
-        await axios.post(`${API_URL}/stats`, formData, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        await apiClient.post("/stats", formData);
       }
       fetchStats();
       setShowModal(false);
@@ -62,10 +53,7 @@ export default function Stats() {
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this stat?")) return;
     try {
-      const token = localStorage.getItem("adminToken");
-      await axios.delete(`${API_URL}/stats/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await apiClient.delete(`/stats/${id}`);
       fetchStats();
     } catch (error) {
       console.error("Failed to delete stat:", error);

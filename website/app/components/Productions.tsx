@@ -61,7 +61,7 @@ function ModernProductionCard({
       <div className="relative h-48 overflow-hidden">
         {hasImage ? (
           <Image
-            src={production.image ? (imageUrl(production.image) || "/projects/feature-film.png") : "/projects/feature-film.png"}
+            src={production.image ? (imageUrl(production.image) || "/projects/feature-film.jpg") : "/projects/feature-film.jpg"}
             alt={production.title}
             fill
             className={`object-cover transition-transform duration-700 ${
@@ -69,8 +69,8 @@ function ModernProductionCard({
             }`}
             onError={(e) => {
               const target = e.target as HTMLImageElement;
-              if (target.src !== "/projects/feature-film.png") {
-                target.src = "/projects/feature-film.png";
+              if (target.src !== "/projects/feature-film.jpg") {
+                target.src = "/projects/feature-film.jpg";
               }
             }}
             unoptimized={true}
@@ -192,14 +192,14 @@ function ProductionDetailsModal({
         <div className="relative h-64 md:h-80 overflow-hidden">
           {hasImage ? (
             <Image
-              src={production.image ? (imageUrl(production.image) || "/projects/feature-film.png") : "/projects/feature-film.png"}
+              src={production.image ? (imageUrl(production.image) || "/projects/feature-film.jpg") : "/projects/feature-film.jpg"}
               alt={production.title}
               fill
               className="object-cover"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
-                if (target.src !== "/projects/feature-film.png") {
-                  target.src = "/projects/feature-film.png";
+                if (target.src !== "/projects/feature-film.jpg") {
+                  target.src = "/projects/feature-film.jpg";
                 }
               }}
               unoptimized={true}
@@ -533,16 +533,16 @@ export default function Productions() {
                   style={{ animationDelay: `${idx * 50}ms` }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-amber-500/0 to-amber-600/0 group-hover:from-amber-500/5 group-hover:to-amber-600/5 transition-opacity duration-500"></div>
-                  <div className="relative h-48 overflow-hidden">
+                  <div className="relative h-48 overflow-hidden bg-zinc-100">
                     <Image
-                      src={a.image ? (imageUrl(a.image) || "/projects/feature-film.png") : "/projects/feature-film.png"}
+                      src={a.image ? (imageUrl(a.image) || "/projects/feature-film.jpg") : "/projects/feature-film.jpg"}
                       alt={a.title}
                       fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      className="object-contain transition-transform duration-700 group-hover:scale-110"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
-                        if (target.src !== "/projects/feature-film.png") {
-                          target.src = "/projects/feature-film.png";
+                        if (target.src !== "/projects/feature-film.jpg") {
+                          target.src = "/projects/feature-film.jpg";
                         }
                       }}
                       unoptimized={true}
@@ -559,7 +559,7 @@ export default function Productions() {
                       {a.title}
                     </h3>
                     <p className="text-sm text-zinc-600">
-                      {a.category} – {a.project}
+                      {a.category && a.project ? `${a.category} – ${a.project}` : a.category || a.project || ""}
                     </p>
                     {a.year && (
                       <div className="flex items-center gap-2 text-zinc-500 text-xs mt-2">
@@ -598,14 +598,14 @@ export default function Productions() {
                   <div className="absolute inset-0 bg-gradient-to-br from-green-500/0 to-emerald-600/0 group-hover:from-green-500/5 group-hover:to-emerald-600/5 transition-opacity duration-500"></div>
                   <div className="relative h-64 overflow-hidden">
                     <Image
-                      src={r.image ? (imageUrl(r.image) || "/projects/feature-film.png") : "/projects/feature-film.png"}
+                      src={r.image ? (imageUrl(r.image) || "/projects/feature-film.jpg") : "/projects/feature-film.jpg"}
                       alt={r.title}
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-110"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
-                        if (target.src !== "/projects/feature-film.png") {
-                          target.src = "/projects/feature-film.png";
+                        if (target.src !== "/projects/feature-film.jpg") {
+                          target.src = "/projects/feature-film.jpg";
                         }
                       }}
                       unoptimized={true}

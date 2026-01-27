@@ -1,11 +1,9 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import apiClient from "../lib/api";
 import { Plus, Edit, Trash2, X } from "lucide-react";
 import { uploadImage, imageUrl } from "../lib/upload";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
 export default function Testimonials() {
   const [testimonials, setTestimonials] = useState<any[]>([]);
@@ -30,7 +28,7 @@ export default function Testimonials() {
 
   const fetchTestimonials = async () => {
     try {
-      const response = await axios.get(`${API_URL}/testimonials`);
+      const response = await apiClient.get("/testimonials");
       if (response.data.success) {
         setTestimonials(response.data.data);
       }
@@ -48,17 +46,10 @@ export default function Testimonials() {
       return;
     }
     try {
-      const token = localStorage.getItem("adminToken");
       if (editing) {
-        await axios.put(
-          `${API_URL}/testimonials/${editing._id}`,
-          formData,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
+        await apiClient.put(`/testimonials/${editing._id}`, formData);
       } else {
-        await axios.post(`${API_URL}/testimonials`, formData, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        await apiClient.post("/testimonials", formData);
       }
       fetchTestimonials();
       setShowModal(false);
@@ -72,10 +63,7 @@ export default function Testimonials() {
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this testimonial?")) return;
     try {
-      const token = localStorage.getItem("adminToken");
-      await axios.delete(`${API_URL}/testimonials/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await apiClient.delete(`/testimonials/${id}`);
       fetchTestimonials();
     } catch (error) {
       console.error("Failed to delete testimonial:", error);

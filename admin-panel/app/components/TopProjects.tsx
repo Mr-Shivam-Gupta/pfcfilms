@@ -1,11 +1,9 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import apiClient from "../lib/api";
 import { Plus, Edit, Trash2, X } from "lucide-react";
 import { uploadImage, imageUrl } from "../lib/upload";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
 export default function TopProjects() {
   const [topProjects, setTopProjects] = useState<any[]>([]);
@@ -29,7 +27,7 @@ export default function TopProjects() {
 
   const fetchTopProjects = async () => {
     try {
-      const response = await axios.get(`${API_URL}/top-projects`);
+      const response = await apiClient.get("/top-projects");
       if (response.data.success) {
         setTopProjects(response.data.data);
       }
@@ -47,17 +45,10 @@ export default function TopProjects() {
       return;
     }
     try {
-      const token = localStorage.getItem("adminToken");
       if (editing) {
-        await axios.put(
-          `${API_URL}/top-projects/${editing._id}`,
-          formData,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
+        await apiClient.put(`/top-projects/${editing._id}`, formData);
       } else {
-        await axios.post(`${API_URL}/top-projects`, formData, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        await apiClient.post("/top-projects", formData);
       }
       fetchTopProjects();
       setShowModal(false);
@@ -71,10 +62,7 @@ export default function TopProjects() {
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this top project?")) return;
     try {
-      const token = localStorage.getItem("adminToken");
-      await axios.delete(`${API_URL}/top-projects/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await apiClient.delete(`/top-projects/${id}`);
       fetchTopProjects();
     } catch (error) {
       console.error("Failed to delete top project:", error);

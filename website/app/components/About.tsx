@@ -13,12 +13,9 @@ import {
   Film,
   Users,
   Star,
-  Camera,
   Trophy,
   Target,
   X,
-  ChevronLeft,
-  ChevronRight,
 } from "lucide-react";
 import { imageUrl } from "../lib/api";
 
@@ -84,7 +81,7 @@ function DirectorImageSection({ aboutData }: { aboutData: any }) {
     >
       <div className="relative w-full aspect-square rounded-2xl overflow-hidden border border-zinc-200 shadow-2xl">
         <Image
-          src={imageUrl(aboutData.directorImage) || "https://placehold.co/600x600/1a1a1a/fbbf24?text=Director"}
+          src={imageUrl(aboutData.directorImage) || "/images/Director_producer_Pramod_Gupta.jpeg"}
           alt={aboutData.directorName}
           fill
           className="object-cover hover:scale-105 transition-transform duration-700"
@@ -236,9 +233,6 @@ function useTicker({
 }
 
 export default function About() {
-  const [celebrities, setCelebrities] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-
   // Static about data
   const aboutData = {
     directorName: "Mr. Pramod Kumar Gupta",
@@ -249,74 +243,6 @@ export default function About() {
     vision: "To be the global benchmark in film production and cinematic education, creating a legacy of storytelling that transcends borders and cultures, inspiring generations to dream beyond the ordinary.",
     mission: "To nurture raw talent into world-class cinematic artists through immersive training, while simultaneously producing high-caliber content that entertains, educates, and elevates the standards of regional and national cinema.",
     achievements: []
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      const { getCelebrities } = await import("../lib/api");
-      const celebs = await getCelebrities();
-      setCelebrities(celebs);
-      setLoading(false);
-    };
-    fetchData();
-  }, []);
-
-
-  // --- Marquee Logic ---
-  const [selectedCelebrity, setSelectedCelebrity] = useState<
-    (typeof celebrities)[0] | null
-  >(null);
-  const [dragX, setDragX] = useState(0);
-  const [lastDragX, setLastDragX] = useState(0);
-
-  // Ref based drag state to avoid async closure issues
-  const isDraggingRef = useRef(false);
-  const startXRef = useRef(0);
-  const didMoveRef = useRef(false);
-
-  // Marquee parameters
-  // IMPORTANT: For proper infinite loop, we duplicate the list.
-  // The logic relies on total width.
-  const CARD_WIDTH = 280; // w-64 is 256px + padding/gap. Let's assume approx spacing.
-
-  const autoOffset = useTicker({ initialSpeed: 1, direction: 1 });
-  const totalOffset = autoOffset + dragX;
-  const totalStripWidth = celebrities.length * CARD_WIDTH;
-
-  // Normalize offset to loop
-  const x = totalOffset % totalStripWidth;
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    isDraggingRef.current = true;
-    startXRef.current = e.clientX;
-    didMoveRef.current = false;
-    setLastDragX(dragX);
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDraggingRef.current) return;
-
-    const delta = e.clientX - startXRef.current;
-    if (Math.abs(delta) > 5) {
-      didMoveRef.current = true;
-    }
-
-    setDragX(lastDragX + delta * 1.2); // 1.2 sensitivity
-  };
-
-  const handleMouseUp = () => {
-    isDraggingRef.current = false;
-  };
-
-  const handleMouseLeave = () => {
-    isDraggingRef.current = false;
-  };
-
-  const handleItemClick = (celeb: (typeof celebrities)[0]) => {
-    if (!didMoveRef.current) {
-      setSelectedCelebrity(celeb);
-    }
   };
 
   return (
@@ -394,151 +320,6 @@ export default function About() {
           </div>
         </div>
       </section>
-
-      {/* Celebrities Section (Updated with Marquee & Popup) */}
-      <section className="py-20 bg-white overflow-hidden select-none">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-black mb-4">
-              Celebrity <span className="text-amber-500">Collaborations</span>
-            </h2>
-            <p className="text-zinc-600 text-lg max-w-2xl mx-auto">
-              Working with the industry's finest talents. Drag to explore.
-            </p>
-          </div>
-        </div>
-
-        {/* Marquee Container */}
-        <div
-          className="relative w-full cursor-grab active:cursor-grabbing pb-8"
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseLeave}
-        >
-          {/* We duplicate items 3 times for a smooth buffer on wide screens */}
-          <div
-            className="flex gap-6 pl-[50%] will-change-transform" // pl-50% centers initial visual significantly
-            style={{
-              transform: `translate3d(${x}px, 0, 0)`,
-              width: "max-content",
-            }}
-          >
-            {loading ? (
-              Array.from({ length: 6 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="w-64 flex-shrink-0 bg-white rounded-xl overflow-hidden shadow-sm p-3 border border-zinc-100"
-                >
-                  <div className="aspect-square rounded-lg bg-zinc-200 animate-pulse mb-3" />
-                  <div className="h-4 bg-zinc-200 rounded animate-pulse mb-1" />
-                  <div className="h-3 bg-zinc-200 rounded animate-pulse w-2/3 mx-auto" />
-                </div>
-              ))
-            ) : celebrities.length === 0 ? (
-              <div className="w-full text-center py-12 text-zinc-500">No celebrities found</div>
-            ) : (
-              [...celebrities, ...celebrities, ...celebrities].map(
-                (celebrity, index) => (
-                  <div
-                    key={`${celebrity._id || celebrity.name}-${index}`}
-                    onClick={() => handleItemClick(celebrity)}
-                    className="group w-64 flex-shrink-0 bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 p-3 border border-zinc-100 cursor-pointer"
-                  >
-                    <div className="relative aspect-square rounded-lg overflow-hidden mb-3 bg-zinc-100">
-                      <Image
-                        src={celebrity.image ? (imageUrl(celebrity.image) || "/projects/feature-film.png") : "/projects/feature-film.png"}
-                        alt={celebrity.name}
-                        fill
-                        className="object-cover filter grayscale group-hover:grayscale-0 transition-all duration-500"
-                        draggable={false}
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          if (target.src !== "/projects/feature-film.png") {
-                            target.src = "/projects/feature-film.png";
-                          }
-                        }}
-                        unoptimized={true}
-                      />
-                    </div>
-                    <div className="text-center">
-                      <h4 className="font-bold text-black text-sm mb-1 group-hover:text-amber-600 transition-colors">
-                        {celebrity.name}
-                      </h4>
-                      <p className="text-xs text-zinc-500 font-medium">
-                        {celebrity.role}
-                      </p>
-                    </div>
-                  </div>
-                ),
-              )
-            )}
-          </div>
-
-          {/* Fade Edges for premium feel */}
-          <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-white to-transparent pointer-events-none z-10"></div>
-          <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-white to-transparent pointer-events-none z-10"></div>
-        </div>
-      </section>
-
-      {/* Gallery Modal - Grid View */}
-      {selectedCelebrity && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fadeInUp"
-          onClick={() => setSelectedCelebrity(null)}
-        >
-          <div
-            className="bg-white rounded-2xl overflow-hidden max-w-5xl w-full max-h-[90vh] flex flex-col relative shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b">
-              <h3 className="text-xl font-bold">{selectedCelebrity.name}</h3>
-              <button
-                onClick={() => setSelectedCelebrity(null)}
-                className="p-2 hover:bg-zinc-100 rounded-full transition-colors text-black"
-                aria-label="Close Gallery"
-              >
-                <X size={24} />
-              </button>
-            </div>
-
-            {/* Content with Grid */}
-            <div className="flex-1 overflow-y-auto p-6 bg-zinc-50">
-              {selectedCelebrity.gallery &&
-              selectedCelebrity.gallery.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {selectedCelebrity.gallery.map((img: string, idx: number) => (
-                    <div
-                      key={idx}
-                      className="relative aspect-[3/4] sm:aspect-[4/3] rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all group"
-                    >
-                      <Image
-                        src={img ? (imageUrl(img) || "/projects/feature-film.png") : "/projects/feature-film.png"}
-                        alt={`${selectedCelebrity.name} gallery ${idx}`}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          if (target.src !== "/projects/feature-film.png") {
-                            target.src = "/projects/feature-film.png";
-                          }
-                        }}
-                        unoptimized={true}
-                      />
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="flex flex-col items-center justify-center h-full text-zinc-400">
-                  <Camera className="w-12 h-12 mb-2 opacity-50" />
-                  <p>No gallery images available</p>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Vision & Mission Section */}
       <section className="py-20 px-4 bg-zinc-50 relative overflow-hidden">

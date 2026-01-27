@@ -5,7 +5,7 @@ import Image from "next/image";
 import { ChevronRight, ArrowRight, Calendar, MapPin, X, Award, Film, Clock, Tag } from "lucide-react";
 import { getProductions, getAwards, imageUrl, type Production, type Award as AwardType } from "../lib/api";
 
-const DEFAULT_IMAGE = "/projects/feature-film.png";
+const DEFAULT_IMAGE = "/projects/feature-film.jpg";
 
 interface Activity {
   title: string;
@@ -41,16 +41,16 @@ function ActivityDetailsModal({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="relative h-64 md:h-80 overflow-hidden">
+        <div className="relative h-64 md:h-80 overflow-hidden bg-zinc-900">
           {hasImage ? (
             <Image
               src={imageUrl(activity.image) || DEFAULT_IMAGE}
               alt={activity.title}
               fill
-              className="object-cover"
+              className="object-contain"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
-                if (!target.src.endsWith("feature-film.png")) {
+                if (!target.src.endsWith("feature-film.jpg")) {
                   target.src = DEFAULT_IMAGE;
                 }
               }}
@@ -422,17 +422,17 @@ function ModernActivityCard({
       ></div>
 
       {/* Image Container */}
-      <div className="relative h-48 overflow-hidden">
+      <div className="relative h-48 overflow-hidden bg-zinc-900/50">
         {hasImage ? (
           <img
             src={imageUrl(activity.image) || DEFAULT_IMAGE}
             alt={activity.title}
-            className={`w-full h-full object-cover transition-transform duration-700 ${
+            className={`w-full h-full object-contain transition-transform duration-700 ${
               isHovered ? "scale-110" : "scale-100"
             }`}
             onError={(e) => {
               const target = e.target as HTMLImageElement;
-              if (!target.src.endsWith("feature-film.png")) {
+              if (!target.src.endsWith("feature-film.jpg")) {
                 target.src = DEFAULT_IMAGE;
               }
             }}

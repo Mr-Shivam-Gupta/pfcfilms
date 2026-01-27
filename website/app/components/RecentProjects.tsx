@@ -35,12 +35,12 @@ export default function RecentProjects() {
   }, []);
 
   const projects = topProjects.map((p, idx) => {
-    const imagePath = p.image ? imageUrl(p.image) : "/projects/feature-film.png";
+    const imagePath = p.image ? imageUrl(p.image) : "/projects/feature-film.jpg";
     return {
       id: p._id || `project-${idx}`,
       title: p.title,
       category: p.category,
-      image: imagePath || "/projects/feature-film.png",
+      image: imagePath || "/projects/feature-film.jpg",
       color: categoryColors[p.category] || "from-purple-500/20 to-pink-500/20",
     };
   });
@@ -99,8 +99,8 @@ export default function RecentProjects() {
                         className="object-cover transform transition-all duration-700 group-hover:scale-110"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;
-                          if (target.src !== "/projects/feature-film.png") {
-                            target.src = "/projects/feature-film.png";
+                          if (target.src !== "/projects/feature-film.jpg") {
+                            target.src = "/projects/feature-film.jpg";
                           }
                         }}
                         unoptimized={project.image.startsWith("http://") || project.image.startsWith("https://")}

@@ -1,11 +1,9 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import apiClient from "../lib/api";
 import { Plus, Edit, Trash2, X } from "lucide-react";
 import { uploadImage, imageUrl } from "../lib/upload";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
 export default function Productions() {
   const [productions, setProductions] = useState<any[]>([]);
@@ -34,7 +32,7 @@ export default function Productions() {
 
   const fetchProductions = async () => {
     try {
-      const response = await axios.get(`${API_URL}/productions`);
+      const response = await apiClient.get("/productions");
       if (response.data.success) {
         setProductions(response.data.data);
       }
@@ -52,17 +50,10 @@ export default function Productions() {
       return;
     }
     try {
-      const token = localStorage.getItem("adminToken");
       if (editing) {
-        await axios.put(
-          `${API_URL}/productions/${editing._id}`,
-          formData,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
+        await apiClient.put(`/productions/${editing._id}`, formData);
       } else {
-        await axios.post(`${API_URL}/productions`, formData, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        await apiClient.post("/productions", formData);
       }
       fetchProductions();
       setShowModal(false);
@@ -76,10 +67,7 @@ export default function Productions() {
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this production?")) return;
     try {
-      const token = localStorage.getItem("adminToken");
-      await axios.delete(`${API_URL}/productions/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await apiClient.delete(`/productions/${id}`);
       fetchProductions();
     } catch (error) {
       console.error("Failed to delete production:", error);

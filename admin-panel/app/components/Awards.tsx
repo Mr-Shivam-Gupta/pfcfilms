@@ -1,11 +1,9 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import apiClient from "../lib/api";
 import { Plus, Edit, Trash2, X } from "lucide-react";
 import { uploadImage, imageUrl } from "../lib/upload";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
 export default function Awards() {
   const [awards, setAwards] = useState<any[]>([]);
@@ -31,7 +29,7 @@ export default function Awards() {
 
   const fetchAwards = async () => {
     try {
-      const response = await axios.get(`${API_URL}/awards`);
+      const response = await apiClient.get("/awards");
       if (response.data.success) {
         setAwards(response.data.data);
       }
@@ -49,38 +47,28 @@ export default function Awards() {
       return;
     }
     try {
-      const token = localStorage.getItem("adminToken");
       if (editing) {
-        await axios.put(
-          `${API_URL}/awards/${editing._id}`,
-          formData,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
+        await apiClient.put(`/awards/${editing._id}`, formData);
       } else {
-        await axios.post(`${API_URL}/awards`, formData, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        await apiClient.post("/awards", formData);
       }
       fetchAwards();
       setShowModal(false);
       resetForm();
     } catch (error) {
-      console.error("Failed to save award:", error);
-      alert("Failed to save award");
+      console.error("Failed to save award/celebrity:", error);
+      alert("Failed to save award/celebrity");
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this award?")) return;
+    if (!confirm("Are you sure you want to delete this award/celebrity?")) return;
     try {
-      const token = localStorage.getItem("adminToken");
-      await axios.delete(`${API_URL}/awards/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await apiClient.delete(`/awards/${id}`);
       fetchAwards();
     } catch (error) {
-      console.error("Failed to delete award:", error);
-      alert("Failed to delete award");
+      console.error("Failed to delete award/celebrity:", error);
+      alert("Failed to delete award/celebrity");
     }
   };
 
@@ -134,7 +122,7 @@ export default function Awards() {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">Awards</h2>
+        <h2 className="text-2xl font-bold">Awards & Celebrities</h2>
         <button
           onClick={() => {
             resetForm();
@@ -143,7 +131,7 @@ export default function Awards() {
           className="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2"
         >
           <Plus className="w-5 h-5" />
-          <span>Add Award</span>
+          <span>Add Award/Celebrity</span>
         </button>
       </div>
 
@@ -193,7 +181,7 @@ export default function Awards() {
             <div className="p-6">
               <div className="flex justify-between items-center mb-6">
                 <h3 className="text-2xl font-bold">
-                  {editing ? "Edit Award" : "Add Award"}
+                  {editing ? "Edit Award/Celebrity" : "Add Award/Celebrity"}
                 </h3>
                 <button onClick={() => setShowModal(false)}>
                   <X className="w-6 h-6" />
@@ -212,36 +200,12 @@ export default function Awards() {
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Year *</label>
-                    <input
-                      type="text"
-                      value={formData.year}
-                      onChange={(e) => setFormData({ ...formData, year: e.target.value })}
-                      required
-                      className="w-full px-4 py-2 border rounded-lg"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium mb-2">Category *</label>
-                    <input
-                      type="text"
-                      value={formData.category}
-                      onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                      required
-                      className="w-full px-4 py-2 border rounded-lg"
-                    />
-                  </div>
-                </div>
-
                 <div>
-                  <label className="block text-sm font-medium mb-2">Project *</label>
+                  <label className="block text-sm font-medium mb-2">Year *</label>
                   <input
                     type="text"
-                    value={formData.project}
-                    onChange={(e) => setFormData({ ...formData, project: e.target.value })}
+                    value={formData.year}
+                    onChange={(e) => setFormData({ ...formData, year: e.target.value })}
                     required
                     className="w-full px-4 py-2 border rounded-lg"
                   />
@@ -252,24 +216,53 @@ export default function Awards() {
                   <input
                     ref={imageInputRef}
                     type="file"
-                    accept="image/jpeg,image/png,image/gif,image/webp"
+                    accept="image/*"
                     onChange={handleImageChange}
                     className="w-full px-4 py-2 border rounded-lg"
                   />
                   {imageUploading && <p className="text-sm text-amber-600 mt-1">Uploading...</p>}
                   {formData.image && (
-                    <div className="mt-2 flex items-center gap-3">
-                      <img src={imageUrl(formData.image)} alt="Preview" className="h-20 w-28 object-cover rounded border" />
-                      <span className="text-sm text-zinc-500">Uploaded</span>
+                    <div className="mt-2">
+                      <img 
+                        src={imageUrl(formData.image)} 
+                        alt="Preview" 
+                        className="max-h-40 w-auto object-contain rounded border" 
+                      />
+                      <span className="text-sm text-zinc-500 block mt-1">Uploaded</span>
                     </div>
                   )}
                   {!formData.image && editing && (
-                    <div className="mt-2 flex items-center gap-3">
-                      <img src={imageUrl(editing.image)} alt="Current" className="h-20 w-28 object-cover rounded border" />
-                      <span className="text-sm text-zinc-500">Current image (upload new to replace)</span>
+                    <div className="mt-2">
+                      <img 
+                        src={imageUrl(editing.image)} 
+                        alt="Current" 
+                        className="max-h-40 w-auto object-contain rounded border" 
+                      />
+                      <span className="text-sm text-zinc-500 block mt-1">Current image (upload new to replace)</span>
                     </div>
                   )}
                 </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">Category</label>
+                  <input
+                    type="text"
+                    value={formData.category}
+                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                    className="w-full px-4 py-2 border rounded-lg"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">Project</label>
+                  <input
+                    type="text"
+                    value={formData.project}
+                    onChange={(e) => setFormData({ ...formData, project: e.target.value })}
+                    className="w-full px-4 py-2 border rounded-lg"
+                  />
+                </div>
+
 
                 <div>
                   <label className="block text-sm font-medium mb-2">Description</label>

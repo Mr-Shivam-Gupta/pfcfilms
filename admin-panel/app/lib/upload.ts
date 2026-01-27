@@ -1,6 +1,5 @@
-import axios from "axios";
+import apiClient, { API_URL } from "./api";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 export const IMAGE_BASE = API_URL.replace(/\/api\/?$/, "") || "http://localhost:5000";
 
 export function imageUrl(path: string | undefined | null): string {
@@ -14,12 +13,11 @@ export async function uploadImage(file: File): Promise<string> {
   if (!token) throw new Error("Not authenticated");
   const formData = new FormData();
   formData.append("image", file);
-  const { data } = await axios.post<{ success: boolean; path?: string; message?: string }>(
-    `${API_URL}/upload/image`,
+  const { data } = await apiClient.post<{ success: boolean; path?: string; message?: string }>(
+    "/upload/image",
     formData,
     {
       headers: {
-        Authorization: `Bearer ${token}`,
         "Content-Type": "multipart/form-data",
       },
     }

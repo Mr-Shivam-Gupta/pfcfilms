@@ -53,7 +53,6 @@ app.use('/api/productions', require('./routes/productions'));
 app.use('/api/courses', require('./routes/courses'));
 app.use('/api/gallery', require('./routes/gallery'));
 app.use('/api/contact', require('./routes/contact'));
-app.use('/api/celebrities', require('./routes/celebrities'));
 app.use('/api/testimonials', require('./routes/testimonials'));
 app.use('/api/awards', require('./routes/awards'));
 app.use('/api/stats', require('./routes/stats'));
