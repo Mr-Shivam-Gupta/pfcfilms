@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
     if (featured === 'true') {
       query.featured = true;
     }
-    const awards = await Award.find(query).sort({ order: 1, year: -1 });
+    const awards = await Award.find(query).sort({ order: 1, createdAt: -1 });
     res.json({ success: true, data: awards });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });

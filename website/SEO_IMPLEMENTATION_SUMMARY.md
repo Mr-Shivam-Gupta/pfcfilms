@@ -4,7 +4,7 @@
 
 ### 1. **Root Layout SEO Optimization** ✅
 - **File**: `app/layout.tsx`
-- SEO-optimized title: "Best Dance Academy & Acting School in Kanpur | PFC FILMS"
+- SEO-optimized title: "Best Films Acting Academy & Dance Academy in Kanpur | PFC FILMS"
 - Complete meta description with keywords
 - Open Graph tags for social media
 - Twitter Card configuration
@@ -15,7 +15,7 @@
 
 ### 2. **Homepage Optimization** ✅
 - **File**: `app/components/Hero.tsx`
-- H1 updated: "Best Dance Academy & Acting School in Kanpur"
+- H1 updated: "Best Films Acting Academy & Dance Academy in Kanpur"
 - Hero description includes local keywords
 - Natural keyword integration
 

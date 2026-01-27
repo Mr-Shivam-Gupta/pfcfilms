@@ -30,7 +30,7 @@ export default function Hero() {
           className="text-6xl md:text-6xl font-black mb-6 tracking-tighter animate-fadeInUp text-black"
           style={{ animationDelay: "200ms" }}
         >
-          Best Dance Academy & Acting School{" "}
+          Best Films Acting Academy & Dance Academy{" "}
           <span className="text-amber-500 inline-block animate-shimmer bg-gradient-to-r from-amber-500 via-amber-300 to-amber-500 bg-clip-text text-transparent bg-[length:200%_100%]">
             in Kanpur | Mumbai  
           </span>

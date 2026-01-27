@@ -63,7 +63,7 @@ export default function Navbar({
               <span className="text-2xl font-black tracking-tighter text-zinc-900">
                 PFC
               </span>
-              <span className="text-2xl font-bold tracking-[0.15em] text-amber-500 ml-2 group-hover:ml-3 transition-all duration-300">
+              <span className="text-2xl font-bold tracking-[0.15em] text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700 ml-2 group-hover:ml-3 transition-all duration-300">
                 FILMS
               </span>
             </div>

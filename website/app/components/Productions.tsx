@@ -558,15 +558,6 @@ export default function Productions() {
                     <h3 className="text-lg font-bold text-zinc-900 mb-2 group-hover:text-amber-600 transition-colors">
                       {a.title}
                     </h3>
-                    <p className="text-sm text-zinc-600">
-                      {a.category && a.project ? `${a.category} – ${a.project}` : a.category || a.project || ""}
-                    </p>
-                    {a.year && (
-                      <div className="flex items-center gap-2 text-zinc-500 text-xs mt-2">
-                        <Calendar className="w-3.5 h-3.5" />
-                        <span>{a.year}</span>
-                      </div>
-                    )}
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
                 </div>

@@ -1,5 +1,5 @@
 # 🚀 Complete SEO Optimization Guide for PFC FILMS / Dhamal India Dance
-## Best Dance Academy & Acting School in Kanpur
+## Best Films Acting Academy & Dance Academy in Kanpur
 
 ---
 
@@ -21,7 +21,7 @@
 ### ✅ COMPLETED OPTIMIZATIONS
 
 #### **Root Layout (app/layout.tsx)**
-- ✅ SEO-optimized Title Tag: "Best Dance Academy & Acting School in Kanpur | PFC FILMS"
+- ✅ SEO-optimized Title Tag: "Best Films Acting Academy & Dance Academy in Kanpur | PFC FILMS"
 - ✅ Meta Description (155-160 chars): Optimized with primary keywords
 - ✅ Keywords Meta Tag: All target keywords included
 - ✅ Open Graph Tags: Complete social media optimization
@@ -31,7 +31,7 @@
 - ✅ Robots Meta: Proper indexing directives
 
 #### **Homepage (app/page.tsx)**
-- ✅ H1 Tag: "Best Dance Academy & Acting School in Kanpur"
+- ✅ H1 Tag: "Best Films Acting Academy & Dance Academy in Kanpur"
 - ✅ Hero Content: Local keywords integrated naturally
 - ✅ Services Section: Dance Academy & Acting School highlighted
 

@@ -12,9 +12,6 @@ export default function Awards() {
   const [editing, setEditing] = useState<any>(null);
   const [formData, setFormData] = useState({
     title: "",
-    year: "",
-    category: "",
-    project: "",
     image: "",
     description: "",
     featured: false,
@@ -76,9 +73,6 @@ export default function Awards() {
     setEditing(award);
     setFormData({
       title: award.title,
-      year: award.year,
-      category: award.category,
-      project: award.project,
       image: award.image,
       description: award.description || "",
       featured: award.featured || false,
@@ -91,9 +85,6 @@ export default function Awards() {
     setEditing(null);
     setFormData({
       title: "",
-      year: "",
-      category: "",
-      project: "",
       image: "",
       description: "",
       featured: false,
@@ -140,9 +131,6 @@ export default function Awards() {
           <thead className="bg-zinc-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Title</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Year</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Category</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Project</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Actions</th>
             </tr>
           </thead>
@@ -150,9 +138,6 @@ export default function Awards() {
             {awards.map((award) => (
               <tr key={award._id} className="hover:bg-zinc-50">
                 <td className="px-6 py-4 whitespace-nowrap">{award.title}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{award.year}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{award.category}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{award.project}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex space-x-2">
                     <button
@@ -201,17 +186,6 @@ export default function Awards() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Year *</label>
-                  <input
-                    type="text"
-                    value={formData.year}
-                    onChange={(e) => setFormData({ ...formData, year: e.target.value })}
-                    required
-                    className="w-full px-4 py-2 border rounded-lg"
-                  />
-                </div>
-
-                <div>
                   <label className="block text-sm font-medium mb-2">Image *</label>
                   <input
                     ref={imageInputRef}
@@ -242,27 +216,6 @@ export default function Awards() {
                     </div>
                   )}
                 </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2">Category</label>
-                  <input
-                    type="text"
-                    value={formData.category}
-                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full px-4 py-2 border rounded-lg"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2">Project</label>
-                  <input
-                    type="text"
-                    value={formData.project}
-                    onChange={(e) => setFormData({ ...formData, project: e.target.value })}
-                    className="w-full px-4 py-2 border rounded-lg"
-                  />
-                </div>
-
 
                 <div>
                   <label className="block text-sm font-medium mb-2">Description</label>

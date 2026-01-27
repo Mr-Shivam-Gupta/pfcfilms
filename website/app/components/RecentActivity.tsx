@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { ChevronRight, ArrowRight, Calendar, MapPin, X, Award, Film, Clock, Tag } from "lucide-react";
 import { getProductions, getAwards, imageUrl, type Production, type Award as AwardType } from "../lib/api";
 
@@ -37,151 +38,134 @@ function ActivityDetailsModal({
       onClick={onClose}
     >
       <div
-        className="bg-gradient-to-br from-zinc-900 via-zinc-800 to-black rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-white/10 shadow-2xl"
+        className="bg-gradient-to-br from-zinc-900 via-zinc-800 to-black rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden border border-white/10 shadow-2xl flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
-        <div className="relative h-64 md:h-80 overflow-hidden bg-zinc-900">
-          {hasImage ? (
-            <Image
-              src={imageUrl(activity.image) || DEFAULT_IMAGE}
-              alt={activity.title}
-              fill
-              className="object-contain"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                if (!target.src.endsWith("feature-film.jpg")) {
-                  target.src = DEFAULT_IMAGE;
-                }
-              }}
-              unoptimized
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-amber-500/20 to-amber-600/20">
-              <span className="text-6xl">{isProduction ? "🎬" : "🏆"}</span>
-            </div>
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/50 to-transparent"></div>
-          
-          {/* Close Button */}
-          <button
-            onClick={onClose}
-            className="absolute top-4 right-4 p-2 rounded-full bg-black/50 hover:bg-black/70 text-white transition-colors z-10"
-            aria-label="Close"
-          >
-            <X className="w-6 h-6" />
-          </button>
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 p-2 rounded-full bg-black/50 hover:bg-black/70 text-white transition-colors z-10"
+          aria-label="Close"
+        >
+          <X className="w-6 h-6" />
+        </button>
 
-          {/* Title Overlay */}
-          <div className="absolute bottom-0 left-0 right-0 p-6">
-            <div className="flex items-center gap-2 mb-2">
-              {isProduction ? (
-                <Film className="w-5 h-5 text-amber-400" />
-              ) : (
-                <Award className="w-5 h-5 text-amber-400" />
-              )}
-              <span className="text-sm font-semibold text-amber-400 uppercase tracking-wider">
-                {activity.event}
-              </span>
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
-              {activity.title}
-            </h2>
-            <div className="flex items-center gap-4 text-zinc-400 text-sm">
-              <div className="flex items-center gap-1">
-                <Calendar className="w-4 h-4" />
-                <span>{activity.date}</span>
+        {/* Main Content - Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 flex-1 overflow-hidden">
+          {/* Right Side - Image (Shows first on mobile, second on desktop) */}
+          <div className="relative bg-zinc-900 overflow-hidden order-1 md:order-2">
+            {hasImage ? (
+              <div className="relative w-full h-full min-h-[400px] md:min-h-[700px]">
+                <Image
+                  src={imageUrl(activity.image) || DEFAULT_IMAGE}
+                  alt={activity.title}
+                  fill
+                  className="object-contain"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    if (!target.src.endsWith("feature-film.jpg")) {
+                      target.src = DEFAULT_IMAGE;
+                    }
+                  }}
+                  unoptimized
+                />
               </div>
-            </div>
+            ) : (
+              <div className="w-full h-full min-h-[400px] md:min-h-[700px] flex items-center justify-center bg-gradient-to-br from-amber-500/20 to-amber-600/20">
+                <span className="text-6xl">{isProduction ? "🎬" : "🏆"}</span>
+              </div>
+            )}
           </div>
-        </div>
 
-        {/* Content */}
-        <div className="p-6 md:p-8 space-y-6">
-          {/* Description */}
-          {(production?.description || award?.description) && (
+          {/* Left Side - Details (Shows second on mobile, first on desktop) */}
+          <div className="p-6 md:p-8 overflow-y-auto space-y-6 order-2 md:order-1">
+            {/* Header */}
             <div>
-              <h3 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
-                <Tag className="w-5 h-5 text-amber-400" />
-                Description
-              </h3>
-              <p className="text-zinc-300 leading-relaxed">
-                {production?.description || award?.description}
-              </p>
-            </div>
-          )}
-
-          {/* Production Specific Details */}
-          {isProduction && production && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {production.genre && (
-                <div>
-                  <h4 className="text-sm font-semibold text-amber-400 mb-2 uppercase tracking-wider">
-                    Genre
-                  </h4>
-                  <p className="text-zinc-300">{production.genre}</p>
-                </div>
-              )}
-              {production.duration && (
-                <div>
-                  <h4 className="text-sm font-semibold text-amber-400 mb-2 uppercase tracking-wider flex items-center gap-2">
-                    <Clock className="w-4 h-4" />
-                    Duration
-                  </h4>
-                  <p className="text-zinc-300">{production.duration}</p>
-                </div>
-              )}
-              {production.status && (
-                <div>
-                  <h4 className="text-sm font-semibold text-amber-400 mb-2 uppercase tracking-wider">
-                    Status
-                  </h4>
-                  <p className="text-zinc-300">{production.status}</p>
-                </div>
-              )}
-              {production.awards && (
-                <div>
-                  <h4 className="text-sm font-semibold text-amber-400 mb-2 uppercase tracking-wider flex items-center gap-2">
-                    <Award className="w-4 h-4" />
-                    Awards
-                  </h4>
-                  <p className="text-zinc-300">{production.awards}</p>
+              <div className="flex items-center gap-2 mb-2">
+                {isProduction ? (
+                  <Film className="w-5 h-5 text-amber-400" />
+                ) : (
+                  <Award className="w-5 h-5 text-amber-400" />
+                )}
+                <span className="text-sm font-semibold text-amber-400 uppercase tracking-wider">
+                  {activity.event}
+                </span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                {activity.title}
+              </h2>
+              {activity.date && (
+                <div className="flex items-center gap-2 text-zinc-400 text-sm mb-6">
+                  <Calendar className="w-4 h-4" />
+                  <span>{activity.date}</span>
                 </div>
               )}
             </div>
-          )}
 
-          {/* Award Specific Details */}
-          {!isProduction && award && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {award.project && (
-                <div>
-                  <h4 className="text-sm font-semibold text-amber-400 mb-2 uppercase tracking-wider flex items-center gap-2">
-                    <Film className="w-4 h-4" />
-                    Project
-                  </h4>
-                  <p className="text-zinc-300">{award.project}</p>
-                </div>
-              )}
-              {award.category && (
-                <div>
-                  <h4 className="text-sm font-semibold text-amber-400 mb-2 uppercase tracking-wider">
-                    Category
-                  </h4>
-                  <p className="text-zinc-300">{award.category}</p>
-                </div>
-              )}
+            {/* Description */}
+            {(production?.description || award?.description) && (
+              <div>
+                <h3 className="text-xl font-bold text-white mb-3 flex items-center gap-2">
+                  <Tag className="w-5 h-5 text-amber-400" />
+                  Description
+                </h3>
+                <p className="text-zinc-300 leading-relaxed">
+                  {production?.description || award?.description}
+                </p>
+              </div>
+            )}
+
+            {/* Production Specific Details */}
+            {isProduction && production && (
+              <div className="grid grid-cols-1 gap-6">
+                {production.genre && (
+                  <div>
+                    <h4 className="text-sm font-semibold text-amber-400 mb-2 uppercase tracking-wider">
+                      Genre
+                    </h4>
+                    <p className="text-zinc-300">{production.genre}</p>
+                  </div>
+                )}
+                {production.duration && (
+                  <div>
+                    <h4 className="text-sm font-semibold text-amber-400 mb-2 uppercase tracking-wider flex items-center gap-2">
+                      <Clock className="w-4 h-4" />
+                      Duration
+                    </h4>
+                    <p className="text-zinc-300">{production.duration}</p>
+                  </div>
+                )}
+                {production.status && (
+                  <div>
+                    <h4 className="text-sm font-semibold text-amber-400 mb-2 uppercase tracking-wider">
+                      Status
+                    </h4>
+                    <p className="text-zinc-300">{production.status}</p>
+                  </div>
+                )}
+                {production.awards && (
+                  <div>
+                    <h4 className="text-sm font-semibold text-amber-400 mb-2 uppercase tracking-wider flex items-center gap-2">
+                      <Award className="w-4 h-4" />
+                      Awards
+                    </h4>
+                    <p className="text-zinc-300">{production.awards}</p>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Award Specific Details - Removed year, category, project fields */}
+
+            {/* Action Buttons */}
+            <div className="flex gap-4 pt-4 border-t border-white/10">
+              <button
+                onClick={onClose}
+                className="flex-1 px-6 py-3 rounded-lg bg-white/5 hover:bg-white/10 text-white font-semibold border border-white/10 hover:border-white/20 transition-all duration-300"
+              >
+                Close
+              </button>
             </div>
-          )}
-
-          {/* Action Buttons */}
-          <div className="flex gap-4 pt-4 border-t border-white/10">
-            <button
-              onClick={onClose}
-              className="flex-1 px-6 py-3 rounded-lg bg-white/5 hover:bg-white/10 text-white font-semibold border border-white/10 hover:border-white/20 transition-all duration-300"
-            >
-              Close
-            </button>
           </div>
         </div>
       </div>
@@ -190,6 +174,7 @@ function ActivityDetailsModal({
 }
 
 export default function RecentActivity() {
+  const router = useRouter();
   const [activeActivityTab, setActiveActivityTab] =
     useState<ActivityTab>("awards");
   const [productions, setProductions] = useState<Production[]>([]);
@@ -229,8 +214,8 @@ export default function RecentActivity() {
     })),
     awards: awards.map((award) => ({
       title: award.title,
-      event: award.category || "Award",
-      date: award.year || "",
+      event: "Award",
+      date: "",
       image: award.image || "",
       originalData: award,
       type: "award" as const,
@@ -250,8 +235,8 @@ export default function RecentActivity() {
   const tabs = [
     {
       key: "awards" as ActivityTab,
-      label: "Awards",
-      shortLabel: "Awards",
+      label: "Awards & Celebrities",
+      shortLabel: "Awards & Celebrities",
       icon: "🏆",
       color: "from-yellow-400 to-amber-500",
       bgColor: "bg-yellow-50",
@@ -371,6 +356,7 @@ export default function RecentActivity() {
                   {/* View More Button */}
                   <div className="mt-12 text-center">
                     <button
+                      onClick={() => router.push("/productions")}
                       className={`group inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-white bg-gradient-to-r ${tab.color} hover:shadow-lg hover:shadow-${tab.color.split("-")[1]}-500/50 transition-all duration-300 hover:scale-105`}
                     >
                       View All {tab.label}
@@ -448,14 +434,7 @@ function ModernActivityCard({
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
 
-        {/* Category Badge */}
-        <div className="absolute top-4 left-4">
-          <div
-            className={`px-3 py-1 rounded-full text-xs font-bold text-white bg-gradient-to-r ${tab.color} shadow-lg`}
-          >
-            {tab.key.toUpperCase()}
-          </div>
-        </div>
+
       </div>
 
       {/* Content */}
@@ -463,18 +442,6 @@ function ModernActivityCard({
         <h3 className="text-lg font-bold text-white mb-3 group-hover:text-amber-400 transition-colors line-clamp-2">
           {activity.title}
         </h3>
-
-        <div className="space-y-2 mb-4">
-          <div className="flex items-center gap-2 text-zinc-400 text-sm">
-            <MapPin className="w-4 h-4 text-amber-400" />
-            <span className="line-clamp-1">{activity.event}</span>
-          </div>
-          <div className="flex items-center gap-2 text-zinc-500 text-xs">
-            <Calendar className="w-3.5 h-3.5" />
-            <span>{activity.date}</span>
-          </div>
-        </div>
-
         {/* Action Button */}
         <button 
           onClick={() => onViewDetails(activity)}

@@ -90,7 +90,7 @@ export default function Contact() {
             </span>
           </h1>
           <p className="max-w-2xl mx-auto text-xl text-zinc-600 leading-relaxed">
-            Join the best Dance Academy & Acting School in Kanpur! Contact PFC FILMS for dance classes, acting courses, and film training.
+            Join the Best Films Acting Academy & Dance Academy in Kanpur! Contact PFC FILMS for dance classes, acting courses, and film training.
           </p>
         </div>
       </section>

@@ -96,10 +96,7 @@ export interface Testimonial {
 export interface Award {
   _id: string;
   title: string;
-  year: string;
   image: string;
-  category?: string;
-  project?: string;
   description?: string;
   featured?: boolean;
   order?: number;

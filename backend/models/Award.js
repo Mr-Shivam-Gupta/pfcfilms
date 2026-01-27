@@ -6,21 +6,9 @@ const awardSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
-  year: {
-    type: String,
-    required: true
-  },
   image: {
     type: String,
     required: true
-  },
-  category: {
-    type: String,
-    trim: true
-  },
-  project: {
-    type: String,
-    trim: true
   },
   description: {
     type: String
