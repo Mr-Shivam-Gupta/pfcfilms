@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   BookOpen,
   Clock,
@@ -415,9 +416,12 @@ export default function Academy() {
                         <span className="text-lg font-bold text-amber-600">{course.price}</span>
                       </div>
 
-                      <button className="w-full border border-amber-400 text-amber-600 hover:bg-amber-400 hover:text-black py-3 rounded-xl font-semibold transition">
+                      <Link
+                        href="/contact"
+                        className="block w-full text-center border border-amber-400 text-amber-600 hover:bg-amber-400 hover:text-black py-3 rounded-xl font-semibold transition"
+                      >
                         Join Us
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 ))}
@@ -584,9 +588,12 @@ export default function Academy() {
               Join over 1000+ students who have transformed their passion into
               profession
             </p>
-            <button className="bg-amber-400 hover:bg-amber-500 text-black px-8 py-4 rounded-full font-semibold transition-all transform hover:scale-105 hover:shadow-2xl hover:shadow-amber-500/50">
+            <Link
+              href="/contact"
+              className="inline-block bg-amber-400 hover:bg-amber-500 text-black px-8 py-4 rounded-full font-semibold transition-all transform hover:scale-105 hover:shadow-2xl hover:shadow-amber-500/50"
+            >
               Schedule a Free Demo Class
-            </button>
+            </Link>
           </div>
           </div>
         </div>
