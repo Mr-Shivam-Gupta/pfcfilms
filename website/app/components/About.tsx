@@ -18,6 +18,7 @@ import {
   X,
 } from "lucide-react";
 import { imageUrl } from "../lib/api";
+import FAQ, { type FAQItem } from "./FAQ";
 
 // Component for Director Image with reliable animation
 function DirectorImageSection({ aboutData }: { aboutData: any }) {
@@ -232,11 +233,38 @@ function useTicker({
   return offset;
 }
 
+const ABOUT_FAQS: FAQItem[] = [
+  {
+    q: "Who is Pramod Kumar Gupta?",
+    a: "Pramod Kumar Gupta is the Founder, Creative Director, and a celebrated Director and Producer at PFC FILMS. Based in Kanpur, he has over 15 years of experience in the film industry. He is also the force behind Dhamal India Dance and the PFC FILMS Acting School, training thousands of students in dance and acting.",
+  },
+  {
+    q: "Is Pramod Kumar Gupta a director and producer?",
+    a: "Yes. Pramod Kumar Gupta is an acclaimed Director and Producer. He began as an assistant director in Mumbai and has since directed and produced numerous films. He leads PFC FILMS as both Director and Producer, creating regional and commercial cinema while running the group's dance academy and acting school in Kanpur.",
+  },
+  {
+    q: "What is PFC FILMS?",
+    a: "PFC FILMS is a Kanpur-based film production company, dance academy (Dhamal India Dance), and acting school. Founded by Director and Producer Pramod Kumar Gupta, it produces films, offers professional dance and acting training, and has trained over 1000 students. PFC FILMS is known for cinematic excellence and talent development in Uttar Pradesh.",
+  },
+  {
+    q: "Who founded PFC FILMS?",
+    a: "PFC FILMS was founded by Pramod Kumar Gupta, an award-winning Director and Producer. Under his leadership, PFC FILMS has become Kanpur's premier destination for film production, dance classes (Dhamal India Dance), and acting training.",
+  },
+  {
+    q: "Where is PFC FILMS located?",
+    a: "PFC FILMS is headquartered in Kanpur, Uttar Pradesh. The company runs its film production, dance academy (Dhamal India Dance), and acting school from Kanpur, with a strong presence in the regional film and entertainment education space.",
+  },
+  {
+    q: "What are PFC FILMS' main services?",
+    a: "PFC FILMS offers film production (feature films, shorts, commercials), professional dance training through Dhamal India Dance Academy, and acting courses at the PFC FILMS Acting School. Director and Producer Pramod Kumar Gupta leads the creative vision across all divisions.",
+  },
+];
+
 export default function About() {
   // Static about data
   const aboutData = {
     directorName: "Mr. Pramod Kumar Gupta",
-    directorTitle: "Founder & Creative Director",
+    directorTitle: "Founder, Director & Producer",
     directorImage: "",
     directorBio: "",
     quote: "Cinema is not just about telling stories; it's about creating experiences that touch hearts and transform lives. Every frame is an opportunity to inspire.",
@@ -373,6 +401,13 @@ export default function About() {
           </div>
         </div>
       </section>
+
+      {/* FAQ - Pramod Kumar Gupta (Director, Producer) & PFC FILMS */}
+      <FAQ
+        faqs={ABOUT_FAQS}
+        id="faq"
+        title="Frequently Asked Questions"
+      />
     </div>
   );
 }
