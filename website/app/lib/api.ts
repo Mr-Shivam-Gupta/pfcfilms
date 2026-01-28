@@ -12,6 +12,11 @@ export function imageUrl(path: string | undefined | null): string {
     return path;
   }
   
+  // Backend public assets (like default-user-icon.png)
+  if (path.startsWith('/public/')) {
+    return `${API_BASE}${path}`;
+  }
+  
   // Backend uploaded images - always prepend API_BASE
   if (path.startsWith('/uploads/') || path.startsWith('/uploads')) {
     return `${API_BASE}${path}`;

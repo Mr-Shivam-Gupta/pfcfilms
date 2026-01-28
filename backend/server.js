@@ -15,6 +15,12 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Serve static files from public directory (for default images, etc.)
+const publicDir = path.join(__dirname, 'public');
+if (fs.existsSync(publicDir)) {
+  app.use('/public', express.static(publicDir));
+}
+
 // On Vercel, /var/task is read-only; use /tmp (ephemeral). For production uploads, use S3/Vercel Blob/Cloudinary.
 const uploadsBase = process.env.VERCEL ? '/tmp/pfcfilms-uploads' : path.join(__dirname, 'uploads');
 const uploadsImages = path.join(uploadsBase, 'images');
@@ -33,12 +39,22 @@ app.use('/uploads', express.static(uploadsBase, {
   fallthrough: true, // Continue to next middleware if file not found
 }));
 
-// Also handle /images/ paths (redirect to /uploads/images/)
+// Also handle /images/ paths (redirect to /uploads/images/, fallback to public)
 app.use('/images', (req, res, next) => {
-  // Redirect /images/... to /uploads/images/...
-  const newPath = `/uploads/images${req.path}`;
-  req.url = newPath;
-  req.originalUrl = newPath;
+  // First try /uploads/images/...
+  const uploadsPath = path.join(uploadsBase, 'images', req.path);
+  if (fs.existsSync(uploadsPath)) {
+    const newPath = `/uploads/images${req.path}`;
+    req.url = newPath;
+    req.originalUrl = newPath;
+    return next();
+  }
+  // Fallback to public/images/ for default images
+  const publicImagesPath = path.join(__dirname, 'public', 'images', req.path);
+  if (fs.existsSync(publicImagesPath)) {
+    req.url = `/public/images${req.path}`;
+    req.originalUrl = `/public/images${req.path}`;
+  }
   next();
 }, express.static(uploadsBase, {
   fallthrough: true,

@@ -15,6 +15,10 @@ export function imageUrl(path: string | undefined | null): string {
   if (!path) return "";
   // If it's already a full URL (Cloudinary, Vercel Blob, etc.), return as-is
   if (path.startsWith("http://") || path.startsWith("https://")) return path;
+  // Handle backend public assets (like default-user-icon.png)
+  if (path.startsWith("/public/")) {
+    return `${IMAGE_BASE}${path}`;
+  }
   // Otherwise, prepend the API base URL for local files
   return `${IMAGE_BASE}${path.startsWith("/") ? "" : "/"}${path}`;
 }

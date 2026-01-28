@@ -176,7 +176,7 @@ function ActivityDetailsModal({
 export default function RecentActivity() {
   const router = useRouter();
   const [activeActivityTab, setActiveActivityTab] =
-    useState<ActivityTab>("awards");
+    useState<ActivityTab>("productions");
   const [productions, setProductions] = useState<Production[]>([]);
   const [awards, setAwards] = useState<AwardType[]>([]);
   const [loading, setLoading] = useState(true);

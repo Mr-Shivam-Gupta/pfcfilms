@@ -13,7 +13,7 @@ const testimonialSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    required: true
+    default: null
   },
   text: {
     type: String,
