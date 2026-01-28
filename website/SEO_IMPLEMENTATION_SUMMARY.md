@@ -191,7 +191,7 @@
 1. **Phone Number**: Replace all instances of `+91 XXXXXXXXXX` with actual number
 2. **Address**: Add exact Kanpur address in contact page and schema
 3. **Coordinates**: Update latitude/longitude in schema with exact location
-4. **Domain**: Update `https://pfcfilms.com` if using different domain
+4. **Domain**: Update `https://pfcfilms.newtab.in` if using different domain
 5. **Images**: Add proper alt tags to all images (some already done)
 6. **Reviews**: Start collecting Google reviews immediately
 

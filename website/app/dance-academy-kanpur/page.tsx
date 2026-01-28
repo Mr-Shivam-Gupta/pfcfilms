@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Best Dance Academy in Kanpur | Dhamal India Dance",
     description: "Premier Dance Academy in Kanpur offering Bollywood, Hip Hop, Classical & Contemporary dance classes. Professional training by industry experts.",
-    url: "https://pfcfilms.com/dance-academy-kanpur",
+    url: "https://pfcfilms.newtab.in/dance-academy-kanpur",
     siteName: "PFC FILMS",
     type: "website",
     images: [{ url: "/logo.jpg", width: 1200, height: 630, alt: "Dhamal India Dance - Best Dance Academy in Kanpur" }],
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     images: ["/logo.jpg"],
   },
   alternates: {
-    canonical: "https://pfcfilms.com/dance-academy-kanpur",
+    canonical: "https://pfcfilms.newtab.in/dance-academy-kanpur",
   },
 };
 

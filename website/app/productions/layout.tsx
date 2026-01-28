@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-const baseUrl = "https://pfcfilms.com";
+const baseUrl = "https://pfcfilms.newtab.in";
 
 export const metadata: Metadata = {
   title: "Productions | Films, Awards & Projects | PFC FILMS",

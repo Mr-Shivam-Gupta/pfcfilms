@@ -315,19 +315,19 @@ import { MetadataRoute } from 'next'
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: 'https://pfcfilms.com',
+      url: 'https://pfcfilms.newtab.in',
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 1,
     },
     {
-      url: 'https://pfcfilms.com/dance-academy-kanpur',
+      url: 'https://pfcfilms.newtab.in/dance-academy-kanpur',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.9,
     },
     {
-      url: 'https://pfcfilms.com/acting-school-kanpur',
+      url: 'https://pfcfilms.newtab.in/acting-school-kanpur',
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.9,
@@ -350,7 +350,7 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/', '/admin/'],
     },
-    sitemap: 'https://pfcfilms.com/sitemap.xml',
+    sitemap: 'https://pfcfilms.newtab.in/sitemap.xml',
   }
 }
 ```
@@ -600,7 +600,7 @@ Add WhatsApp button:
 - [ ] Category: Dance School, Acting School, Film Production Company
 - [ ] Complete Address: [Exact address in Kanpur]
 - [ ] Phone Number: +91 XXXXXXXXXX
-- [ ] Website: https://pfcfilms.com
+- [ ] Website: https://pfcfilms.newtab.in
 - [ ] Business Hours: [Set accurate hours]
 
 #### **Photos** ⭐⭐⭐

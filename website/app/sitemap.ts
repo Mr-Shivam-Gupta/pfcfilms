@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://pfcfilms.com'
+  const baseUrl = 'https://pfcfilms.newtab.in'
 
   return [
     {

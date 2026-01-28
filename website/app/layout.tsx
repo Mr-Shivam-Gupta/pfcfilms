@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Best Films Acting Academy & Dance Academy in Kanpur | PFC FILMS",
     description: "Premier Dance Academy & Acting School in Kanpur | Mumbai. Join Dhamal India Dance for professional dance and acting training.",
-    url: "https://pfcfilms.com",
+    url: "https://pfcfilms.newtab.in",
     siteName: "PFC FILMS",
     locale: "en_IN",
     type: "website",
@@ -55,9 +55,9 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://pfcfilms.com",
+    canonical: "https://pfcfilms.newtab.in",
   },
-  metadataBase: new URL("https://pfcfilms.com"),
+  metadataBase: new URL("https://pfcfilms.newtab.in"),
   icons: {
     icon: "/favicon.ico",
     apple: "/logo.jpg",
@@ -80,9 +80,9 @@ export default function RootLayout({
               "@type": "WebSite",
               "name": "PFC FILMS",
               "alternateName": "Dhamal India Dance",
-              "url": "https://pfcfilms.com",
+              "url": "https://pfcfilms.newtab.in",
               "description": "Premier Dance Academy and Acting School in Kanpur | Mumbai",
-              "publisher": { "@id": "https://pfcfilms.com/#organization" },
+              "publisher": { "@id": "https://pfcfilms.newtab.in/#organization" },
               "inLanguage": "en-IN",
             }),
           }}
@@ -93,13 +93,13 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "EducationalOrganization",
-              "@id": "https://pfcfilms.com/#organization",
+              "@id": "https://pfcfilms.newtab.in/#organization",
               "name": "PFC FILMS",
               "alternateName": "Dhamal India Dance",
               "description": "Premier Dance Academy and Acting School in Kanpur, Uttar Pradesh",
-              "url": "https://pfcfilms.com",
-              "logo": "https://pfcfilms.com/logo.jpg",
-              "image": "https://pfcfilms.com/logo.jpg",
+              "url": "https://pfcfilms.newtab.in",
+              "logo": "https://pfcfilms.newtab.in/logo.jpg",
+              "image": "https://pfcfilms.newtab.in/logo.jpg",
               "address": {
                 "@type": "PostalAddress",
                 "streetAddress": "Kanpur",
@@ -158,9 +158,9 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
               "name": "PFC FILMS - Dance Academy & Acting School",
-              "image": "https://pfcfilms.com/logo.jpg",
-              "@id": "https://pfcfilms.com",
-              "url": "https://pfcfilms.com",
+              "image": "https://pfcfilms.newtab.in/logo.jpg",
+              "@id": "https://pfcfilms.newtab.in",
+              "url": "https://pfcfilms.newtab.in",
               "telephone": "+91-XXXXXXXXXX",
               "priceRange": "₹₹",
               "address": {

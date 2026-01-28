@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Best Acting School in Kanpur | PFC FILMS",
     description: "Premier Acting School in Kanpur offering professional training for film, television, and theatre. Learn from industry experts.",
-    url: "https://pfcfilms.com/acting-school-kanpur",
+    url: "https://pfcfilms.newtab.in/acting-school-kanpur",
     siteName: "PFC FILMS",
     type: "website",
     images: [{ url: "/logo.jpg", width: 1200, height: 630, alt: "PFC FILMS - Best Acting School in Kanpur" }],
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     images: ["/logo.jpg"],
   },
   alternates: {
-    canonical: "https://pfcfilms.com/acting-school-kanpur",
+    canonical: "https://pfcfilms.newtab.in/acting-school-kanpur",
   },
 };
 
