@@ -611,11 +611,11 @@ export default function Productions() {
             {loading ? (
               Array.from({ length: 3 }).map((_, i) => (
                 <div key={i} className="bg-white rounded-2xl overflow-hidden border border-zinc-200 animate-pulse">
-                  <div className="w-full h-48 bg-zinc-200" />
-                  <div className="p-6">
+                  {/* <div className="w-full h-48 bg-zinc-200" /> */}
+                  {/* <div className="p-6">
                     <div className="h-5 bg-zinc-200 rounded mb-2" />
                     <div className="h-4 bg-zinc-200 rounded w-2/3" />
-                  </div>
+                  </div> */}
                 </div>
               ))
             ) : awards.length === 0 ? (
@@ -652,11 +652,6 @@ export default function Productions() {
                       unoptimized={true}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
-                    <div className="absolute top-4 left-4">
-                      <div className="px-3 py-1 rounded-full text-xs font-bold text-white bg-gradient-to-r from-yellow-500 to-amber-600 shadow-lg">
-                        AWARD
-                      </div>
-                    </div>
                   </div>
                   <div className="p-6 relative z-10">
                     <h3 className="text-lg font-bold text-zinc-900 mb-2 group-hover:text-amber-600 transition-colors">
