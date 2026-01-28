@@ -81,7 +81,7 @@ export default function RecentProjects() {
           </div>
         ) : (
           /* Infinite Scroll Container */
-          <div className="relative w-full overflow-hidden mask-gradient">
+          <div className="relative w-full overflow-hidden">
             <div className="flex gap-6 w-max animate-scroll hover:[animation-play-state:paused] py-4">
               {duplicatedProjects.map((project, idx) => (
                 <div

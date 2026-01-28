@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { ChevronRight, ArrowRight, Calendar, MapPin, X, Award, Film, Clock, Tag } from "lucide-react";
+import { ChevronRight, ArrowRight, Calendar, X, Award, Film, Clock, Tag } from "lucide-react";
 import { getProductions, getAwards, imageUrl, type Production, type Award as AwardType } from "../lib/api";
 
 const DEFAULT_IMAGE = "/projects/feature-film.jpg";
@@ -253,38 +253,29 @@ export default function RecentActivity() {
     },
   ];
 
+  const activeTab = tabs.find((t) => t.key === activeActivityTab)!;
+  const activities = recentActivities[activeActivityTab];
+
   return (
     <section
-      className="py-20 px-4 bg-gradient-to-br from-black via-zinc-900 to-black relative overflow-hidden"
+      className="py-20 px-4 bg-zinc-50 relative overflow-hidden"
       id="recent-activity"
     >
-      {/* Animated Background Gradient Orbs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-amber-500/20 to-transparent rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-blue-500/10 to-transparent rounded-full blur-3xl"></div>
-      </div>
+      <div className="max-w-7xl mx-auto">
+        {/* Header - matches Top Projects */}
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-8 text-black" suppressHydrationWarning>
+          Our <span className="text-amber-500">Journey</span>
+        </h2>
+        <p
+          className="text-center text-zinc-600 mb-8 animate-on-scroll opacity-0 transition-all duration-1000"
+          style={{ transitionDelay: "100ms" }}
+          suppressHydrationWarning
+        >
+          From award-winning films to viral marketing campaigns, explore our
+          creative journey through the industry.
+        </p>
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        {/* Header Section */}
-        <div className="text-center mb-16">
-          {/* <div className="inline-block mb-4">
-            <span className="text-sm font-bold text-amber-400 uppercase tracking-wider px-4 py-2 bg-amber-400/10 rounded-full border border-amber-400/20">
-              Recent Activity
-            </span>
-          </div> */}
-          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-white mb-6 tracking-tight">
-            Our{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600">
-              Journey
-            </span>
-          </h2>
-          <p className="text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-            From award-winning films to viral marketing campaigns, explore our
-            creative journey through the industry.
-          </p>
-        </div>
-
-        {/* Tab Navigation - Horizontal Pills */}
+        {/* Tab Navigation - light theme */}
         <div className="flex flex-wrap justify-center gap-4 mb-12">
           {tabs.map((tab) => (
             <button
@@ -292,8 +283,8 @@ export default function RecentActivity() {
               onClick={() => setActiveActivityTab(tab.key)}
               className={`group relative px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 ${
                 activeActivityTab === tab.key
-                  ? `bg-gradient-to-r ${tab.color} text-white shadow-lg shadow-${tab.color.split("-")[1]}-500/50 scale-105`
-                  : "bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-white border border-white/10"
+                  ? `bg-gradient-to-r ${tab.color} text-white shadow-lg scale-105`
+                  : "bg-white border border-zinc-200 text-zinc-600 hover:border-amber-400 hover:text-amber-600"
               }`}
             >
               <span className="relative z-10 flex items-center gap-2">
@@ -301,72 +292,51 @@ export default function RecentActivity() {
                 <span className="hidden sm:inline">{tab.label}</span>
                 <span className="sm:hidden">{tab.shortLabel}</span>
               </span>
-              {activeActivityTab === tab.key && (
-                <div
-                  className={`absolute inset-0 rounded-full bg-gradient-to-r ${tab.color} opacity-20 blur-xl`}
-                ></div>
-              )}
             </button>
           ))}
         </div>
 
-        {/* Scrollable Content Area */}
-        <div className="relative">
-          <div className="space-y-24">
-            {tabs
-              .filter((tab) => tab.key === activeActivityTab)
-              .map((tab) => (
-                <div
-                  key={tab.key}
-                  id={`section-${tab.key}`}
-                  className="relative"
-                >
-                  {loading ? (
-                    <div className="text-center py-12">
-                      <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-amber-500"></div>
-                      <p className="mt-4 text-zinc-400">Loading...</p>
-                    </div>
-                  ) : recentActivities[tab.key].length === 0 ? (
-                    <div className="text-center py-12">
-                      <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/5 mb-4">
-                        <span className="text-4xl">{tab.icon}</span>
-                      </div>
-                      <h3 className="text-xl font-semibold text-white mb-2">No {tab.label} Found</h3>
-                      <p className="text-zinc-400 max-w-md mx-auto">
-                        {tab.label} will appear here once they are added to the system.
-                      </p>
-                    </div>
-                  ) : (
-                    /* Modern Grid Layout */
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {recentActivities[tab.key]
-                        .slice(0, 6)
-                        .map((activity, idx) => (
-                          <ModernActivityCard
-                            key={`${tab.key}-${idx}`}
-                            activity={activity}
-                            tab={tab}
-                            index={idx}
-                            onViewDetails={handleViewDetails}
-                          />
-                        ))}
-                    </div>
-                  )}
-
-                  {/* View More Button */}
-                  <div className="mt-12 text-center">
-                    <button
-                      onClick={() => router.push("/productions")}
-                      className={`group inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-white bg-gradient-to-r ${tab.color} hover:shadow-lg hover:shadow-${tab.color.split("-")[1]}-500/50 transition-all duration-300 hover:scale-105`}
-                    >
-                      View All {tab.label}
-                      <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                    </button>
-                  </div>
-                </div>
-              ))}
+        {loading ? (
+          <div className="text-center py-12">
+            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-amber-500"></div>
+            <p className="mt-4 text-zinc-600">Loading...</p>
           </div>
-        </div>
+        ) : activities.length === 0 ? (
+          <div className="text-center py-12">
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-zinc-100 mb-4">
+              <span className="text-4xl">{activeTab.icon}</span>
+            </div>
+            <h3 className="text-xl font-semibold text-zinc-900 mb-2">No {activeTab.label} Found</h3>
+            <p className="text-zinc-600 max-w-md mx-auto">
+              {activeTab.label} will appear here once they are added to the system.
+            </p>
+          </div>
+        ) : (
+          /* Grid layout */
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {activities.slice(0, 6).map((activity, idx) => (
+              <ModernActivityCard
+                key={`${activeTab.key}-${idx}`}
+                activity={activity}
+                tab={activeTab}
+                onViewDetails={handleViewDetails}
+              />
+            ))}
+          </div>
+        )}
+
+        {/* View All + View Details CTA */}
+        {!loading && activities.length > 0 && (
+          <div className="mt-12 flex flex-wrap justify-center gap-4">
+            <button
+              onClick={() => router.push("/productions")}
+              className="group inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-white bg-gradient-to-r from-amber-500 to-amber-600 hover:shadow-lg hover:shadow-amber-500/50 transition-all duration-300 hover:scale-105"
+            >
+              View All {activeTab.label}
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Details Modal */}
@@ -380,82 +350,71 @@ export default function RecentActivity() {
   );
 }
 
-// Modern Card Component
+// Card Component - matches Top Projects design + View Details button
 function ModernActivityCard({
   activity,
   tab,
-  index,
   onViewDetails,
 }: {
   activity: Activity;
   tab: { key: ActivityTab; color: string; bgColor: string; icon: string };
-  index: number;
   onViewDetails: (activity: Activity) => void;
 }) {
   const hasImage = activity.image && activity.image.trim() !== "";
-  const [isHovered, setIsHovered] = useState(false);
+  const imgSrc = imageUrl(activity.image) || DEFAULT_IMAGE;
 
   return (
-    <div
-      className="group relative bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-xl rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      style={{ animationDelay: `${index * 50}ms` }}
-    >
-      {/* Gradient Overlay on Hover */}
+    <div className="group/card">
       <div
-        className={`absolute inset-0 bg-gradient-to-br ${tab.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}
-      ></div>
-
-      {/* Image Container */}
-      <div className="relative h-48 overflow-hidden bg-zinc-900/50">
-        {hasImage ? (
-          <img
-            src={imageUrl(activity.image) || DEFAULT_IMAGE}
-            alt={activity.title}
-            className={`w-full h-full object-contain transition-transform duration-700 ${
-              isHovered ? "scale-110" : "scale-100"
-            }`}
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              if (!target.src.endsWith("feature-film.jpg")) {
-                target.src = DEFAULT_IMAGE;
-              }
-            }}
-          />
-        ) : (
-          <div
-            className={`w-full h-full flex items-center justify-center text-5xl bg-gradient-to-br ${tab.color} opacity-20`}
-          >
-            {tab.icon}
-          </div>
-        )}
-
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-
-
-      </div>
-
-      {/* Content */}
-      <div className="p-6 relative z-10">
-        <h3 className="text-lg font-bold text-white mb-3 group-hover:text-amber-400 transition-colors line-clamp-2">
-          {activity.title}
-        </h3>
-        {/* Action Button */}
-        <button 
-          onClick={() => onViewDetails(activity)}
-          className="w-full mt-4 px-4 py-2.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-sm font-semibold border border-white/10 hover:border-white/20 transition-all duration-300 flex items-center justify-center gap-2 group/btn"
+        role="button"
+        tabIndex={0}
+        onClick={() => onViewDetails(activity)}
+        onKeyDown={(e) => e.key === "Enter" && onViewDetails(activity)}
+        className="group relative overflow-hidden rounded-2xl bg-white border border-zinc-200 hover:border-amber-400 transition-all cursor-pointer transform hover:scale-105 h-full shadow-lg"
+      >
+        <div
+          className={`aspect-square flex items-center justify-center text-6xl bg-gradient-to-br ${tab.color} relative overflow-hidden`}
         >
-          View Details
-          <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-        </button>
+          {hasImage ? (
+            <Image
+              src={imgSrc}
+              alt={activity.title}
+              fill
+              className="object-cover transform transition-all duration-700 group-hover:scale-110"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                if (!target.src.endsWith("feature-film.jpg")) {
+                  target.src = DEFAULT_IMAGE;
+                }
+              }}
+              unoptimized={imgSrc.startsWith("http://") || imgSrc.startsWith("https://")}
+            />
+          ) : (
+            <span className="relative z-10">{tab.icon}</span>
+          )}
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-500" />
+        </div>
+        <div className="p-6 relative">
+          <div className="text-xs text-amber-600 mb-2 font-semibold uppercase tracking-wider">
+            {activity.event}
+          </div>
+          <h3 className="text-xl font-bold transform transition-all duration-300 group-hover:translate-x-2 text-black line-clamp-2">
+            {activity.title}
+          </h3>
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onViewDetails(activity);
+            }}
+            className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-amber-600 hover:text-amber-700 transition-colors group/btn"
+          >
+            View Details
+            <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+          </button>
+        </div>
+        <div className="absolute inset-0 border-2 border-amber-400 opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-2xl transform scale-105 pointer-events-none" />
       </div>
-
-      {/* Shine Effect */}
-      <div
-        className={`absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000`}
-      ></div>
     </div>
   );
 }
