@@ -1,9 +1,11 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import apiClient from "../lib/api";
 import { Plus, Edit, Trash2, X } from "lucide-react";
 import { uploadImage, imageUrl } from "../lib/upload";
+import { DataTable, ImageCell } from "./DataTable";
+import { ColumnDef } from "@tanstack/react-table";
 
 export default function TopProjects() {
   const [topProjects, setTopProjects] = useState<any[]>([]);
@@ -111,69 +113,93 @@ export default function TopProjects() {
     }
   };
 
+  const columns = useMemo<ColumnDef<any>[]>(
+    () => [
+      {
+        accessorKey: "image",
+        header: "Image",
+        cell: ({ row }) => <ImageCell src={row.original.image} alt={row.original.title} className="w-16 h-12" />,
+      },
+      {
+        accessorKey: "title",
+        header: "Title",
+        cell: ({ row }) => (
+          <div className="font-medium text-zinc-900">{row.getValue("title")}</div>
+        ),
+      },
+      {
+        accessorKey: "category",
+        header: "Category",
+      },
+      {
+        accessorKey: "order",
+        header: "Order",
+        cell: ({ row }) => (
+          <span className="font-semibold text-zinc-600">{row.getValue("order") || 0}</span>
+        ),
+      },
+      {
+        accessorKey: "featured",
+        header: "Featured",
+        cell: ({ row }) => {
+          const featured = row.getValue("featured") as boolean;
+          return (
+            <span className={`px-2 py-1 text-xs rounded-full ${
+              featured ? "bg-green-100 text-green-800 font-semibold" : "bg-zinc-100 text-zinc-400"
+            }`}>
+              {featured ? "Yes" : "No"}
+            </span>
+          );
+        },
+      },
+      {
+        id: "actions",
+        header: "Actions",
+        cell: ({ row }) => {
+          const topProject = row.original;
+          return (
+            <div className="flex space-x-2">
+              <button
+                onClick={() => handleEdit(topProject)}
+                className="text-amber-600 hover:text-amber-700 p-1"
+                title="Edit"
+              >
+                <Edit className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => handleDelete(topProject._id)}
+                className="text-red-600 hover:text-red-700 p-1"
+                title="Delete"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </div>
+          );
+        },
+      },
+    ],
+    []
+  );
+
   if (loading) return <div className="text-center py-12">Loading...</div>;
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
         <h2 className="text-2xl font-bold">Top Projects</h2>
         <button
           onClick={() => {
             resetForm();
             setShowModal(true);
           }}
-          className="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2"
+          className="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 w-full sm:w-auto justify-center"
         >
           <Plus className="w-5 h-5" />
           <span>Add Top Project</span>
         </button>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-zinc-200 overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-zinc-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Title</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Category</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Order</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Featured</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-zinc-200">
-            {topProjects.map((topProject) => (
-              <tr key={topProject._id} className="hover:bg-zinc-50">
-                <td className="px-6 py-4 whitespace-nowrap">{topProject.title}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{topProject.category}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{topProject.order || 0}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {topProject.featured ? (
-                    <span className="text-green-600 font-semibold">Yes</span>
-                  ) : (
-                    <span className="text-zinc-400">No</span>
-                  )}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex space-x-2">
-                    <button
-                      onClick={() => handleEdit(topProject)}
-                      className="text-amber-600 hover:text-amber-700"
-                    >
-                      <Edit className="w-5 h-5" />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(topProject._id)}
-                      className="text-red-600 hover:text-red-700"
-                    >
-                      <Trash2 className="w-5 h-5" />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <DataTable columns={columns} data={topProjects} searchPlaceholder="Search top projects..." searchKey="title" />
 
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">

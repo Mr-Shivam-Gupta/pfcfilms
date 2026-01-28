@@ -1,9 +1,11 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import apiClient from "../lib/api";
 import { Plus, Edit, Trash2, X } from "lucide-react";
 import { uploadImage, imageUrl } from "../lib/upload";
+import { DataTable, ImageCell } from "./DataTable";
+import { ColumnDef } from "@tanstack/react-table";
 
 export default function Productions() {
   const [productions, setProductions] = useState<any[]>([]);
@@ -123,66 +125,93 @@ export default function Productions() {
     }
   };
 
+  const columns = useMemo<ColumnDef<any>[]>(
+    () => [
+      {
+        accessorKey: "image",
+        header: "Image",
+        cell: ({ row }) => <ImageCell src={row.original.image} alt={row.original.title} className="w-16 h-12" />,
+      },
+      {
+        accessorKey: "title",
+        header: "Title",
+        cell: ({ row }) => (
+          <div className="font-medium text-zinc-900">{row.getValue("title")}</div>
+        ),
+      },
+      {
+        accessorKey: "category",
+        header: "Category",
+      },
+      {
+        accessorKey: "status",
+        header: "Status",
+        cell: ({ row }) => {
+          const status = row.getValue("status") as string;
+          return (
+            <span className={`px-2 py-1 text-xs rounded-full ${
+              status === "Released" ? "bg-green-100 text-green-800" :
+              status === "Upcoming" ? "bg-blue-100 text-blue-800" :
+              "bg-amber-100 text-amber-800"
+            }`}>
+              {status}
+            </span>
+          );
+        },
+      },
+      {
+        id: "actions",
+        header: "Actions",
+        cell: ({ row }) => {
+          const production = row.original;
+          return (
+            <div className="flex space-x-2">
+              <button
+                onClick={() => handleEdit(production)}
+                className="text-amber-600 hover:text-amber-700 p-1"
+                title="Edit"
+              >
+                <Edit className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => handleDelete(production._id)}
+                className="text-red-600 hover:text-red-700 p-1"
+                title="Delete"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </div>
+          );
+        },
+      },
+    ],
+    []
+  );
+
   if (loading) return <div className="text-center py-12">Loading...</div>;
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
         <h2 className="text-2xl font-bold">Productions</h2>
         <button
           onClick={() => {
             resetForm();
             setShowModal(true);
           }}
-          className="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2"
+          className="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 w-full sm:w-auto justify-center"
         >
           <Plus className="w-5 h-5" />
           <span>Add Production</span>
         </button>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-zinc-200 overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-zinc-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Title</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Category</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Status</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-zinc-200">
-            {productions.map((production) => (
-              <tr key={production._id} className="hover:bg-zinc-50">
-                <td className="px-6 py-4 whitespace-nowrap">{production.title}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{production.category}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{production.status}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex space-x-2">
-                    <button
-                      onClick={() => handleEdit(production)}
-                      className="text-amber-600 hover:text-amber-700"
-                    >
-                      <Edit className="w-5 h-5" />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(production._id)}
-                      className="text-red-600 hover:text-red-700"
-                    >
-                      <Trash2 className="w-5 h-5" />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <DataTable columns={columns} data={productions} searchPlaceholder="Search productions..." searchKey="title" />
 
       {showModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2 sm:p-4">
+          <div className="bg-white rounded-xl max-w-2xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
+            <div className="p-4 sm:p-6">
               <div className="flex justify-between items-center mb-6">
                 <h3 className="text-2xl font-bold">
                   {editing ? "Edit Production" : "Add Production"}
@@ -257,7 +286,7 @@ export default function Productions() {
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium mb-2">Duration</label>
                     <input
@@ -289,7 +318,7 @@ export default function Productions() {
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium mb-2">Status</label>
                     <select
@@ -324,17 +353,17 @@ export default function Productions() {
                   <label>Featured</label>
                 </div>
 
-                <div className="flex justify-end space-x-4">
+                <div className="flex flex-col sm:flex-row justify-end gap-2 sm:gap-4 sm:space-x-0">
                   <button
                     type="button"
                     onClick={() => setShowModal(false)}
-                    className="px-4 py-2 border rounded-lg"
+                    className="px-4 py-2 border rounded-lg w-full sm:w-auto"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600"
+                    className="px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 w-full sm:w-auto"
                   >
                     {editing ? "Update" : "Create"}
                   </button>

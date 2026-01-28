@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import apiClient from "../lib/api";
 import { Trash2, Mail, CheckCircle } from "lucide-react";
+import { DataTable } from "./DataTable";
+import { ColumnDef } from "@tanstack/react-table";
 
 export default function Contacts() {
   const [contacts, setContacts] = useState<any[]>([]);
@@ -46,84 +48,120 @@ export default function Contacts() {
     }
   };
 
+  const columns = useMemo<ColumnDef<any>[]>(
+    () => [
+      {
+        accessorKey: "name",
+        header: "Name",
+        cell: ({ row }) => (
+          <div 
+            className={`font-medium text-zinc-900 cursor-pointer ${
+              row.original.status === "new" ? "font-semibold" : ""
+            }`}
+            onClick={() => setSelectedContact(row.original)}
+          >
+            {row.getValue("name")}
+          </div>
+        ),
+      },
+      {
+        accessorKey: "email",
+        header: "Email",
+        cell: ({ row }) => (
+          <div 
+            className="text-zinc-600 cursor-pointer"
+            onClick={() => setSelectedContact(row.original)}
+          >
+            {row.getValue("email")}
+          </div>
+        ),
+      },
+      {
+        accessorKey: "status",
+        header: "Status",
+        cell: ({ row }) => {
+          const status = row.getValue("status") as string;
+          return (
+            <span
+              className={`px-2 py-1 rounded text-xs font-medium ${
+                status === "new"
+                  ? "bg-amber-100 text-amber-800"
+                  : status === "read"
+                  ? "bg-blue-100 text-blue-800"
+                  : "bg-green-100 text-green-800"
+              }`}
+            >
+              {status}
+            </span>
+          );
+        },
+      },
+      {
+        accessorKey: "createdAt",
+        header: "Date",
+        cell: ({ row }) => {
+          const date = new Date(row.getValue("createdAt"));
+          return (
+            <div className="text-sm text-zinc-600">
+              {date.toLocaleDateString()}
+            </div>
+          );
+        },
+      },
+      {
+        id: "actions",
+        header: "Actions",
+        cell: ({ row }) => {
+          const contact = row.original;
+          return (
+            <div className="flex space-x-2">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  updateStatus(contact._id, "read");
+                }}
+                className="text-blue-600 hover:text-blue-700 p-1"
+                title="Mark as read"
+              >
+                <CheckCircle className="w-4 h-4" />
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDelete(contact._id);
+                }}
+                className="text-red-600 hover:text-red-700 p-1"
+                title="Delete"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </div>
+          );
+        },
+      },
+    ],
+    []
+  );
+
   if (loading) return <div className="text-center py-12">Loading...</div>;
 
   return (
     <div>
       <h2 className="text-2xl font-bold mb-6">Contact Submissions</h2>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         <div className="lg:col-span-2">
-          <div className="bg-white rounded-xl shadow-sm border border-zinc-200 overflow-hidden">
-            <table className="w-full">
-              <thead className="bg-zinc-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Name</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Email</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Status</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Date</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-zinc-200">
-                {contacts.map((contact) => (
-                  <tr
-                    key={contact._id}
-                    className={`hover:bg-zinc-50 cursor-pointer ${
-                      contact.status === "new" ? "bg-amber-50" : ""
-                    }`}
-                    onClick={() => setSelectedContact(contact)}
-                  >
-                    <td className="px-6 py-4 whitespace-nowrap">{contact.name}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">{contact.email}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span
-                        className={`px-2 py-1 rounded text-xs ${
-                          contact.status === "new"
-                            ? "bg-amber-100 text-amber-800"
-                            : contact.status === "read"
-                            ? "bg-blue-100 text-blue-800"
-                            : "bg-green-100 text-green-800"
-                        }`}
-                      >
-                        {contact.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-zinc-600">
-                      {new Date(contact.createdAt).toLocaleDateString()}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex space-x-2">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            updateStatus(contact._id, "read");
-                          }}
-                          className="text-blue-600 hover:text-blue-700"
-                        >
-                          <CheckCircle className="w-5 h-5" />
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleDelete(contact._id);
-                          }}
-                          className="text-red-600 hover:text-red-700"
-                        >
-                          <Trash2 className="w-5 h-5" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <DataTable 
+            columns={columns} 
+            data={contacts} 
+            searchPlaceholder="Search contacts..." 
+            searchKey="name" 
+          />
         </div>
 
         {selectedContact && (
-          <div className="bg-white rounded-xl shadow-sm border border-zinc-200 p-6">
-            <h3 className="text-xl font-bold mb-4">Contact Details</h3>
+          <div className="bg-white rounded-xl shadow-sm border border-zinc-200 p-4 sm:p-6 order-first lg:order-last">
+            <h3 className="text-lg sm:text-xl font-bold mb-4">Contact Details</h3>
             <div className="space-y-4">
               <div>
                 <label className="text-sm font-medium text-zinc-600">Name</label>

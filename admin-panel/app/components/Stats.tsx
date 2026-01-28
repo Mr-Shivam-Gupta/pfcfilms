@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import apiClient from "../lib/api";
 import { Plus, Edit, Trash2, X } from "lucide-react";
+import { DataTable } from "./DataTable";
+import { ColumnDef } from "@tanstack/react-table";
 
 export default function Stats() {
   const [stats, setStats] = useState<any[]>([]);
@@ -82,61 +84,77 @@ export default function Stats() {
     });
   };
 
+  const columns = useMemo<ColumnDef<any>[]>(
+    () => [
+      {
+        accessorKey: "number",
+        header: "Number",
+        cell: ({ row }) => (
+          <span className="font-bold text-amber-500 text-lg">{row.getValue("number")}</span>
+        ),
+      },
+      {
+        accessorKey: "label",
+        header: "Label",
+        cell: ({ row }) => (
+          <div className="font-medium text-zinc-900">{row.getValue("label")}</div>
+        ),
+      },
+      {
+        accessorKey: "order",
+        header: "Order",
+        cell: ({ row }) => (
+          <span className="font-semibold text-zinc-600">{row.getValue("order") || 0}</span>
+        ),
+      },
+      {
+        id: "actions",
+        header: "Actions",
+        cell: ({ row }) => {
+          const stat = row.original;
+          return (
+            <div className="flex space-x-2">
+              <button
+                onClick={() => handleEdit(stat)}
+                className="text-amber-600 hover:text-amber-700 p-1"
+                title="Edit"
+              >
+                <Edit className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => handleDelete(stat._id)}
+                className="text-red-600 hover:text-red-700 p-1"
+                title="Delete"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </div>
+          );
+        },
+      },
+    ],
+    []
+  );
+
   if (loading) return <div className="text-center py-12">Loading...</div>;
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
         <h2 className="text-2xl font-bold">Stats</h2>
         <button
           onClick={() => {
             resetForm();
             setShowModal(true);
           }}
-          className="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2"
+          className="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 w-full sm:w-auto justify-center"
         >
           <Plus className="w-5 h-5" />
           <span>Add Stat</span>
         </button>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-zinc-200 overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-zinc-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Number</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Label</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Order</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-zinc-200">
-            {stats.map((stat) => (
-              <tr key={stat._id} className="hover:bg-zinc-50">
-                <td className="px-6 py-4 whitespace-nowrap font-bold text-amber-500">{stat.number}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{stat.label}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{stat.order}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex space-x-2">
-                    <button
-                      onClick={() => handleEdit(stat)}
-                      className="text-amber-600 hover:text-amber-700"
-                    >
-                      <Edit className="w-5 h-5" />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(stat._id)}
-                      className="text-red-600 hover:text-red-700"
-                    >
-                      <Trash2 className="w-5 h-5" />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <DataTable columns={columns} data={stats} searchPlaceholder="Search stats..." searchKey="label" />
 
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">

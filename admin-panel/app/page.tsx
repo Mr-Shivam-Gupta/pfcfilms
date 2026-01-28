@@ -3,8 +3,10 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { ExternalLink } from "lucide-react";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+const WEBSITE_URL = process.env.NEXT_PUBLIC_WEBSITE_URL || "http://localhost:3000";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -43,8 +45,8 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 to-zinc-100">
-      <div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 to-zinc-100 p-4">
+      <div className="bg-white p-6 sm:p-8 rounded-2xl shadow-xl w-full max-w-md">
         <h1 className="text-3xl font-bold text-center mb-2 text-zinc-900">
           PFC Films Admin
         </h1>
@@ -93,6 +95,18 @@ export default function Login() {
             {loading ? "Signing in..." : "Sign In"}
           </button>
         </form>
+
+        <div className="mt-6 pt-6 border-t border-zinc-200">
+          <a
+            href={WEBSITE_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full flex items-center justify-center space-x-2 px-4 py-2.5 border border-zinc-300 rounded-lg hover:bg-zinc-50 transition-colors text-zinc-700 font-medium"
+          >
+            <span>Visit Website</span>
+            <ExternalLink className="w-4 h-4" />
+          </a>
+        </div>
       </div>
     </div>
   );

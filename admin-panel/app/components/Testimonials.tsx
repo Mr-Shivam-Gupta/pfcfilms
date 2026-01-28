@@ -1,9 +1,11 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import apiClient from "../lib/api";
 import { Plus, Edit, Trash2, X } from "lucide-react";
 import { uploadImage, imageUrl } from "../lib/upload";
+import { DataTable, ImageCell } from "./DataTable";
+import { ColumnDef } from "@tanstack/react-table";
 
 export default function Testimonials() {
   const [testimonials, setTestimonials] = useState<any[]>([]);
@@ -114,61 +116,85 @@ export default function Testimonials() {
     }
   };
 
+  const columns = useMemo<ColumnDef<any>[]>(
+    () => [
+      {
+        accessorKey: "image",
+        header: "Image",
+        cell: ({ row }) => <ImageCell src={row.original.image} alt={row.original.name} className="w-12 h-12 rounded-full" />,
+      },
+      {
+        accessorKey: "name",
+        header: "Name",
+        cell: ({ row }) => (
+          <div className="font-medium text-zinc-900">{row.getValue("name")}</div>
+        ),
+      },
+      {
+        accessorKey: "course",
+        header: "Course",
+      },
+      {
+        accessorKey: "rating",
+        header: "Rating",
+        cell: ({ row }) => {
+          const rating = row.getValue("rating") as number;
+          return (
+            <div className="flex items-center gap-1">
+              <span className="font-semibold text-amber-600">{rating}</span>
+              <span>⭐</span>
+            </div>
+          );
+        },
+      },
+      {
+        id: "actions",
+        header: "Actions",
+        cell: ({ row }) => {
+          const testimonial = row.original;
+          return (
+            <div className="flex space-x-2">
+              <button
+                onClick={() => handleEdit(testimonial)}
+                className="text-amber-600 hover:text-amber-700 p-1"
+                title="Edit"
+              >
+                <Edit className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => handleDelete(testimonial._id)}
+                className="text-red-600 hover:text-red-700 p-1"
+                title="Delete"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </div>
+          );
+        },
+      },
+    ],
+    []
+  );
+
   if (loading) return <div className="text-center py-12">Loading...</div>;
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
         <h2 className="text-2xl font-bold">Testimonials</h2>
         <button
           onClick={() => {
             resetForm();
             setShowModal(true);
           }}
-          className="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2"
+          className="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg flex items-center space-x-2 w-full sm:w-auto justify-center"
         >
           <Plus className="w-5 h-5" />
           <span>Add Testimonial</span>
         </button>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-zinc-200 overflow-hidden">
-        <table className="w-full">
-          <thead className="bg-zinc-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Name</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Course</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Rating</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-zinc-600 uppercase">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-zinc-200">
-            {testimonials.map((testimonial) => (
-              <tr key={testimonial._id} className="hover:bg-zinc-50">
-                <td className="px-6 py-4 whitespace-nowrap">{testimonial.name}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{testimonial.course}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{testimonial.rating} ⭐</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="flex space-x-2">
-                    <button
-                      onClick={() => handleEdit(testimonial)}
-                      className="text-amber-600 hover:text-amber-700"
-                    >
-                      <Edit className="w-5 h-5" />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(testimonial._id)}
-                      className="text-red-600 hover:text-red-700"
-                    >
-                      <Trash2 className="w-5 h-5" />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <DataTable columns={columns} data={testimonials} searchPlaceholder="Search testimonials..." searchKey="name" />
 
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
