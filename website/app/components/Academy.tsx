@@ -484,20 +484,62 @@ export default function Academy() {
                       >
                         <div className="flex items-center space-x-4 mb-4">
                           <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-amber-400">
-                            <Image
-                              src={testimonial.image ? (imageUrl(testimonial.image) || "/projects/feature-film.jpg") : "/projects/feature-film.jpg"}
-                              alt={testimonial.name}
-                              fill
-                              className="object-cover"
-                              draggable={false}
-                              onError={(e) => {
-                                const target = e.target as HTMLImageElement;
-                                if (target.src !== "/projects/feature-film.jpg") {
-                                  target.src = "/projects/feature-film.jpg";
-                                }
-                              }}
-                              unoptimized={true}
-                            />
+                            {testimonial.image ? (
+                              <Image
+                                src={imageUrl(testimonial.image)}
+                                alt={testimonial.name}
+                                fill
+                                className="object-cover"
+                                draggable={false}
+                                onError={(e) => {
+                                  const target = e.target as HTMLImageElement;
+                                  target.style.display = "none";
+                                  const parent = target.parentElement;
+                                  if (parent) {
+                                    const userIcon = parent.querySelector(".user-icon-fallback") as HTMLElement;
+                                    if (userIcon) {
+                                      userIcon.style.display = "block";
+                                    }
+                                  }
+                                }}
+                                onLoad={(e) => {
+                                  const target = e.target as HTMLImageElement;
+                                  const parent = target.parentElement;
+                                  if (parent) {
+                                    const userIcon = parent.querySelector(".user-icon-fallback") as HTMLElement;
+                                    if (userIcon) {
+                                      userIcon.style.display = "none";
+                                    }
+                                  }
+                                }}
+                                unoptimized={true}
+                              />
+                            ) : null}
+                            <div className={`user-icon-fallback absolute inset-0 ${testimonial.image ? "hidden" : "block"}`}>
+                              <Image
+                                src="/images/default-user-icon.png"
+                                alt={testimonial.name || "User"}
+                                fill
+                                className="object-cover"
+                                draggable={false}
+                                onError={(e) => {
+                                  // Fallback to SVG if default image doesn't exist
+                                  const target = e.target as HTMLImageElement;
+                                  target.style.display = "none";
+                                  const parent = target.parentElement;
+                                  if (parent) {
+                                    parent.innerHTML = `
+                                      <div class="absolute inset-0 bg-zinc-100 flex items-center justify-center">
+                                        <svg class="w-8 h-8 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                        </svg>
+                                      </div>
+                                    `;
+                                  }
+                                }}
+                                unoptimized={true}
+                              />
+                            </div>
                           </div>
                           <div>
                             <h4 className="font-bold text-black">{testimonial.name}</h4>

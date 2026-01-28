@@ -125,6 +125,20 @@ export default function Awards() {
         ),
       },
       {
+        accessorKey: "featured",
+        header: "Featured",
+        cell: ({ row }) => {
+          const featured = row.getValue("featured") as boolean;
+          return (
+            <span className={`px-2 py-1 text-xs rounded-full ${
+              featured ? "bg-green-100 text-green-800 font-semibold" : "bg-zinc-100 text-zinc-400"
+            }`}>
+              {featured ? "Yes" : "No"}
+            </span>
+          );
+        },
+      },
+      {
         id: "actions",
         header: "Actions",
         cell: ({ row }) => {

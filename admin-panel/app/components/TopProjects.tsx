@@ -17,8 +17,6 @@ export default function TopProjects() {
     category: "Feature Films",
     image: "",
     description: "",
-    featured: false,
-    order: 0,
   });
   const [imageUploading, setImageUploading] = useState(false);
   const imageInputRef = useRef<HTMLInputElement>(null);
@@ -79,8 +77,6 @@ export default function TopProjects() {
       category: topProject.category,
       image: topProject.image,
       description: topProject.description || "",
-      featured: topProject.featured || false,
-      order: topProject.order || 0,
     });
     setShowModal(true);
   };
@@ -92,8 +88,6 @@ export default function TopProjects() {
       category: "Feature Films",
       image: "",
       description: "",
-      featured: false,
-      order: 0,
     });
     imageInputRef.current && (imageInputRef.current.value = "");
   };
@@ -130,27 +124,6 @@ export default function TopProjects() {
       {
         accessorKey: "category",
         header: "Category",
-      },
-      {
-        accessorKey: "order",
-        header: "Order",
-        cell: ({ row }) => (
-          <span className="font-semibold text-zinc-600">{row.getValue("order") || 0}</span>
-        ),
-      },
-      {
-        accessorKey: "featured",
-        header: "Featured",
-        cell: ({ row }) => {
-          const featured = row.getValue("featured") as boolean;
-          return (
-            <span className={`px-2 py-1 text-xs rounded-full ${
-              featured ? "bg-green-100 text-green-800 font-semibold" : "bg-zinc-100 text-zinc-400"
-            }`}>
-              {featured ? "Yes" : "No"}
-            </span>
-          );
-        },
       },
       {
         id: "actions",
@@ -276,27 +249,6 @@ export default function TopProjects() {
                     rows={3}
                     className="w-full px-4 py-2 border rounded-lg"
                   />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2">Order</label>
-                  <input
-                    type="number"
-                    value={formData.order}
-                    onChange={(e) => setFormData({ ...formData, order: parseInt(e.target.value) || 0 })}
-                    className="w-full px-4 py-2 border rounded-lg"
-                  />
-                  <p className="text-xs text-zinc-500 mt-1">Lower numbers appear first</p>
-                </div>
-
-                <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    checked={formData.featured}
-                    onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
-                    className="mr-2"
-                  />
-                  <label>Featured</label>
                 </div>
 
                 <div className="flex justify-end space-x-4">

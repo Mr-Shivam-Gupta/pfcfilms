@@ -26,10 +26,6 @@ const testimonialSchema = new mongoose.Schema({
     max: 5,
     default: 5
   },
-  featured: {
-    type: Boolean,
-    default: false
-  },
   order: {
     type: Number,
     default: 0

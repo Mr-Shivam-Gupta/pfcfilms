@@ -6,7 +6,7 @@ const auth = require('../middleware/auth');
 // Get all courses (public)
 router.get('/', async (req, res) => {
   try {
-    const { academy, level, featured } = req.query;
+    const { academy, level } = req.query;
     const query = {};
 
     if (academy) {
@@ -14,9 +14,6 @@ router.get('/', async (req, res) => {
     }
     if (level) {
       query.level = level;
-    }
-    if (featured === 'true') {
-      query.featured = true;
     }
 
     const courses = await Course.find(query).sort({ order: 1, createdAt: -1 });

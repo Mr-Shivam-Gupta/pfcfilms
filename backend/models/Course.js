@@ -44,10 +44,6 @@ const courseSchema = new mongoose.Schema({
     enum: ['Acting School', 'Dance Academy', 'Film Academy'],
     default: 'Film Academy'
   },
-  featured: {
-    type: Boolean,
-    default: false
-  },
   order: {
     type: Number,
     default: 0

@@ -20,7 +20,6 @@ export default function Gallery() {
     thumbnail: "",
     videoUrl: "",
     duration: "",
-    featured: false,
     order: 0,
   });
   const [imageUploading, setImageUploading] = useState(false);
@@ -114,7 +113,6 @@ export default function Gallery() {
       thumbnail: item.thumbnail || "",
       videoUrl: item.videoUrl || "",
       duration: item.duration || "",
-      featured: item.featured || false,
       order: item.order || 0,
     });
     setShowModal(true);
@@ -130,7 +128,6 @@ export default function Gallery() {
       thumbnail: "",
       videoUrl: "",
       duration: "",
-      featured: false,
       order: 0,
     });
     imageInputRef.current && (imageInputRef.current.value = "");
@@ -348,16 +345,6 @@ export default function Gallery() {
                     </div>
                   </>
                 )}
-
-                <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    checked={formData.featured}
-                    onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
-                    className="mr-2"
-                  />
-                  <label>Featured</label>
-                </div>
 
                 <div className="flex justify-end space-x-4">
                   <button

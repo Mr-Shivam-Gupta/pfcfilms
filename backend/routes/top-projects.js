@@ -6,14 +6,7 @@ const auth = require('../middleware/auth');
 // Get all top projects (public)
 router.get('/', async (req, res) => {
   try {
-    const { featured } = req.query;
-    const query = {};
-    
-    if (featured === 'true') {
-      query.featured = true;
-    }
-
-    const topProjects = await TopProject.find(query).sort({ order: 1, createdAt: -1 });
+    const topProjects = await TopProject.find().sort({ createdAt: -1 });
     res.json({ success: true, data: topProjects });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });

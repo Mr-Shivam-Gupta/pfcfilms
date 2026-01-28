@@ -31,10 +31,6 @@ const gallerySchema = new mongoose.Schema({
   duration: {
     type: String
   },
-  featured: {
-    type: Boolean,
-    default: false
-  },
   order: {
     type: Number,
     default: 0

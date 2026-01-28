@@ -18,7 +18,6 @@ export default function Testimonials() {
     image: "",
     text: "",
     rating: 5,
-    featured: false,
     order: 0,
   });
   const [imageUploading, setImageUploading] = useState(false);
@@ -81,7 +80,6 @@ export default function Testimonials() {
       image: testimonial.image,
       text: testimonial.text,
       rating: testimonial.rating,
-      featured: testimonial.featured || false,
       order: testimonial.order || 0,
     });
     setShowModal(true);
@@ -95,7 +93,6 @@ export default function Testimonials() {
       image: "",
       text: "",
       rating: 5,
-      featured: false,
       order: 0,
     });
     imageInputRef.current && (imageInputRef.current.value = "");
@@ -121,7 +118,7 @@ export default function Testimonials() {
       {
         accessorKey: "image",
         header: "Image",
-        cell: ({ row }) => <ImageCell src={row.original.image} alt={row.original.name} className="w-12 h-12 rounded-full" />,
+        cell: ({ row }) => <ImageCell src={row.original.image} alt={row.original.name} className="w-12 h-12 rounded-full" showUserIcon={true} />,
       },
       {
         accessorKey: "name",
@@ -283,16 +280,6 @@ export default function Testimonials() {
                     <option value={2}>2 ⭐</option>
                     <option value={1}>1 ⭐</option>
                   </select>
-                </div>
-
-                <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    checked={formData.featured}
-                    onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
-                    className="mr-2"
-                  />
-                  <label>Featured</label>
                 </div>
 
                 <div className="flex justify-end space-x-4">

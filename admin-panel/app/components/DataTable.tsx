@@ -212,19 +212,56 @@ export function DataTable<TData, TValue>({
 }
 
 // Helper component for displaying images in table cells
-export function ImageCell({ src, alt, className = "w-12 h-12" }: { src?: string | null; alt?: string; className?: string }) {
+export function ImageCell({ 
+  src, 
+  alt, 
+  className = "w-12 h-12",
+  showUserIcon = false 
+}: { 
+  src?: string | null; 
+  alt?: string; 
+  className?: string;
+  showUserIcon?: boolean;
+}) {
+  const [imageError, setImageError] = useState(false);
+  
+  // Show user icon if showUserIcon is true and (no src or image error)
+  if (showUserIcon && (!src || imageError)) {
+    return (
+      <div className={`${className} rounded-full overflow-hidden border border-zinc-200`}>
+        <img
+          src="/images/default-user-icon.png"
+          alt={alt || "User"}
+          className="w-full h-full object-cover"
+          onError={(e) => {
+            // Fallback to SVG if image file doesn't exist
+            const target = e.target as HTMLImageElement;
+            target.style.display = "none";
+            const parent = target.parentElement;
+            if (parent) {
+              parent.innerHTML = `
+                <div class="w-full h-full bg-zinc-100 flex items-center justify-center">
+                  <svg class="w-1/2 h-1/2 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                  </svg>
+                </div>
+              `;
+            }
+          }}
+        />
+      </div>
+    );
+  }
+  
   if (!src) return <span className="text-zinc-400 text-xs">No image</span>;
+  
   return (
     <img
       src={imageUrl(src)}
       alt={alt || "Image"}
       className={`${className} object-cover rounded border border-zinc-200`}
-      onError={(e) => {
-        (e.target as HTMLImageElement).style.display = "none";
-        const parent = (e.target as HTMLImageElement).parentElement;
-        if (parent) {
-          parent.innerHTML = '<span class="text-zinc-400 text-xs">No image</span>';
-        }
+      onError={() => {
+        setImageError(true);
       }}
     />
   );

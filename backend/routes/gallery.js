@@ -6,7 +6,7 @@ const auth = require('../middleware/auth');
 // Get all gallery items (public)
 router.get('/', async (req, res) => {
   try {
-    const { type, category, featured } = req.query;
+    const { type, category } = req.query;
     const query = {};
 
     if (type) {
@@ -14,9 +14,6 @@ router.get('/', async (req, res) => {
     }
     if (category) {
       query.category = category;
-    }
-    if (featured === 'true') {
-      query.featured = true;
     }
 
     const gallery = await Gallery.find(query).sort({ order: 1, createdAt: -1 });

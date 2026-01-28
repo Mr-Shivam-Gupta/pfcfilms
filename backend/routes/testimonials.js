@@ -6,12 +6,7 @@ const auth = require('../middleware/auth');
 // Get all testimonials (public)
 router.get('/', async (req, res) => {
   try {
-    const { featured } = req.query;
-    const query = {};
-    if (featured === 'true') {
-      query.featured = true;
-    }
-    const testimonials = await Testimonial.find(query).sort({ order: 1, createdAt: -1 });
+    const testimonials = await Testimonial.find().sort({ order: 1, createdAt: -1 });
     res.json({ success: true, data: testimonials });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });

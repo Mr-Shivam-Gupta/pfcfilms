@@ -24,14 +24,6 @@ const topProjectSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Production',
     default: null
-  },
-  order: {
-    type: Number,
-    default: 0
-  },
-  featured: {
-    type: Boolean,
-    default: false
   }
 }, {
   timestamps: true

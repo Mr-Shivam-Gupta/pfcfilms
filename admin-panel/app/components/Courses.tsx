@@ -23,7 +23,6 @@ export default function Courses() {
     description: "",
     modules: [] as string[],
     academy: "Film Academy",
-    featured: false,
     order: 0,
   });
   const [moduleInput, setModuleInput] = useState("");
@@ -92,7 +91,6 @@ export default function Courses() {
       description: course.description,
       modules: course.modules || [],
       academy: course.academy || "Film Academy",
-      featured: course.featured || false,
       order: course.order || 0,
     });
     setShowModal(true);
@@ -111,7 +109,6 @@ export default function Courses() {
       description: "",
       modules: [],
       academy: "Film Academy",
-      featured: false,
       order: 0,
     });
     setModuleInput("");
@@ -397,16 +394,6 @@ export default function Courses() {
                       </span>
                     ))}
                   </div>
-                </div>
-
-                <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    checked={formData.featured}
-                    onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
-                    className="mr-2"
-                  />
-                  <label>Featured</label>
                 </div>
 
                 <div className="flex justify-end space-x-4">
