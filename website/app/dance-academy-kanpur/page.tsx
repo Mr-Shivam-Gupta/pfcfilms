@@ -9,7 +9,16 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Best Dance Academy in Kanpur | Dhamal India Dance",
     description: "Premier Dance Academy in Kanpur offering Bollywood, Hip Hop, Classical & Contemporary dance classes. Professional training by industry experts.",
+    url: "https://pfcfilms.com/dance-academy-kanpur",
+    siteName: "PFC FILMS",
     type: "website",
+    images: [{ url: "/logo.jpg", width: 1200, height: 630, alt: "Dhamal India Dance - Best Dance Academy in Kanpur" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Best Dance Academy in Kanpur | Dhamal India Dance",
+    description: "Premier Dance Academy in Kanpur. Bollywood, Hip Hop, Classical & Contemporary dance classes.",
+    images: ["/logo.jpg"],
   },
   alternates: {
     canonical: "https://pfcfilms.com/dance-academy-kanpur",
@@ -153,7 +162,43 @@ export default function DanceAcademyPage() {
       </section>
 
       {/* FAQs */}
-      <section className="py-20 px-4 bg-zinc-50">
+      <section className="py-20 px-4 bg-zinc-50" id="faq">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: [
+                {
+                  "@type": "Question",
+                  name: "What makes Dhamal India Dance the best dance academy in Kanpur?",
+                  acceptedAnswer: { "@type": "Answer", text: "Dhamal India Dance is Kanpur's premier dance academy with expert instructors, multiple dance styles, state-of-the-art facilities, and proven track record of student success in competitions and performances." },
+                },
+                {
+                  "@type": "Question",
+                  name: "What dance styles are taught at your Kanpur dance academy?",
+                  acceptedAnswer: { "@type": "Answer", text: "We offer comprehensive training in Bollywood, Hip Hop, Classical (Kathak, Bharatanatyam), Contemporary, Folk, and Wedding dance choreography at our Kanpur location." },
+                },
+                {
+                  "@type": "Question",
+                  name: "Are there dance classes for kids in Kanpur?",
+                  acceptedAnswer: { "@type": "Answer", text: "Yes! We offer specialized dance classes for kids starting from age 5, with age-appropriate choreography and fun learning methods at our Kanpur dance academy." },
+                },
+                {
+                  "@type": "Question",
+                  name: "How do I enroll in dance classes at Dhamal India Dance Kanpur?",
+                  acceptedAnswer: { "@type": "Answer", text: "You can enroll by calling us, visiting our Kanpur location, or booking a free trial class through our website. We offer flexible batch timings." },
+                },
+                {
+                  "@type": "Question",
+                  name: "What is the fee structure for dance classes in Kanpur?",
+                  acceptedAnswer: { "@type": "Answer", text: "Our dance class fees vary based on the program and duration. Contact us for detailed pricing and special offers. We also offer monthly and quarterly payment options." },
+                },
+              ],
+            }),
+          }}
+        />
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-12 text-black">
             Frequently Asked <span className="text-amber-500">Questions</span>

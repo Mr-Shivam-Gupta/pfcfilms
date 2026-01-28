@@ -58,6 +58,10 @@ export const metadata: Metadata = {
     canonical: "https://pfcfilms.com",
   },
   metadataBase: new URL("https://pfcfilms.com"),
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/logo.jpg",
+  },
 };
 
 export default function RootLayout({
@@ -73,7 +77,23 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
+              "@type": "WebSite",
+              "name": "PFC FILMS",
+              "alternateName": "Dhamal India Dance",
+              "url": "https://pfcfilms.com",
+              "description": "Premier Dance Academy and Acting School in Kanpur | Mumbai",
+              "publisher": { "@id": "https://pfcfilms.com/#organization" },
+              "inLanguage": "en-IN",
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
               "@type": "EducationalOrganization",
+              "@id": "https://pfcfilms.com/#organization",
               "name": "PFC FILMS",
               "alternateName": "Dhamal India Dance",
               "description": "Premier Dance Academy and Acting School in Kanpur, Uttar Pradesh",

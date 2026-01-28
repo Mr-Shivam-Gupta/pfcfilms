@@ -9,7 +9,16 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Best Acting School in Kanpur | PFC FILMS",
     description: "Premier Acting School in Kanpur offering professional training for film, television, and theatre. Learn from industry experts.",
+    url: "https://pfcfilms.com/acting-school-kanpur",
+    siteName: "PFC FILMS",
     type: "website",
+    images: [{ url: "/logo.jpg", width: 1200, height: 630, alt: "PFC FILMS - Best Acting School in Kanpur" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Best Acting School in Kanpur | PFC FILMS",
+    description: "Premier Acting School in Kanpur. Film, TV & theatre acting training.",
+    images: ["/logo.jpg"],
   },
   alternates: {
     canonical: "https://pfcfilms.com/acting-school-kanpur",
@@ -185,7 +194,43 @@ export default function ActingSchoolPage() {
       </section>
 
       {/* FAQs */}
-      <section className="py-20 px-4 bg-white">
+      <section className="py-20 px-4 bg-white" id="faq">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: [
+                {
+                  "@type": "Question",
+                  name: "What makes PFC FILMS the best acting school in Kanpur?",
+                  acceptedAnswer: { "@type": "Answer", text: "PFC FILMS is Kanpur's premier acting school with industry veteran Pramod Kumar Gupta as director, comprehensive training programs, industry connections, and proven track record of student placements in films, TV, and OTT platforms." },
+                },
+                {
+                  "@type": "Question",
+                  name: "What acting courses are available at your Kanpur acting school?",
+                  acceptedAnswer: { "@type": "Answer", text: "We offer Film Acting Course, Theatre Acting, Method Acting Workshop, OTT & Web Series Acting, Voice & Diction Training, and Audition Preparation programs at our Kanpur location." },
+                },
+                {
+                  "@type": "Question",
+                  name: "Do you provide placement assistance after acting training in Kanpur?",
+                  acceptedAnswer: { "@type": "Answer", text: "Yes! We offer 100% placement assistance to deserving students. Our industry connections help students get auditions for films, web series, TV shows, and theatre productions." },
+                },
+                {
+                  "@type": "Question",
+                  name: "Can beginners join acting classes in Kanpur?",
+                  acceptedAnswer: { "@type": "Answer", text: "Absolutely! Our acting school in Kanpur welcomes beginners. We start from basics and gradually build your acting skills through structured training programs suitable for all levels." },
+                },
+                {
+                  "@type": "Question",
+                  name: "What is the duration and fee for acting courses in Kanpur?",
+                  acceptedAnswer: { "@type": "Answer", text: "Acting course duration ranges from 1-6 months depending on the program. Contact us for detailed fee structure and flexible payment options. We also offer demo classes." },
+                },
+              ],
+            }),
+          }}
+        />
         <div className="max-w-4xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-12 text-black">
             Frequently Asked <span className="text-amber-500">Questions</span>

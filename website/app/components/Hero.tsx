@@ -19,9 +19,11 @@ export default function Hero() {
           <div className="w-40 h-40 relative rounded-2xl overflow-hidden shadow-2xl transform transition-all duration-500 hover:scale-110 hover:rotate-6 animate-pulse-slow ring-4 ring-white/50">
             <Image
               src="/logo.jpg"
-              alt="PFC Logo"
+              alt="PFC FILMS - Best Dance Academy & Acting School in Kanpur"
               fill
               className="object-cover"
+              priority
+              sizes="160px"
             />
           </div>
         </div>
