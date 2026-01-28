@@ -4,9 +4,13 @@ const path = require('path');
 const multer = require('multer');
 const auth = require('../middleware/auth');
 const { uploadImage } = require('../middleware/upload');
+const { uploadToCloudinary, deleteFromCloudinary } = require('../config/cloudinary');
 
 router.post('/image', auth, async (req, res, next) => {
-  // Check if we should use Vercel Blob Storage
+  // Check storage options in priority order: Cloudinary > Vercel Blob > Local
+  const useCloudinary = process.env.CLOUDINARY_CLOUD_NAME && 
+                        process.env.CLOUDINARY_API_KEY && 
+                        process.env.CLOUDINARY_API_SECRET;
   const useBlobStorage = process.env.BLOB_READ_WRITE_TOKEN;
 
   uploadImage.single('image')(req, res, async (err) => {
@@ -23,7 +27,31 @@ router.post('/image', auth, async (req, res, next) => {
       return res.status(400).json({ success: false, message: 'No image file provided' });
     }
 
-    // Use Vercel Blob Storage if token is available
+    // Priority 1: Use Cloudinary if configured
+    if (useCloudinary) {
+      try {
+        const folder = 'pfcfilms/images';
+        const result = await uploadToCloudinary(req.file.buffer, folder, {
+          resource_type: 'image',
+          format: path.extname(req.file.originalname).slice(1) || 'jpg',
+        });
+        
+        // Return the Cloudinary secure URL
+        return res.json({ 
+          success: true, 
+          path: result.secure_url,
+          public_id: result.public_id 
+        });
+      } catch (cloudinaryError) {
+        console.error('Cloudinary upload error:', cloudinaryError);
+        return res.status(500).json({ 
+          success: false, 
+          message: 'Failed to upload to Cloudinary: ' + cloudinaryError.message 
+        });
+      }
+    }
+
+    // Priority 2: Use Vercel Blob Storage if token is available
     if (useBlobStorage) {
       try {
         const { put } = await import('@vercel/blob');
@@ -48,12 +76,55 @@ router.post('/image', auth, async (req, res, next) => {
         const filePath = '/uploads/images/' + fallbackFilename;
         return res.json({ success: true, path: filePath });
       }
-    } else {
-      // Use local file storage for development
-      const filePath = '/uploads/images/' + req.file.filename;
-      res.json({ success: true, path: filePath });
     }
+
+    // Priority 3: Use local file storage for development
+    const filePath = '/uploads/images/' + req.file.filename;
+    res.json({ success: true, path: filePath });
   });
+});
+
+// Delete image endpoint (for Cloudinary cleanup)
+router.delete('/image', auth, async (req, res) => {
+  try {
+    const { imageUrl } = req.body;
+    
+    if (!imageUrl) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Image URL is required' 
+      });
+    }
+
+    // Only delete from Cloudinary if it's a Cloudinary URL
+    if (imageUrl.includes('cloudinary.com')) {
+      try {
+        await deleteFromCloudinary(imageUrl);
+        return res.json({ 
+          success: true, 
+          message: 'Image deleted from Cloudinary' 
+        });
+      } catch (error) {
+        console.error('Error deleting from Cloudinary:', error);
+        return res.status(500).json({ 
+          success: false, 
+          message: 'Failed to delete image from Cloudinary' 
+        });
+      }
+    }
+
+    // For non-Cloudinary URLs, just return success (local files can be cleaned up separately)
+    res.json({ 
+      success: true, 
+      message: 'Delete request processed (non-Cloudinary URL)' 
+    });
+  } catch (error) {
+    console.error('Delete image error:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: 'Failed to delete image' 
+    });
+  }
 });
 
 module.exports = router;

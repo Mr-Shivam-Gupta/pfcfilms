@@ -16,11 +16,15 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-// Use memory storage when using Vercel Blob, disk storage otherwise
+// Use memory storage when using Cloudinary, Vercel Blob, or on Vercel; disk storage otherwise
+const useCloudinary = process.env.CLOUDINARY_CLOUD_NAME && 
+                      process.env.CLOUDINARY_API_KEY && 
+                      process.env.CLOUDINARY_API_SECRET;
 const useBlobStorage = process.env.BLOB_READ_WRITE_TOKEN || process.env.VERCEL;
+const useMemoryStorage = useCloudinary || (useBlobStorage && process.env.BLOB_READ_WRITE_TOKEN) || process.env.VERCEL;
 
-const storage = useBlobStorage && process.env.BLOB_READ_WRITE_TOKEN
-  ? multer.memoryStorage() // Use memory storage for Blob uploads
+const storage = useMemoryStorage
+  ? multer.memoryStorage() // Use memory storage for Cloudinary/Blob uploads
   : multer.diskStorage({
       destination: (req, file, cb) => {
         cb(null, uploadsImages);
