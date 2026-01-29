@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { ADDRESS, SOCIAL, PHONE_DISPLAY, PHONE_E164, GOOGLE_MAPS_URL } from "../lib/constants";
 
@@ -50,9 +51,9 @@ export default function Contact() {
   };
 
   const socialMediaLinks = [
-    { name: "Instagram", handle: "@pfcfilms", url: SOCIAL.instagram },
-    { name: "YouTube", handle: "PFC Films Production House", url: SOCIAL.youtube },
-    { name: "Facebook", handle: "PFC Films", url: SOCIAL.facebook },
+    { name: "Instagram", handle: "@pfcfilms", url: SOCIAL.instagram, image: "/images/instagram.png" },
+    { name: "YouTube", handle: "PFC Films Production House", url: SOCIAL.youtube, image: "/images/you_tube.png" },
+    { name: "Facebook", handle: "PFC Films", url: SOCIAL.facebook, image: "/images/facebook.png" },
   ];
 
   return (
@@ -165,10 +166,18 @@ export default function Contact() {
                       <a
                         key={`social-${index}`}
                         href={social.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="social-card"
                       >
-                        <div className="qr-placeholder bg-zinc-100 w-40 h-40 rounded-lg mb-3 flex items-center justify-center text-sm text-zinc-400">
-                          QR Code
+                        <div className="w-40 h-40 rounded-lg mb-3 flex items-center justify-center overflow-hidden bg-white border border-zinc-200">
+                          <Image
+                            src={social.image}
+                            alt={`${social.name} - ${social.handle}`}
+                            width={160}
+                            height={160}
+                            className="object-contain w-full h-full"
+                          />
                         </div>
                         <p className="text-base font-semibold text-black">{social.name}</p>
                         <p className="text-sm text-zinc-500">{social.handle}</p>
@@ -180,10 +189,18 @@ export default function Contact() {
                       <a
                         key={`social-duplicate-${index}`}
                         href={social.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="social-card"
                       >
-                        <div className="qr-placeholder bg-zinc-100 w-40 h-40 rounded-lg mb-3 flex items-center justify-center text-sm text-zinc-400">
-                          QR Code
+                        <div className="w-40 h-40 rounded-lg mb-3 flex items-center justify-center overflow-hidden bg-white border border-zinc-200">
+                          <Image
+                            src={social.image}
+                            alt={`${social.name} - ${social.handle}`}
+                            width={160}
+                            height={160}
+                            className="object-contain w-full h-full"
+                          />
                         </div>
                         <p className="text-base font-semibold text-black">{social.name}</p>
                         <p className="text-sm text-zinc-500">{social.handle}</p>
