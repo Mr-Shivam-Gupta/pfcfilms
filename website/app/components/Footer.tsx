@@ -3,11 +3,13 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Instagram, Facebook, Twitter, Youtube } from "lucide-react";
+import { Instagram, Facebook, Youtube } from "lucide-react";
+import { ADDRESS, SOCIAL, PHONE_DISPLAY, PHONE_E164, GOOGLE_MAPS_URL } from "../lib/constants";
 
 const QUICK_LINKS = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
+  { label: "Productions", href: "/productions" },
   { label: "Gallery", href: "/gallery" },
   { label: "Contact", href: "/contact" },
 ] as const;
@@ -20,10 +22,9 @@ const SERVICES = [
 ] as const;
 
 const SOCIAL_LINKS = [
-  { icon: Instagram, href: "https://www.instagram.com/pfcfilms" },
-  { icon: Facebook, href: "https://www.facebook.com/pfcfilms" },
-  { icon: Twitter, href: "https://twitter.com/pfcfilms" },
-  { icon: Youtube, href: "https://www.youtube.com/@pfcfilms" },
+  { icon: Instagram, href: SOCIAL.instagram },
+  { icon: Facebook, href: SOCIAL.facebook },
+  { icon: Youtube, href: SOCIAL.youtube },
 ] as const;
 
 export default function Footer() {
@@ -60,7 +61,7 @@ export default function Footer() {
               </div>
             </Link>
             <p className="text-zinc-300 font-medium text-base mb-6">
-              Creating cinematic excellence and nurturing dance talent
+              Production House & Institute — films, web series, music, ad films, documentaries, reality TV &amp; live shows. Training in acting, dance, cinematography, editing &amp; more.
             </p>
             
             {/* Social Icons */}
@@ -130,10 +131,15 @@ export default function Footer() {
               <a href="mailto:info@pfcfilms.com" className="block hover:text-amber-400 transition-colors hover:translate-x-1 transform duration-300">
                 info@pfcfilms.com
               </a>
-              <a href="tel:+918176000084" className="block hover:text-amber-400 transition-colors hover:translate-x-1 transform duration-300">
-                81760 00084
+              <a href={`tel:${PHONE_E164}`} className="block hover:text-amber-400 transition-colors hover:translate-x-1 transform duration-300">
+                {PHONE_DISPLAY}
               </a>
-              <span className="block">Kanpur Cantonment, Uttar Pradesh, India</span>
+              <a href={SOCIAL.justdial} target="_blank" rel="noopener noreferrer" className="block hover:text-amber-400 transition-colors hover:translate-x-1 transform duration-300">
+                JustDial · PFC FILMS Barra
+              </a>
+              <a href={GOOGLE_MAPS_URL} target="_blank" rel="noopener noreferrer" className="block hover:text-amber-400 transition-colors hover:translate-x-1 transform duration-300">
+                {ADDRESS.short}
+              </a>
             </div>
           </div>
         </div>

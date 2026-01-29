@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Mail, Phone, MapPin, Send, Instagram, Youtube, Facebook } from "lucide-react";
+import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { ADDRESS, SOCIAL, PHONE_DISPLAY, PHONE_E164, GOOGLE_MAPS_URL } from "../lib/constants";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -49,24 +50,9 @@ export default function Contact() {
   };
 
   const socialMediaLinks = [
-    {
-      name: "Instagram",
-      handle: "@pfcfilms",
-      url: "#",
-      qrCode: "/qr-codes/instagram-qr.png", // Update with actual path
-    },
-    {
-      name: "YouTube",
-      handle: "PFC Films",
-      url: "#",
-      qrCode: "/qr-codes/youtube-qr.png", // Update with actual path
-    },
-    {
-      name: "Facebook",
-      handle: "PFC Films",
-      url: "#",
-      qrCode: "/qr-codes/facebook-qr.png", // Update with actual path
-    },
+    { name: "Instagram", handle: "@pfcfilms", url: SOCIAL.instagram },
+    { name: "YouTube", handle: "PFC Films Production House", url: SOCIAL.youtube },
+    { name: "Facebook", handle: "PFC Films", url: SOCIAL.facebook },
   ];
 
   return (
@@ -126,7 +112,7 @@ export default function Contact() {
                     >
                       info@pfcfilms.com
                     </a>
-                    <p className="text-sm text-zinc-500 mt-1">For Dance Academy: dhamalindiadance@pfcfilms.com</p>
+                    {/* <p className="text-sm text-zinc-500 mt-1">For Dance Academy: dhamalindiadance@pfcfilms.com</p> */}
                   </div>
                 </div>
 
@@ -137,10 +123,10 @@ export default function Contact() {
                   <div>
                     <h4 className="font-semibold mb-1 text-black">Phone</h4>
                     <a
-                      href="tel:+91XXXXXXXXXX"
+                      href={`tel:${PHONE_E164}`}
                       className="text-zinc-600 hover:text-amber-600 transition-colors"
                     >
-                      +91 XXXXXXXXXX
+                      {PHONE_DISPLAY}
                     </a>
                     <p className="text-sm text-zinc-500 mt-1">Call for Dance Classes & Acting Courses in Kanpur</p>
                   </div>
@@ -152,13 +138,16 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4 className="font-semibold mb-1 text-black">Location</h4>
-                    <p className="text-zinc-600">
-                      PFC FILMS - Dance Academy & Acting School
+                    <a
+                      href={GOOGLE_MAPS_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-zinc-600 hover:text-amber-600 transition-colors block"
+                    >
+                      PFC FILMS — Production House & Institute
                       <br />
-                      Kanpur, Uttar Pradesh 208001
-                      <br />
-                      India
-                    </p>
+                      {ADDRESS.full}
+                    </a>
                   </div>
                 </div>
               </div>

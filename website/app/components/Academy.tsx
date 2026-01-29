@@ -283,7 +283,61 @@ export default function Academy() {
         </div>
       </section>
 
-      <div className="relative py-20">
+      {/* Dance Academy & Acting School – compact horizontal cards */}
+      <section className="relative z-10 px-4 sm:px-6 lg:px-8 py-5">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center">
+            <Link
+              href="/dance-academy-kanpur"
+              className="group flex items-center gap-5 w-full sm:w-auto bg-white rounded-xl border border-zinc-200 hover:border-amber-400 px-5 py-4 shadow-sm hover:shadow-md transition-all duration-300"
+            >
+              <div className="relative w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 rounded-xl overflow-hidden ring-1 ring-zinc-100">
+                <Image
+                  src="/projects/music-video.png"
+                  alt="Dance Academy"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  sizes="96px"
+                />
+              </div>
+              <div className="flex-1 min-w-0 text-left">
+                <span className="text-lg font-bold text-zinc-900 group-hover:text-amber-600 transition-colors">
+                  Dance <span className="text-amber-500">Academy</span>
+                </span>
+                <p className="text-sm text-zinc-500 mt-1">Dhamal India Dance · Kanpur</p>
+              </div>
+              <span className="text-zinc-400 group-hover:text-amber-500 group-hover:translate-x-0.5 transition-all text-base font-medium flex-shrink-0">
+                Explore →
+              </span>
+            </Link>
+            <Link
+              href="/acting-school-kanpur"
+              className="group flex items-center gap-5 w-full sm:w-auto bg-white rounded-xl border border-zinc-200 hover:border-amber-400 px-5 py-4 shadow-sm hover:shadow-md transition-all duration-300"
+            >
+              <div className="relative w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 rounded-xl overflow-hidden ring-1 ring-zinc-100">
+                <Image
+                  src="/projects/feature-film.jpg"
+                  alt="Acting School"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  sizes="96px"
+                />
+              </div>
+              <div className="flex-1 min-w-0 text-left">
+                <span className="text-lg font-bold text-zinc-900 group-hover:text-amber-600 transition-colors">
+                  Acting <span className="text-amber-500">School</span>
+                </span>
+                <p className="text-sm text-zinc-500 mt-1">PFC FILMS · Kanpur</p>
+              </div>
+              <span className="text-zinc-400 group-hover:text-amber-500 group-hover:translate-x-0.5 transition-all text-base font-medium flex-shrink-0">
+                Explore →
+              </span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <div className="relative py-10">
         {/* Animated Background Orbs */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/20 rounded-full blur-3xl animate-float"></div>

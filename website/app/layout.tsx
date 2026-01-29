@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ScrollObserver from "./components/ScrollObserver";
 import Footer from "./components/Footer";
+import { ADDRESS, SOCIAL, PHONE_E164, SITE, GOOGLE_REVIEWS } from "./lib/constants";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -102,10 +103,10 @@ export default function RootLayout({
               "image": "https://pfcfilms.newtab.in/logo.jpg",
               "address": {
                 "@type": "PostalAddress",
-                "streetAddress": "Kanpur",
-                "addressLocality": "Kanpur",
-                "addressRegion": "Uttar Pradesh",
-                "postalCode": "208001",
+                "streetAddress": ADDRESS.line1,
+                "addressLocality": ADDRESS.locality,
+                "addressRegion": ADDRESS.region,
+                "postalCode": ADDRESS.postalCode,
                 "addressCountry": "IN"
               },
               "geo": {
@@ -115,7 +116,7 @@ export default function RootLayout({
               },
               "founder": {
                 "@type": "Person",
-                "name": "Pramod Kumar Gupta"
+                "name": SITE.directorName
               },
               "areaServed": {
                 "@type": "City",
@@ -143,11 +144,7 @@ export default function RootLayout({
                   }
                 ]
               },
-              "sameAs": [
-                "https://www.instagram.com/pfcfilms",
-                "https://www.youtube.com/@pfcfilms",
-                "https://www.facebook.com/pfcfilms"
-              ]
+              "sameAs": [SOCIAL.instagram, SOCIAL.youtube, SOCIAL.facebook, SOCIAL.justdial]
             }),
           }}
         />
@@ -157,18 +154,18 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
-              "name": "PFC FILMS - Dance Academy & Acting School",
+              "name": "PFC FILMS - Production House & Institute",
               "image": "https://pfcfilms.newtab.in/logo.jpg",
               "@id": "https://pfcfilms.newtab.in",
               "url": "https://pfcfilms.newtab.in",
-              "telephone": "+91-XXXXXXXXXX",
+              "telephone": PHONE_E164,
               "priceRange": "₹₹",
               "address": {
                 "@type": "PostalAddress",
-                "streetAddress": "Kanpur",
-                "addressLocality": "Kanpur",
-                "addressRegion": "Uttar Pradesh",
-                "postalCode": "208001",
+                "streetAddress": ADDRESS.line1,
+                "addressLocality": ADDRESS.locality,
+                "addressRegion": ADDRESS.region,
+                "postalCode": ADDRESS.postalCode,
                 "addressCountry": "IN"
               },
               "geo": {
@@ -189,11 +186,13 @@ export default function RootLayout({
                 "opens": "09:00",
                 "closes": "20:00"
               },
-              "sameAs": [
-                "https://www.instagram.com/pfcfilms",
-                "https://www.youtube.com/@pfcfilms",
-                "https://www.facebook.com/pfcfilms"
-              ]
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": GOOGLE_REVIEWS.rating,
+                "reviewCount": GOOGLE_REVIEWS.count,
+                "bestRating": 5
+              },
+              "sameAs": [SOCIAL.instagram, SOCIAL.youtube, SOCIAL.facebook, SOCIAL.justdial]
             }),
           }}
         />

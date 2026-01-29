@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Navbar from "../components/Navbar";
 import CursorEffect from "../components/CursorEffect";
+import { PHONE, PHONE_DISPLAY } from "../lib/constants";
 
 export const metadata: Metadata = {
   title: "Best Acting School in Kanpur | Film Acting Course | PFC FILMS",
@@ -27,34 +28,43 @@ export const metadata: Metadata = {
 
 export default function ActingSchoolPage() {
   return (
-    <div className="min-h-screen bg-white text-black">
+    <div className="min-h-screen bg-zinc-50 text-zinc-900 relative">
       <CursorEffect />
       <Navbar activeSection="acting-school" />
-      
-      {/* Hero Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-zinc-900 to-black text-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              Best <span className="text-amber-500">Acting School in Kanpur</span>
-            </h1>
-            <p className="text-xl text-zinc-300 max-w-3xl mx-auto mb-8">
-              PFC FILMS Acting School in Kanpur - Professional acting training for film, television, and theatre. Learn from industry veteran Pramod Kumar Gupta and launch your acting career!
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="/contact"
-                className="bg-amber-500 hover:bg-amber-600 text-black px-8 py-4 rounded-full font-semibold transition-all transform hover:scale-105"
-              >
-                Book Free Demo Class
-              </a>
-              <a
-                href="tel:+91XXXXXXXXXX"
-                className="border-2 border-amber-500 hover:bg-amber-500 hover:text-black text-amber-500 px-8 py-4 rounded-full font-semibold transition-all"
-              >
-                Call Now: +91 XXXXXXXXXX
-              </a>
-            </div>
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-20 -left-20 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 -right-20 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
+      </div>
+
+      {/* Hero – same style as About */}
+      <section className="py-24 text-center relative overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gradient-to-br from-amber-200/30 to-transparent rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-blue-200/20 to-transparent rounded-full blur-3xl"></div>
+        </div>
+        <div className="relative z-10 px-4">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tight text-black">
+            Best{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-amber-600 to-amber-700">
+              Acting School in Kanpur
+            </span>
+          </h1>
+          <p className="max-w-2xl mx-auto text-xl text-zinc-600 leading-relaxed mb-8">
+            PFC FILMS Acting School in Kanpur – Professional acting training for film, television, and theatre. Learn from industry veteran Pramod Kumar Gupta and launch your acting career!
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="/contact"
+              className="bg-amber-500 hover:bg-amber-600 text-black px-8 py-4 rounded-full font-semibold transition-all transform hover:scale-105"
+            >
+              Book Free Demo Class
+            </a>
+            <a
+              href={`tel:+91${PHONE}`}
+              className="border-2 border-amber-500 hover:bg-amber-500 hover:text-black text-amber-600 px-8 py-4 rounded-full font-semibold transition-all"
+            >
+              Call Now: {PHONE_DISPLAY}
+            </a>
           </div>
         </div>
       </section>
@@ -162,7 +172,7 @@ export default function ActingSchoolPage() {
             <p className="text-xl mb-4 italic">
               "Acting is not about pretending; it's about becoming. At PFC FILMS Acting School in Kanpur, we don't just teach acting - we transform passion into profession."
             </p>
-            <p className="text-lg text-amber-400 font-semibold">- Pramod Kumar Gupta, Founder & Director</p>
+            <p className="text-lg text-amber-400 font-semibold">— Pramod Kumar Gupta, Director / Producer / Writer / DOP / Actor</p>
           </div>
         </div>
       </section>
@@ -183,10 +193,10 @@ export default function ActingSchoolPage() {
                 Enroll Now
               </a>
               <a
-                href="tel:+91XXXXXXXXXX"
+                href={`tel:+91${PHONE}`}
                 className="border-2 border-white hover:bg-white/10 text-white px-8 py-4 rounded-full font-semibold transition-all"
               >
-                Call: +91 XXXXXXXXXX
+                Call: {PHONE_DISPLAY}
               </a>
             </div>
           </div>
