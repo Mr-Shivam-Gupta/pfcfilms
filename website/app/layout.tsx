@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import ScrollObserver from "./components/ScrollObserver";
-import Footer from "./components/Footer";
+import { ConditionalScrollObserver, ConditionalFooter } from "./components/ConditionalLayout";
 import { ADDRESS, SOCIAL, PHONE_E164, SITE, GOOGLE_REVIEWS } from "./lib/constants";
 
 const geistSans = Geist({
@@ -200,9 +199,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ScrollObserver />
+        <ConditionalScrollObserver />
         {children}
-        <Footer />
+        <ConditionalFooter />
       </body>
     </html>
   );
