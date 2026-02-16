@@ -104,7 +104,7 @@ export default function Hero() {
           {/* Animated rotating text */}
           <p className="text-xl text-zinc-600 max-w-lg leading-relaxed min-h-[4rem]">
             <span
-              className={`inline-block transition-all duration-100 ${isAnimating ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'
+              className={`inline-block transition-all duration-500 ${isAnimating ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'
                 }`}
             >
               {rotatingDescriptions[currentTextIndex]}

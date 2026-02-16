@@ -5,7 +5,6 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Services from "./components/Services";
 import RecentProjects from "./components/RecentProjects";
-import RecentActivity from "./components/RecentActivity";
 import Stats from "./components/Stats";
 import FAQ from "./components/FAQ";
 import CTA from "./components/CTA";
@@ -48,7 +47,6 @@ export default function Home() {
       <Hero />
       <Services />
       <RecentProjects />
-      <RecentActivity />
       <Stats />
       <FAQ faqs={HOME_FAQS} id="faq" />
       <CTA />

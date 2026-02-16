@@ -43,27 +43,24 @@ export default function Footer() {
         </video>
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/30"></div>
       </div>
-      
+
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div className="animate-on-scroll opacity-0 transition-all duration-1000 translate-y-10" suppressHydrationWarning>
-            <Link href="/" className="flex items-center space-x-4 mb-6 group cursor-pointer">
-              <div className="w-20 h-20 relative rounded-2xl overflow-hidden transform transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 shadow-2xl border-2 border-zinc-800 group-hover:border-amber-400/50">
+            <Link href="/" className="inline-block mb-6 group cursor-pointer">
+              <div className="relative w-48 h-32 transform transition-all duration-300 group-hover:scale-105">
                 <Image
-                  src="/logo.jpg"
-                  alt="PFC Logo"
+                  src="/footer_logo.png"
+                  alt="PFC Films Logo"
                   fill
-                  className="object-cover"
+                  className="object-contain"
                 />
-              </div>
-              <div className="font-black text-3xl text-white tracking-tighter">
-                PFC <span className="text-amber-400">FILMS</span>
               </div>
             </Link>
             <p className="text-zinc-300 font-medium text-base mb-6">
               Production House & Institute — films, web series, music, ad films, documentaries, reality TV &amp; live shows. Training in acting, dance, cinematography, editing &amp; more.
             </p>
-            
+
             {/* Social Icons */}
             <div className="flex gap-4">
               {SOCIAL_LINKS.map((social, i) => (
@@ -146,10 +143,10 @@ export default function Footer() {
         <div className="border-t border-zinc-800 pt-8 text-center text-zinc-400 font-medium">
           <p>
             © 2026 Developed by{" "}
-            <a 
-              href="https://newtab.in" 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <a
+              href="https://newtab.in"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-amber-400 hover:text-amber-300 transition-colors font-medium hover:underline"
             >
               New Tab Software Solutions

@@ -80,11 +80,10 @@ export default function Navbar({
                     key={item}
                     href={href}
                     onClick={() => setActiveSection?.(item.toLowerCase())}
-                    className={`text-sm font-medium transition-all duration-300 relative group ${
-                      isActive
-                        ? "text-amber-500"
-                        : "text-zinc-800 hover:text-amber-500"
-                    }`}
+                    className={`text-sm font-medium transition-all duration-300 relative group ${isActive
+                      ? "text-amber-500"
+                      : "text-zinc-800 hover:text-amber-500"
+                      }`}
                     style={{ animationDelay: `${idx * 50}ms` }}
                   >
                     {item}
