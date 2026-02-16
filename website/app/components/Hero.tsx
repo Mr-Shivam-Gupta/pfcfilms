@@ -70,7 +70,7 @@ export default function Hero() {
   }, [displayedText, typingPhase, currentTextIndex]);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-10">
       {/* Background gradients */}
       <div className="absolute inset-0 bg-gradient-to-b from-white via-amber-50/30 to-white z-0" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(245,158,11,0.1),transparent_50%)] z-0" />
@@ -81,20 +81,20 @@ export default function Hero() {
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-300/20 rounded-full blur-3xl animate-float-delayed"></div>
       </div>
 
-      <div className="container px-4 z-10 grid lg:grid-cols-2 gap-12 items-center">
+      <div className="container px-4 z-10 grid lg:grid-cols-2 gap-8 lg:gap-12 items-center py-8 lg:py-0">
         {/* Left side - Text content */}
-        <div className="space-y-8">
+        <div className="space-y-6 lg:space-y-8">
           <div className="inline-block">
-            <span className="px-4 py-2 bg-amber-500/10 border border-amber-500/20 rounded-full text-amber-600 text-sm font-medium">
+            <span className="px-3 py-2 lg:px-4 lg:py-2 bg-amber-500/10 border border-amber-500/20 rounded-full text-amber-600 text-xs sm:text-sm font-medium inline-block max-w-full">
               Premium Film Production & Training Institute
             </span>
           </div>
-          <h1 className="text-5xl lg:text-7xl font-bold tracking-tighter">
+          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tighter">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-black via-amber-600 to-amber-500">
               PFC FILMS
             </span>
             <br />
-            <span className="inline-block text-black">
+            <span className="inline-block text-black text-3xl sm:text-4xl lg:text-6xl">
               {/* {displayedText} */}
               Production House  & Institute
               {/* <span className="inline-block w-1 h-[1em] bg-amber-500 ml-1 animate-pulse" /> */}
@@ -102,7 +102,7 @@ export default function Hero() {
           </h1>
 
           {/* Animated rotating text */}
-          <p className="text-xl text-zinc-600 max-w-lg leading-relaxed min-h-[4rem]">
+          <p className="text-base sm:text-lg lg:text-xl text-zinc-600 max-w-lg leading-relaxed min-h-[3rem] sm:min-h-[4rem]">
             <span
               className={`inline-block transition-all duration-500 ${isAnimating ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'
                 }`}
@@ -111,15 +111,15 @@ export default function Hero() {
             </span>
           </p>
 
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-3 sm:gap-4">
             <Link href="/academy">
-              <button className="px-6 py-3 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg transition-colors flex items-center gap-2">
+              <button className="px-5 py-2.5 sm:px-6 sm:py-3 bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg transition-colors flex items-center gap-2 text-sm sm:text-base">
                 Explore Academy
                 <ArrowRight className="w-4 h-4" />
               </button>
             </Link>
             <Link href="/contact">
-              <button className="px-6 py-3 border-2 border-zinc-300 text-zinc-700 hover:bg-zinc-100 font-semibold rounded-lg transition-colors">
+              <button className="px-5 py-2.5 sm:px-6 sm:py-3 border-2 border-zinc-300 text-zinc-700 hover:bg-zinc-100 font-semibold rounded-lg transition-colors text-sm sm:text-base">
                 Contact Us
               </button>
             </Link>
@@ -127,12 +127,12 @@ export default function Hero() {
         </div>
 
         {/* Right side - 3D Scene */}
-        <div className="h-[500px] w-full flex items-center justify-center">
+        <div className="h-[300px] sm:h-[400px] lg:h-[500px] w-full flex items-center justify-center">
           <HeroScene />
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-10">
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-10 hidden sm:block">
         <ChevronRight className="rotate-90 text-amber-500" size={32} />
       </div>
     </section>
