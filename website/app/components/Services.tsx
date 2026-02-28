@@ -44,9 +44,9 @@ export default function Services() {
   ];
 
   return (
-    <section className="py-20 px-4 bg-white relative">
+    <section className="py-10 px-4 bg-white relative">
       <div className="max-w-7xl mx-auto relative z-10">
-        <h2 
+        <h2
           className="text-4xl md:text-5xl font-bold text-center mb-16 animate-on-scroll opacity-0 transition-all duration-1000 translate-y-10 text-black"
           suppressHydrationWarning
         >

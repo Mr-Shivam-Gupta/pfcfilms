@@ -198,6 +198,47 @@ export default function RootLayout({
             }),
           }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                {
+                  "@type": "ListItem",
+                  "position": 1,
+                  "name": "Home",
+                  "item": "https://pfcfilms.newtab.in"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 2,
+                  "name": "Dance Academy in Kanpur",
+                  "item": "https://pfcfilms.newtab.in/dance-academy-kanpur"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 3,
+                  "name": "Acting School in Kanpur",
+                  "item": "https://pfcfilms.newtab.in/acting-school-kanpur"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 4,
+                  "name": "About",
+                  "item": "https://pfcfilms.newtab.in/about"
+                },
+                {
+                  "@type": "ListItem",
+                  "position": 5,
+                  "name": "Gallery",
+                  "item": "https://pfcfilms.newtab.in/gallery"
+                }
+              ]
+            }),
+          }}
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}

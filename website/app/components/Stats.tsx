@@ -65,12 +65,12 @@ function formatNumber(value: number, original: string): string {
 }
 
 // Animated Counter Component
-function AnimatedCounter({ 
-  targetValue, 
+function AnimatedCounter({
+  targetValue,
   duration = 2000,
   suffix = ''
-}: { 
-  targetValue: string; 
+}: {
+  targetValue: string;
   duration?: number;
   suffix?: string;
 }) {
@@ -147,7 +147,7 @@ export default function Stats() {
 
   if (loading) {
     return (
-      <section className="py-20 px-4 bg-gradient-to-br from-amber-50 via-white to-amber-50/30 relative overflow-hidden">
+      <section className="py-10 px-4 bg-gradient-to-br from-amber-50 via-white to-amber-50/30 relative overflow-hidden">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-0 right-0 w-96 h-96 bg-amber-200/20 rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-amber-300/20 rounded-full blur-3xl"></div>
@@ -167,7 +167,7 @@ export default function Stats() {
   }
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-br from-amber-50 via-white to-amber-50/30 relative overflow-hidden">
+    <section className="py-10 px-4 bg-gradient-to-br from-amber-50 via-white to-amber-50/30 relative overflow-hidden">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 right-0 w-96 h-96 bg-amber-200/20 rounded-full blur-3xl animate-pulse"></div>

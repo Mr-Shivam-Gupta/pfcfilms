@@ -70,7 +70,7 @@ export default function AdminLogin() {
               onChange={(e) => setEmail(e.target.value)}
               required
               className="w-full px-4 py-3 border border-zinc-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
-              placeholder="admin@pfcfilms.com"
+              placeholder="admin@pfcfilms.newtab.in"
             />
           </div>
 

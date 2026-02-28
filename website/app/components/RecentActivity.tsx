@@ -258,7 +258,7 @@ export default function RecentActivity() {
 
   return (
     <section
-      className="py-20 px-4 bg-zinc-50 relative overflow-hidden"
+      className="py-10 px-4 bg-zinc-50 relative overflow-hidden"
       id="recent-activity"
     >
       <div className="max-w-7xl mx-auto">
@@ -281,11 +281,10 @@ export default function RecentActivity() {
             <button
               key={tab.key}
               onClick={() => setActiveActivityTab(tab.key)}
-              className={`group relative px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 ${
-                activeActivityTab === tab.key
+              className={`group relative px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 ${activeActivityTab === tab.key
                   ? `bg-gradient-to-r ${tab.color} text-white shadow-lg scale-105`
                   : "bg-white border border-zinc-200 text-zinc-600 hover:border-amber-400 hover:text-amber-600"
-              }`}
+                }`}
             >
               <span className="relative z-10 flex items-center gap-2">
                 <span className="text-lg">{tab.icon}</span>

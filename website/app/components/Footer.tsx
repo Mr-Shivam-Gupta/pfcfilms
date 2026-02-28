@@ -125,8 +125,8 @@ export default function Footer() {
           >
             <h4 className="font-extrabold text-lg mb-6 text-white uppercase tracking-wider">Contact</h4>
             <div className="space-y-3 text-zinc-300 font-medium">
-              <a href="mailto:info@pfcfilms.com" className="block hover:text-amber-400 transition-colors hover:translate-x-1 transform duration-300">
-                info@pfcfilms.com
+              <a href="mailto:info@pfcfilms.newtab.in" className="block hover:text-amber-400 transition-colors hover:translate-x-1 transform duration-300">
+                info@pfcfilms.newtab.in
               </a>
               <a href={`tel:${PHONE_E164}`} className="block hover:text-amber-400 transition-colors hover:translate-x-1 transform duration-300">
                 {PHONE_DISPLAY}

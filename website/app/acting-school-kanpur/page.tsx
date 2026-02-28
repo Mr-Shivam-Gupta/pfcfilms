@@ -2,6 +2,31 @@ import type { Metadata } from "next";
 import Navbar from "../components/Navbar";
 import CursorEffect from "../components/CursorEffect";
 import { PHONE, PHONE_DISPLAY } from "../lib/constants";
+import FAQ from "../components/FAQ";
+import type { FAQItem } from "../components/FAQ";
+
+const ACTING_FAQS: FAQItem[] = [
+  {
+    q: "What makes PFC FILMS the best acting school in Kanpur?",
+    a: "PFC FILMS is Kanpur's premier acting school with industry veteran Pramod Kumar Gupta as director, comprehensive training programs, industry connections, and proven track record of student placements in films, TV, and OTT platforms.",
+  },
+  {
+    q: "What acting courses are available at your Kanpur acting school?",
+    a: "We offer Film Acting Course, Theatre Acting, Method Acting Workshop, OTT & Web Series Acting, Voice & Diction Training, and Audition Preparation programs at our Kanpur location.",
+  },
+  {
+    q: "Do you provide placement assistance after acting training in Kanpur?",
+    a: "Yes! We offer 100% placement assistance to deserving students. Our industry connections help students get auditions for films, web series, TV shows, and theatre productions.",
+  },
+  {
+    q: "Can beginners join acting classes in Kanpur?",
+    a: "Absolutely! Our acting school in Kanpur welcomes beginners. We start from basics and gradually build your acting skills through structured training programs suitable for all levels.",
+  },
+  {
+    q: "What is the duration and fee for acting courses in Kanpur?",
+    a: "Acting course duration ranges from 1-6 months depending on the program. Contact us for detailed fee structure and flexible payment options. We also offer demo classes.",
+  },
+];
 
 export const metadata: Metadata = {
   title: "Best Acting School in Kanpur | Film Acting Course | PFC FILMS",
@@ -70,7 +95,7 @@ export default function ActingSchoolPage() {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-20 px-4 bg-white">
+      <section className="py-10 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-12 text-black">
             Why Choose <span className="text-amber-500">PFC FILMS Acting School</span> in Kanpur?
@@ -102,7 +127,7 @@ export default function ActingSchoolPage() {
       </section>
 
       {/* Acting Courses */}
-      <section className="py-20 px-4 bg-zinc-50">
+      <section className="py-10 px-4 bg-zinc-50">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl font-bold text-center mb-12 text-black">
             Our <span className="text-amber-500">Acting Programs</span> in Kanpur
@@ -165,7 +190,7 @@ export default function ActingSchoolPage() {
       </section>
 
       {/* Director's Message */}
-      <section className="py-20 px-4 bg-white">
+      <section className="py-10 px-4 bg-white">
         <div className="max-w-4xl mx-auto">
           <div className="bg-gradient-to-br from-zinc-900 to-black rounded-2xl p-12 text-white text-center">
             <h2 className="text-3xl font-bold mb-6">Message from Director</h2>
@@ -178,7 +203,7 @@ export default function ActingSchoolPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 bg-zinc-50">
+      <section className="py-10 px-4 bg-zinc-50">
         <div className="max-w-7xl mx-auto">
           <div className="bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl p-12 text-center text-white">
             <h2 className="text-4xl font-bold mb-6">Start Your Acting Career in Kanpur Today!</h2>
@@ -203,79 +228,7 @@ export default function ActingSchoolPage() {
         </div>
       </section>
 
-      {/* FAQs */}
-      <section className="py-20 px-4 bg-white" id="faq">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "FAQPage",
-              mainEntity: [
-                {
-                  "@type": "Question",
-                  name: "What makes PFC FILMS the best acting school in Kanpur?",
-                  acceptedAnswer: { "@type": "Answer", text: "PFC FILMS is Kanpur's premier acting school with industry veteran Pramod Kumar Gupta as director, comprehensive training programs, industry connections, and proven track record of student placements in films, TV, and OTT platforms." },
-                },
-                {
-                  "@type": "Question",
-                  name: "What acting courses are available at your Kanpur acting school?",
-                  acceptedAnswer: { "@type": "Answer", text: "We offer Film Acting Course, Theatre Acting, Method Acting Workshop, OTT & Web Series Acting, Voice & Diction Training, and Audition Preparation programs at our Kanpur location." },
-                },
-                {
-                  "@type": "Question",
-                  name: "Do you provide placement assistance after acting training in Kanpur?",
-                  acceptedAnswer: { "@type": "Answer", text: "Yes! We offer 100% placement assistance to deserving students. Our industry connections help students get auditions for films, web series, TV shows, and theatre productions." },
-                },
-                {
-                  "@type": "Question",
-                  name: "Can beginners join acting classes in Kanpur?",
-                  acceptedAnswer: { "@type": "Answer", text: "Absolutely! Our acting school in Kanpur welcomes beginners. We start from basics and gradually build your acting skills through structured training programs suitable for all levels." },
-                },
-                {
-                  "@type": "Question",
-                  name: "What is the duration and fee for acting courses in Kanpur?",
-                  acceptedAnswer: { "@type": "Answer", text: "Acting course duration ranges from 1-6 months depending on the program. Contact us for detailed fee structure and flexible payment options. We also offer demo classes." },
-                },
-              ],
-            }),
-          }}
-        />
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12 text-black">
-            Frequently Asked <span className="text-amber-500">Questions</span>
-          </h2>
-          <div className="space-y-6">
-            {[
-              {
-                q: "What makes PFC FILMS the best acting school in Kanpur?",
-                a: "PFC FILMS is Kanpur's premier acting school with industry veteran Pramod Kumar Gupta as director, comprehensive training programs, industry connections, and proven track record of student placements in films, TV, and OTT platforms.",
-              },
-              {
-                q: "What acting courses are available at your Kanpur acting school?",
-                a: "We offer Film Acting Course, Theatre Acting, Method Acting Workshop, OTT & Web Series Acting, Voice & Diction Training, and Audition Preparation programs at our Kanpur location.",
-              },
-              {
-                q: "Do you provide placement assistance after acting training in Kanpur?",
-                a: "Yes! We offer 100% placement assistance to deserving students. Our industry connections help students get auditions for films, web series, TV shows, and theatre productions.",
-              },
-              {
-                q: "Can beginners join acting classes in Kanpur?",
-                a: "Absolutely! Our acting school in Kanpur welcomes beginners. We start from basics and gradually build your acting skills through structured training programs suitable for all levels.",
-              },
-              {
-                q: "What is the duration and fee for acting courses in Kanpur?",
-                a: "Acting course duration ranges from 1-6 months depending on the program. Contact us for detailed fee structure and flexible payment options. We also offer demo classes.",
-              },
-            ].map((faq, idx) => (
-              <div key={idx} className="bg-zinc-50 p-6 rounded-xl border border-zinc-200">
-                <h3 className="text-xl font-bold mb-3 text-black">{faq.q}</h3>
-                <p className="text-zinc-600">{faq.a}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <FAQ faqs={ACTING_FAQS} id="faq" />
     </div>
   );
 }

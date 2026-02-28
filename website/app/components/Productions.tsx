@@ -477,11 +477,11 @@ export default function Productions() {
   /* ===================== UI ===================== */
 
   return (
-    <div className="bg-zinc-50 text-zinc-900 min-h-screen"> 
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-          <div className="absolute top-20 -left-20 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 -right-20 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
-        </div>
+    <div className="bg-zinc-50 text-zinc-900 min-h-screen">
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-20 -left-20 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 -right-20 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
+      </div>
       {/* HERO */}
       <section className="py-24 text-center relative overflow-hidden">
         {/* Animated Background Gradient Orbs */}
@@ -510,11 +510,10 @@ export default function Productions() {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat.toLowerCase())}
-                className={`group relative px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 ${
-                  activeCategory === cat.toLowerCase()
+                className={`group relative px-6 py-3 rounded-full font-bold text-sm transition-all duration-300 ${activeCategory === cat.toLowerCase()
                     ? "bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-lg shadow-amber-500/50 scale-105"
                     : "bg-white text-zinc-600 hover:bg-amber-50 hover:text-amber-700 border border-zinc-200 hover:border-amber-300"
-                }`}
+                  }`}
               >
                 <span className="relative z-10">{cat}</span>
                 {activeCategory === cat.toLowerCase() && (
@@ -528,7 +527,7 @@ export default function Productions() {
 
       {/* IN PRODUCTION SECTION */}
       {inProduction.length > 0 && (
-        <section className="py-20 px-4 relative overflow-hidden">
+        <section className="py-10 px-4 relative overflow-hidden">
           <div className="max-w-7xl mx-auto relative z-10">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-zinc-900 mb-6 tracking-tight">
@@ -553,7 +552,7 @@ export default function Productions() {
       )}
 
       {/* PRODUCTIONS GRID */}
-      <section className="py-20 px-4 relative overflow-hidden">
+      <section className="py-10 px-4 relative overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10">
           {loading ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -593,10 +592,10 @@ export default function Productions() {
             </div>
           )}
         </div>
-        </section>
+      </section>
 
       {/* AWARDS */}
-      <section className="py-20 px-4 relative overflow-hidden">
+      <section className="py-10 px-4 relative overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-zinc-900 mb-6 tracking-tight">
@@ -643,7 +642,7 @@ export default function Productions() {
 
       {/* UPCOMING RELEASES */}
       {releases.length > 0 && (
-        <section className="py-20 px-4 relative overflow-hidden">
+        <section className="py-10 px-4 relative overflow-hidden">
           <div className="max-w-7xl mx-auto relative z-10">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-zinc-900 mb-6 tracking-tight">

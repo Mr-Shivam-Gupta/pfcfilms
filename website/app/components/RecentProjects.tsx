@@ -51,7 +51,7 @@ export default function RecentProjects() {
   const duplicatedProjects = Array(duplicateCount).fill(projects).flat();
 
   return (
-    <section className="py-20 px-4 bg-zinc-50 relative overflow-hidden">
+    <section className="py-10 px-4 bg-zinc-50 relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-4xl md:text-5xl font-bold text-center mb-8 animate-on-scroll opacity-0 transition-all duration-1000 translate-y-10 text-black" suppressHydrationWarning>
           Top <span className="text-amber-500">Projects</span>

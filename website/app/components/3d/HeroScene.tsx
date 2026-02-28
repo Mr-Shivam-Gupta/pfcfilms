@@ -1,7 +1,7 @@
 'use client';
 
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, PerspectiveCamera, Float, useTexture } from '@react-three/drei';
+import { PresentationControls, PerspectiveCamera, Float, useTexture } from '@react-three/drei';
 import { Suspense, useRef } from 'react';
 import * as THREE from 'three';
 
@@ -18,8 +18,8 @@ function Clapperboard() {
 
     useFrame((state) => {
         if (groupRef.current) {
-            // Gentle floating rotation
-            groupRef.current.rotation.y = Math.sin(state.clock.getElapsedTime() * 0.2) * 0.1;
+            // Gentle floating rotation + auto rotation (since we removed OrbitControls)
+            groupRef.current.rotation.y = (state.clock.getElapsedTime() * 0.2) + Math.sin(state.clock.getElapsedTime() * 0.2) * 0.1;
             groupRef.current.position.y = Math.sin(state.clock.getElapsedTime() * 0.5) * 0.2;
         }
         if (clapperRef.current) {
@@ -109,19 +109,28 @@ function Clapperboard() {
 export default function HeroScene() {
     return (
         <div className="w-full h-full">
-            <Canvas>
+            <Canvas style={{ touchAction: 'pan-y' }}>
                 <Suspense fallback={null}>
                     <PerspectiveCamera makeDefault position={[0, 0, 8]} />
-                    <OrbitControls
-                        enableZoom={false}
-                        autoRotate
-                        autoRotateSpeed={0.5}
-                        enablePan={false}
-                        maxPolarAngle={Math.PI / 1.8}
-                        minPolarAngle={Math.PI / 3}
-                    />
 
-                    {/* Lighting */}
+                    <PresentationControls
+                        global={false} // Only respond to events on the object
+                        cursor={true}
+                        snap={true} // Snap back to original position
+                        speed={2}
+                        zoom={1}
+                        rotation={[0, 0, 0]}
+                        polar={[-Math.PI / 4, Math.PI / 4]}
+                        azimuth={[-Math.PI / 4, Math.PI / 4]}
+                    >
+                        {/* Lighting is kept inside PresentationControls to maintain consistent highlights on the object if needed,
+                            but usually lighting is better outside if we want global lighting. */}
+
+                        {/* Single Object */}
+                        <Clapperboard />
+                    </PresentationControls>
+
+                    {/* Lighting - External to controls so it stays fixed relative to camera */}
                     <ambientLight intensity={0.5} />
                     <directionalLight position={[5, 5, 5]} intensity={1.5} castShadow />
                     <pointLight position={[-5, 3, -3]} color="#f59e0b" intensity={2} />
@@ -132,9 +141,6 @@ export default function HeroScene() {
                         intensity={2}
                         color="#ffffff"
                     />
-
-                    {/* Single Object */}
-                    <Clapperboard />
 
                     {/* Cinematic Background Particles */}
                     <mesh position={[0, 0, -5]}>

@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function CTA() {
   return (
-    <section className="py-20 px-4 bg-white relative overflow-hidden">
+    <section className="py-10 px-4 bg-white relative overflow-hidden">
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-to-r from-transparent via-amber-200/40 to-transparent animate-shimmer-slow"></div>
       </div>

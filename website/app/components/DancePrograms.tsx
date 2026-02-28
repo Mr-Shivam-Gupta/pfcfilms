@@ -27,7 +27,7 @@ export default function DancePrograms() {
   ];
 
   return (
-    <section className="py-20 px-4 bg-zinc-900/50 relative overflow-hidden">
+    <section className="py-10 px-4 bg-zinc-900/50 relative overflow-hidden">
       <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl"></div>
       <div className="max-w-7xl mx-auto relative z-10">
         <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 animate-on-scroll opacity-0 transition-all duration-1000 translate-y-10" suppressHydrationWarning>

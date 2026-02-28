@@ -37,7 +37,7 @@ export default function FAQ({
   if (!faqs.length) return null;
 
   return (
-    <section id={id} className="py-12 sm:py-16 lg:py-20 px-4 bg-white">
+    <section id={id} className="py-12 sm:py-16 lg:py-10 px-4 bg-white">
       <div className="max-w-7xl mx-auto">
         <script
           type="application/ld+json"
@@ -88,21 +88,28 @@ export default function FAQ({
           </div>
 
           {/* Right Side - Image */}
-          <div className="relative h-[400px] lg:h-[600px] rounded-2xl overflow-hidden bg-gradient-to-br from-amber-50 via-white to-amber-100 shadow-2xl border border-amber-200/50 flex items-center justify-center">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(245,158,11,0.1),transparent_70%)]" />
-            <div className="relative w-full h-full flex items-center justify-center p-8 sm:p-12">
-              <div className="relative w-full h-full">
-                <Image
-                  src="/footer_logo.png"
-                  alt="PFC Films - Professional Film Production and Training"
-                  fill
-                  className="object-contain drop-shadow-2xl"
-                />
-              </div>
+          <div className="relative h-[400px] lg:h-[600px] rounded-3xl overflow-hidden bg-zinc-900 shadow-2xl border border-zinc-800 flex items-center justify-center group cursor-pointer">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10" />
+
+            {/* Main Cinematic Image */}
+            <div className="relative w-full h-full transform group-hover:scale-105 transition-transform duration-1000 ease-out">
+              <Image
+                src="/images/faq_scene.png"
+                alt="PFC Films - Professional Film Production Scene"
+                fill
+                className="object-cover"
+              />
             </div>
+
+            {/* Content overlay */}
+            <div className="absolute bottom-10 left-10 z-20 max-w-sm">
+              <div className="h-1 w-12 bg-amber-500 mb-4" />
+              <h3 className="text-white text-2xl font-bold mb-2">Cinematic Excellence</h3>
+              <p className="text-zinc-400 text-sm">Empowering the next generation of filmmakers and performers through professional industry-standard training.</p>
+            </div>
+
             {/* Decorative elements */}
-            <div className="absolute top-10 right-10 w-32 h-32 bg-amber-500/10 rounded-full blur-3xl" />
-            <div className="absolute bottom-10 left-10 w-40 h-40 bg-amber-600/10 rounded-full blur-3xl" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(245,158,11,0.1)_0%,transparent_70%)] opacity-50 z-10" />
           </div>
         </div>
       </div>
